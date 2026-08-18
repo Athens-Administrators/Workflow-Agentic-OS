@@ -1,0 +1,27 @@
+{
+  "name": "wos-azure-boards",
+  "version": "0.1.0",
+  "description": "Standalone Workflow OS Azure Boards destination for development-team work item setup, workflow discovery, reads, confirmed writes, reviews, and emoji-formatted work item maintenance.",
+  "author": {
+    "name": "Workflow OS"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Workflow OS - Azure Boards",
+    "shortDescription": "v0.1.0 - Dev-team Azure Boards setup, workflow discovery, reads, and confirmed writes",
+    "longDescription": "Workflow OS Azure Boards provides development-team Azure Boards setup, read-only workflow discovery from reference boards, and Workflow OS standard work item creation, updates, reviews, and description maintenance. It uses the Azure Boards connector first, Azure DevOps CLI only when separately authenticated, and enforces project access boundaries.",
+    "developerName": "Workflow OS",
+    "category": "Productivity",
+    "capabilities": [
+      "Azure Boards setup",
+      "Workflow discovery",
+      "Work item creation",
+      "Work item updates",
+      "Work item review",
+      "Project access boundaries"
+    ],
+    "defaultPrompt": [
+      "Run $azure-boards-setup to configure WOS Azure Boards."
+    ]
+  }
+}

@@ -8,6 +8,17 @@
 
 This update tightens the documentation workflow so WOS Documentation follows the same process no matter how a user asks for a KB article, draft, refresh, review, or Confluence publish.
 
+### Route selection is required
+
+Every documentation request must identify one of these routes before the plugin drafts, refreshes, reviews, or publishes:
+
+- Help Desk
+- Infrastructure
+- DEV/DBA team
+- Public-facing for Athens employees
+
+If the user already states the route clearly in the request, the plugin can use it. If the route is missing or unclear, the plugin must ask before continuing.
+
 ### Required question gate
 
 When required information is missing, WOS Documentation must ask direct questions before drafting.
@@ -64,6 +75,29 @@ Users can still provide a one-request Confluence space override, but that does n
 
 `JSM Optimization Advisory` is intentionally out of scope for WOS Documentation route defaults.
 
+### Help Desk routing rules
+
+Help Desk documentation now routes by article purpose:
+
+- Public-facing employee help article: `HelpDesk Public` / `AEHT`
+- Troubleshooting article for agents: `HelpDesk Troubleshooting` / `AHI`
+- System process, internal process, or internal how-to: `HelpDesk System Processes` / `AIH`
+
+### Infrastructure and DEV/DBA routing rules
+
+Infrastructure and DEV/DBA share templates, but they do not share spaces.
+
+- Infrastructure internal docs go to `Internal Infrastructure KB` / `IIK`.
+- DEV/DBA internal docs go to `Dev Team KB` / `DTK`.
+- Public-facing Infrastructure or DEV/DBA docs go to `HelpDesk Public` / `AEHT`.
+
+For Infrastructure or DEV/DBA requests, the plugin must ask whether the article is:
+
+- Runbook KB article: break/fix, operational steps, commands, validation, rollback, or technical task execution.
+- Business Process KB article: workflow, handoff, approval path, team procedure, or how work moves from start to finish.
+
+The plugin must also confirm whether the page is internal or public-facing for Athens employees.
+
 ### Existing long-document behavior remains
 
 The v0.1.8 long-document behavior still applies:
@@ -81,6 +115,8 @@ Expected plugin version:
 
 - `wos-documentation` v0.1.9
 
+After updating, teammates do not need to memorize the space keys. The plugin should route to the correct default space after it identifies the route, article purpose, and audience.
+
 ## Quick test prompt
 
 Use this prompt after updating to confirm the behavior:
@@ -97,3 +133,4 @@ Expected behavior:
 - WOS Documentation should ask direct questions first.
 - It should not provide a completed draft with unresolved gaps.
 - When the draft is created later, the sections should use emoji headings.
+- The target space should be `HelpDesk Troubleshooting` / `AHI` for this example.
