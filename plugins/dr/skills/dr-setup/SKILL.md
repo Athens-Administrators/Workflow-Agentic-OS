@@ -28,6 +28,13 @@ Best-effort project continuity:
 - Project folder paths under configured OneDrive project roots
 - Optional shallow copies of project marker/planning files when configured by the script
 
+Recursive backup guard:
+
+- The backup root must not be scanned as a project root.
+- If the selected project root contains the backup root, DR must exclude the backup root from marker and structure scans.
+- Prefer a narrow project root such as a Codex projects folder, not the entire OneDrive root.
+- If the user is unsure, ask them to choose a narrower project folder or accept no project-root inventory for now.
+
 Out of scope:
 
 - Exact Codex sidebar thread/task resurrection

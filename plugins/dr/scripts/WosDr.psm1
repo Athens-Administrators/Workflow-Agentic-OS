@@ -1,6 +1,6 @@
 # Workflow OS DR helpers. Keep this ASCII-safe for Windows PowerShell parsing.
 
-$script:WosDrVersion = '0.1.0'
+$script:WosDrVersion = '0.1.1'
 
 function Get-WosDrTimestamp {
     (Get-Date).ToUniversalTime().ToString('yyyyMMddTHHmmssZ')
@@ -140,6 +140,45 @@ function Get-WosDrProjectRoots {
     return $unique
 }
 
+function Normalize-WosDrPathForCompare {
+    param([string]$Path)
+    if (-not $Path) { return $null }
+    $full = [System.IO.Path]::GetFullPath($Path)
+    return $full.TrimEnd([System.IO.Path]::DirectorySeparatorChar, [System.IO.Path]::AltDirectorySeparatorChar)
+}
+
+function Test-WosDrPathUnderRoot {
+    param(
+        [Parameter(Mandatory=$true)][string]$Path,
+        [Parameter(Mandatory=$true)][string]$Root
+    )
+
+    $normalizedPath = Normalize-WosDrPathForCompare -Path $Path
+    $normalizedRoot = Normalize-WosDrPathForCompare -Path $Root
+    if (-not $normalizedPath -or -not $normalizedRoot) { return $false }
+
+    if ([string]::Equals($normalizedPath, $normalizedRoot, [System.StringComparison]::OrdinalIgnoreCase)) {
+        return $true
+    }
+
+    $prefix = $normalizedRoot + [System.IO.Path]::DirectorySeparatorChar
+    return $normalizedPath.StartsWith($prefix, [System.StringComparison]::OrdinalIgnoreCase)
+}
+
+function Test-WosDrPathExcluded {
+    param(
+        [Parameter(Mandatory=$true)][string]$Path,
+        [string[]]$ExcludeRoots = @()
+    )
+
+    foreach ($root in $ExcludeRoots) {
+        if ($root -and (Test-WosDrPathUnderRoot -Path $Path -Root $root)) {
+            return $true
+        }
+    }
+    return $false
+}
+
 function Get-WosDrPluginVersions {
     $cacheRoot = Join-Path $env:USERPROFILE '.codex/plugins/cache/workflow-os'
     $versions = @()
@@ -172,13 +211,19 @@ function Get-WosDrPluginVersions {
 }
 
 function Get-WosDrProjectMarkers {
-    param([string[]]$ProjectRoots = @())
+    param(
+        [string[]]$ProjectRoots = @(),
+        [string[]]$ExcludeRoots = @()
+    )
 
     $markers = @()
     foreach ($root in $ProjectRoots) {
         if (-not (Test-Path -LiteralPath $root -PathType Container)) { continue }
         Get-ChildItem -LiteralPath $root -Recurse -Filter 'WOS.md' -File -ErrorAction SilentlyContinue |
-            Where-Object { $_.FullName -notmatch '\\(node_modules|\.git|\.venv|venv|dist|build)\\' } |
+            Where-Object {
+                $_.FullName -notmatch '\\(node_modules|\.git|\.venv|venv|dist|build)\\' -and
+                -not (Test-WosDrPathExcluded -Path $_.FullName -ExcludeRoots $ExcludeRoots)
+            } |
             ForEach-Object {
                 $markers += [ordered]@{
                     marker_path = $_.FullName
@@ -194,6 +239,7 @@ function Get-WosDrProjectMarkers {
 function Get-WosDrProjectStructure {
     param(
         [string[]]$ProjectRoots = @(),
+        [string[]]$ExcludeRoots = @(),
         [int]$MaxItemsPerRoot = 5000
     )
 
@@ -205,7 +251,10 @@ function Get-WosDrProjectStructure {
         $truncated = $false
         $count = 0
         Get-ChildItem -LiteralPath $root -Recurse -Force -ErrorAction SilentlyContinue |
-            Where-Object { $_.FullName -notmatch $excludedSegmentPattern } |
+            Where-Object {
+                $_.FullName -notmatch $excludedSegmentPattern -and
+                -not (Test-WosDrPathExcluded -Path $_.FullName -ExcludeRoots $ExcludeRoots)
+            } |
             ForEach-Object {
                 if ($count -ge $MaxItemsPerRoot) {
                     $truncated = $true

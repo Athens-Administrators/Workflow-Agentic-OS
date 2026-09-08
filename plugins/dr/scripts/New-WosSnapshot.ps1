@@ -50,7 +50,7 @@ if (Test-Path -LiteralPath $userMemory -PathType Container) {
 }
 
 $projectRoots = @(Get-WosDrProjectRoots -Context $ctx -OverrideRoots $ProjectsRoot)
-$markers = @(Get-WosDrProjectMarkers -ProjectRoots $projectRoots)
+$markers = @(Get-WosDrProjectMarkers -ProjectRoots $projectRoots -ExcludeRoots @($backupRoot))
 $markerRoot = Join-Path $snapshotRoot 'project-markers'
 foreach ($marker in $markers) {
     $safeRel = ($marker.relative_path -replace '[:*?"<>|]', '_')
@@ -82,7 +82,7 @@ $manifest = [ordered]@{
     included = $included
     project_roots = $projectRoots
     project_markers = $markers
-    project_structures = @(Get-WosDrProjectStructure -ProjectRoots $projectRoots)
+    project_structures = @(Get-WosDrProjectStructure -ProjectRoots $projectRoots -ExcludeRoots @($backupRoot))
     plugin_versions = @(Get-WosDrPluginVersions)
     warnings = $warnings
 }

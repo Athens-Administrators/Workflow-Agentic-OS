@@ -19,7 +19,7 @@ Do not rerun first-time onboarding unless the existing install is incomplete or 
 - `wos-onboarding` v0.1.9
 - `wos-jira` v0.2.5
 - `wos-documentation` v0.1.9
-- `wos-dr` v0.1.0
+- `wos-dr` v0.1.1
 - `wos-memory-engine` v0.1.3
 - `wos-project` v0.1.6
 - `wos-task` v0.1.6
@@ -88,7 +88,7 @@ Steps:
     - wos-onboarding v0.1.9
     - wos-jira v0.2.5
     - wos-documentation v0.1.9
-    - wos-dr v0.1.0
+    - wos-dr v0.1.1
     - wos-memory-engine v0.1.3
     - wos-project v0.1.6
     - wos-task v0.1.6
