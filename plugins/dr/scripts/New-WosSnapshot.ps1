@@ -53,8 +53,7 @@ $projectRoots = @(Get-WosDrProjectRoots -Context $ctx -OverrideRoots $ProjectsRo
 $markers = @(Get-WosDrProjectMarkers -ProjectRoots $projectRoots -ExcludeRoots @($backupRoot))
 $markerRoot = Join-Path $snapshotRoot 'project-markers'
 foreach ($marker in $markers) {
-    $safeRel = ($marker.relative_path -replace '[:*?"<>|]', '_')
-    $dest = Join-Path $markerRoot $safeRel
+    $dest = Join-Path $markerRoot (Get-WosDrMarkerCopyName -MarkerPath $marker.marker_path)
     Copy-WosDrFileIfPresent -Source $marker.marker_path -Destination $dest | Out-Null
 }
 
@@ -72,7 +71,7 @@ Get-ChildItem -LiteralPath $snapshotRoot -Recurse -File -ErrorAction SilentlyCon
 $manifest = [ordered]@{
     schema = 'wos-dr-snapshot-v1'
     created = (Get-Date).ToUniversalTime().ToString('o')
-    wos_dr_version = '0.1.0'
+    wos_dr_version = '0.1.2'
     machine = $machine
     user = $env:USERNAME
     data_root = $ctx.data_root

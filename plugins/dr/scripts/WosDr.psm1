@@ -1,6 +1,6 @@
 # Workflow OS DR helpers. Keep this ASCII-safe for Windows PowerShell parsing.
 
-$script:WosDrVersion = '0.1.1'
+$script:WosDrVersion = '0.1.2'
 
 function Get-WosDrTimestamp {
     (Get-Date).ToUniversalTime().ToString('yyyyMMddTHHmmssZ')
@@ -300,4 +300,15 @@ function Get-WosDrSha256 {
         return (Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash.ToLowerInvariant()
     }
     return $null
+}
+
+function Get-WosDrMarkerCopyName {
+    param([Parameter(Mandatory=$true)][string]$MarkerPath)
+
+    # Marker paths can be deeply nested. Keep the snapshot copy name flat so OneDrive
+    # never inherits the source project's full path below project-markers.
+    $bytes = [System.Text.Encoding]::UTF8.GetBytes($MarkerPath.ToLowerInvariant())
+    $hash = [System.Security.Cryptography.SHA256]::Create().ComputeHash($bytes)
+    $id = -join ($hash | ForEach-Object { $_.ToString('x2') })
+    return "$($id.Substring(0, 16)).wos.md"
 }
