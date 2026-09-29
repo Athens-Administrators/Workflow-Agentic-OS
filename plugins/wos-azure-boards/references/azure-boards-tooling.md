@@ -8,6 +8,7 @@ Workflow OS can use the Azure Boards connector, Azure DevOps CLI, browser inspec
 2. Use Azure DevOps CLI (`az devops`, `az boards`) only when it is separately authenticated for the Azure DevOps organization.
 3. Use the authenticated browser session for read-only inspection when connector and CLI reads are not sufficient.
 4. Use Azure DevOps REST / Work Item Tracking APIs last, only when connector and CLI cannot express the needed operation cleanly.
+5. Use `$azure-boards-intake` when direct inspection is blocked but the user can provide screenshots, copied fields, or small card summaries.
 
 ## Verified Connector Context
 
@@ -56,4 +57,3 @@ az boards work-item update --org https://dev.azure.com/AthensTest --id "<id>" --
 - Do not pass secrets through command arguments.
 - Prefer temp files for long approved text when a CLI supports file input; remove temp files afterward.
 - Do not delete or destroy work items.
-

@@ -23,13 +23,26 @@ foreach ($marketplacePath in $marketplaces) {
     $names = @($marketplace.plugins | ForEach-Object { $_.name })
     Assert-True ($names -contains 'wos-memory-lite') "$marketplacePath does not publish wos-memory-lite"
     Assert-True (-not ($names -contains 'wos-memory-engine')) "$marketplacePath still publishes retired wos-memory-engine"
+    $memoryLite = @($marketplace.plugins | Where-Object { $_.name -eq 'wos-memory-lite' })[0]
+    Assert-True ($memoryLite.policy.authentication -in @('ON_INSTALL', 'ON_USE')) "$marketplacePath has an unsupported Memory Lite authentication policy"
 }
 
 $expectedVersions = @{
-    'plugins/memory-lite/.codex-plugin/plugin.json' = '1.0.0'
+    'plugins/memory-lite/.codex-plugin/plugin.json' = '1.1.0'
     'plugins/project/.codex-plugin/plugin.json' = '1.0.0'
     'plugins/task/.codex-plugin/plugin.json' = '1.0.0'
 }
+
+$chatGptMetadata = Join-Path $RepositoryRoot 'plugins/memory-lite/skills/memory-lite/agents/openai.yaml'
+Assert-True (Test-Path -LiteralPath $chatGptMetadata) 'Memory Lite must include ChatGPT Work skill metadata'
+$chatGptMetadataText = Get-Content -LiteralPath $chatGptMetadata -Raw
+foreach ($requiredField in @('display_name:', 'short_description:', 'default_prompt:', 'allow_implicit_invocation:')) {
+    Assert-True ($chatGptMetadataText.Contains($requiredField)) "Memory Lite ChatGPT Work metadata is missing $requiredField"
+}
+
+$memoryLiteSkill = Get-Content -LiteralPath (Join-Path $RepositoryRoot 'plugins/memory-lite/skills/memory-lite/SKILL.md') -Raw
+Assert-True ($memoryLiteSkill.Contains('ChatGPT Work')) 'Memory Lite skill must document ChatGPT Work behavior'
+Assert-True ($memoryLiteSkill.Contains('Codex')) 'Memory Lite skill must document Codex behavior'
 foreach ($entry in $expectedVersions.GetEnumerator()) {
     $manifest = Read-JsonFile $entry.Key
     Assert-True ($manifest.version -eq $entry.Value) "$($entry.Key) must be version $($entry.Value)"
@@ -55,4 +68,4 @@ foreach ($relativeRoot in $activeRoots) {
 }
 Assert-True ($matches.Count -eq 0) ("Retired memory dependency found in active v1 paths:`n" + (($matches | ForEach-Object { "$($_.Path):$($_.LineNumber)" }) -join "`n"))
 
-Write-Host 'WOS Memory Lite v1 structural validation passed.' -ForegroundColor Green
+Write-Host 'WOS Memory Lite v1.1 structural validation passed.' -ForegroundColor Green

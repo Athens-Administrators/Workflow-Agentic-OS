@@ -1,0 +1,7 @@
+interface:
+  display_name: "WOS Memory Lite"
+  short_description: "Orient work and create explicit handoffs without a second memory system."
+  brand_color: "#4F46E5"
+  default_prompt: "Orient me to the current Workflow OS context and recommend the next safe action."
+policy:
+  allow_implicit_invocation: true
