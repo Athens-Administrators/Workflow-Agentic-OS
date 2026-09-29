@@ -1,96 +1,39 @@
-# Workflow OS Project Orchestration Policy
+# Workflow OS Project Collaboration Policy
 
-Project orchestration is explicit and user-controlled. It runs only after project planning is complete and Jira contains the authoritative epic/project item plus phase tasks or subtasks.
+Project collaboration is optional, explicit, and proportional to the work. A project starts local-first; Jira is recommended when shared work needs its visibility, but it is never required.
 
-## Sequence
+## Tracking modes
 
-1. `$project-new` creates or links the project-level Jira item and writes project memory.
-2. The user enters plan mode and builds the project plan.
-3. After planning, the plan is uploaded or updated in Jira as phase tasks/subtasks using WOS emoji descriptions.
-4. `$project-orchestrate` reads Jira, analyzes the phase structure, and proposes execution.
-5. The user chooses whether to greenlight orchestration for this project or keep it linear.
-6. Implementation begins only after the user instructs the orchestrator to implement.
+| Mode | Default behavior | When to use it |
+| --- | --- | --- |
+| **Local** | Current chat, native memory, and an optional `WOS.md` locator. No tracker calls. | Personal work, small initiatives, or a user who does not use a shared tracker. |
+| **Jira-linked** | Jira can hold shared phases, status, ownership, blockers, and dependencies. | Recommended when several people need a durable shared view. |
+| **External** | WOS uses user-provided context and supplies copy-ready updates. It does not assume another tracker integration. | A team using another approved system. |
 
-## Execution Graph
+## Collaboration level
 
-The orchestrator must show a dependency-aware graph before asking for the greenlight:
+Default to **linear work**. Offer a dependency or parallel-work review only when the user asks for `$project-orchestrate` or clearly asks to coordinate independent streams.
 
-```text
-Phase 1 first -> Phases 2/3 parallel -> Phase 4 integration
-```
-
-Parallel delegation is allowed only when phases are independent, do not touch the same files or systems, and do not require unresolved user decisions. Dependency order comes from Jira issue links when present, then Jira descriptions/comments, then the project-state memory.
-
-Use Jira issue links for real dependencies when available, such as "Phase A blocks Phase B". Also include dependency text in descriptions for human readability. If linking fails, continue with description/memory dependency data and report the warning.
-
-## Execution Modes
-
-- **Worktree agent**: default for code, scripts, config, infrastructure, docs inside a repo, or any file-changing work.
-- **Session-only agent**: read-only Jira analysis, Confluence/company knowledge research, context summarization, planning support, and other non-mutating work.
-- **No delegation**: phases with unresolved dependencies, likely file conflicts, unclear scope, live credential/manual UI requirements, production risk without a rollback plan, or decisions that need the user first.
-
-For non-git workspaces, warn that parallel file-editing phases are not safe. Use session-only execution unless the user explicitly accepts the risk.
-
-## Jira Write Manifest
-
-The orchestrator owns Jira structure:
-
-- creates or updates phase issues
-- updates descriptions
-- creates dependency links
-- proposes/transitions statuses
-- posts final synthesis comments
-
-Before Jira writes, show a batch write manifest with all creates, updates, links, comments, and transitions. One explicit approval in the current turn authorizes only the listed writes. Any new unlisted write requires a new confirmation.
-
-Phase agents may post comments only on their assigned Jira item. They must not edit descriptions, parent epic content, links, transitions, or issue structure.
-
-All Jira descriptions and comments must follow the WOS emoji format in `plugins/jira/references/emoji-format.md`.
-
-Deletes/archive remain blocked across Rovo, `acli`, and any other Jira path. If cleanup is needed, call it out for the user to perform manually in Jira.
-
-## Model Selection
-
-Choose the cheapest capable model and reasoning effort for each delegated unit:
-
-- **Lowest cost / lowest effort**: Jira summarization, routine Jira issue/comment work from approved instructions, simple documentation, status updates, and checklist cleanup.
-- **Strong coding model**: code, config, scripts, infrastructure, or multi-file changes.
-- **Highest reasoning**: final integration, failed verification, security-sensitive work, production-impacting changes, or cross-system debugging.
-- **No subagent**: live user decisions, secrets/credential handling, unclear boundaries, or work that cannot be verified independently.
-
-Explain the model/effort choice briefly in the execution graph.
-
-## Superpowers Protocol
-
-Superpowers is part of the orchestration stream, not a hook. Include a Superpowers protocol section in every orchestration plan.
-
-"When applicable" means:
-
-- Use `superpowers:systematic-debugging` when a phase involves a failure, broken test, error, or unclear defect.
-- Use `superpowers:test-driven-development` when a phase changes meaningful code behavior and tests can reasonably be written.
-- Use `superpowers:verification-before-completion` before every phase agent returns completed work.
-- Use `superpowers:using-git-worktrees` for file-changing parallel phases.
-- Use `superpowers:requesting-code-review` and `superpowers:receiving-code-review` for high-risk integration, production-impacting, security-sensitive, or cross-module changes.
-
-Superpowers is not required for simple Jira-only updates, basic summaries, or low-risk documentation edits.
-
-## Handoff Packet
-
-Every delegated phase must return:
+Before parallel work, show a compact graph and identify the evidence behind each dependency:
 
 ```text
-Phase/task:
-Jira key:
-Execution mode:
-Model/effort used:
-Superpowers used:
-Files changed:
-Commands run:
-Verification result:
-Jira comment posted:
-Risks/blockers:
-Dependencies discovered:
-Recommended next step:
+Phase 1 -> Phases 2 and 3 (only if independent) -> integration
 ```
 
-The orchestrator reviews all packets before integration, Jira synthesis, project checkpointing, or completion.
+Use Jira issue links and descriptions/comments for Jira-linked projects. Otherwise use the confirmed current-chat plan and any user-provided external-tracker context. Do not invent dependencies. If ownership, files, systems, or rollback expectations overlap, keep the work linear.
+
+## Delegation boundaries
+
+- Use one main thread for simple or overlapping work.
+- Delegate only clearly bounded, independently verifiable streams after the user explicitly asks to implement the approved plan.
+- Use isolated worktrees for parallel file-changing work in a Git workspace.
+- Do not delegate user decisions, secrets/credentials, manual UI authorization, unclear scope, or production changes without an agreed rollback path.
+- Each delegated stream reports only: outcome, files/systems changed, verification, blockers, and recommended next step.
+
+## Jira safeguards
+
+Jira reads are available only when the project is Jira-linked. Before any Jira create, edit, comment, transition, or link, display a current-turn write manifest. Execute only the approved listed writes and use the WOS Jira emoji format. Deletes and archive actions remain blocked.
+
+## Explicit handoffs
+
+At a pause, checkpoint, or closeout, offer the user a chat recap, a draft for the selected tracker, or a compact confirmed `WOS.md` handoff. Never create a record automatically.

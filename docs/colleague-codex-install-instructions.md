@@ -144,9 +144,8 @@ Use the current Windows username. Do not hardcode another user's path.
 
 ## Optional Plugins
 
-If the user wants project/task/memory/orchestration workflows, onboarding can also install:
+If the user wants lightweight project or task workflows, onboarding can also install:
 
-- `wos-memory-engine`
 - `wos-project`
 - `wos-task`
 

@@ -1,100 +1,60 @@
 ---
 name: project-orchestrate
-description: Use when a Workflow OS project has completed planning, Jira contains the project phase issues, and the user wants dependency-aware orchestration before implementation.
+description: Review a project's dependencies or collaboration plan when the user explicitly asks. Local work stays linear by default; Jira, external tracking, and parallel delegation are optional.
 ---
 
-# `$project-orchestrate` — Orchestrate Project Execution
+# `$project-orchestrate` — Plan Collaboration Deliberately
 
-You are the Workflow OS project orchestrator. This skill runs after planning is complete and Jira has the authoritative project phase structure. Do not use this to create the initial project, import an existing workspace, or replace `$project-new`.
+Use this skill only when the user wants a dependency review, collaboration plan, or deliberate parallel-work decision. It is not required for normal project work and does not replace `$project-new`.
 
-Load `${plugin_root}/references/orchestration-policy.md` and follow it. Load `${plugin_root}/../jira/references/emoji-format.md` before drafting Jira descriptions or comments. Load `${plugin_root}/../jira/references/jira-tooling.md` before choosing Jira tooling.
+Load `${plugin_root}/references/orchestration-policy.md` and follow it. For a Jira-linked project, load `${plugin_root}/../jira/references/emoji-format.md` before drafting Jira descriptions or comments and `${plugin_root}/../jira/references/jira-tooling.md` before choosing Jira tooling.
 
-## Step 1 — Confirm Project Source
+## 1. Confirm the visible plan and tracking mode
 
-Resolve the active project with `${plugin_root}/scripts/active-project.ps1`. If no project is active, ask for the project Jira key or route the user to `$project-new`, `$project-import`, or `$project-resume`.
+Resolve the active project with `${plugin_root}/scripts/active-project.ps1`. If no project is active, ask for the workspace or route the user to `$project-new` or `$project-resume`.
 
-Fetch the project-level Jira item using the Jira tooling order from `jira-tooling.md`: prefer Atlassian Rovo; if Rovo is unavailable, use `acli jira workitem view "<key>" --json` and related `acli` read commands. Jira reads are allowed. Confirm that Jira now contains the planned phase tasks/subtasks. If phase issues are missing, stop and tell the user orchestration starts only after the plan has been uploaded/updated into Jira.
+Read the nearby `WOS.md` when present. Treat `tracking: local` as the default. For `tracking: jira`, offer a live Jira read using the tooling order in `jira-tooling.md`; for `tracking: external`, use only the user-provided context. Do not require a tracker to continue.
 
-## Step 2 — Analyze Jira
+Use the confirmed current-chat plan, plus the selected tracker only when available. Identify phase titles, dependencies and blockers, likely file/system ownership, and any missing information that prevents safe parallel work. Do not infer hidden dependencies optimistically.
 
-Read the parent item, child phase issues, descriptions, comments, statuses, assignees, and issue links. Treat Jira as the source of truth.
+## 2. Present a proportionate plan
 
-Identify:
-
-- phase titles and Jira keys
-- dependencies and blockers
-- likely file/system ownership
-- work type: code/config/docs/research/Jira-only
-- safe parallel groups
-- phases that must stay linear
-- missing information that blocks delegation
-
-Do not infer hidden dependencies optimistically. When uncertain, mark a phase linear or ask the user.
-
-## Step 3 — Present Execution Graph
-
-Show a compact graph before asking for greenlight:
+Default to a concise linear plan. If independent work is plausible, show a compact graph before asking whether the user wants parallel work:
 
 ```text
-Execution graph from Jira
+Phase 1: <title>
+  -> must run first because <evidence>
 
-Phase 1: <key> <title>
-  -> must run first because <dependency>
+Phases 2 and 3: <titles>
+  -> can run in parallel only if <separate files/systems and verification>
 
-Phase 2: <key> <title>
-Phase 3: <key> <title>
-  -> can run in parallel after Phase 1
-
-Phase 4: <key> <title>
-  -> integration and verification
+Integration: <title>
 ```
 
-For each phase, include execution mode, model/effort choice, Superpowers protocol, and why it is safe or unsafe to delegate.
+For each phase, state only why it is safe or unsafe to parallelize and which files or systems it can affect.
 
-## Step 4 — Jira Write Manifest
+## 3. Prepare the selected tracker only when needed
 
-If Jira needs updates before implementation, show a write manifest:
+For a Jira-linked project, if Jira needs updates before implementation, show a current-turn write manifest for creates, description changes, links, transitions, or comments. Use the WOS emoji format and execute only the approved listed writes. For an external tracker, provide copy-ready text only.
 
-- creates/updates
-- description changes
-- dependency links
-- status transitions
-- orchestration comments
+Deletes are blocked. If cleanup is needed, tell the user what to remove manually in Jira.
 
-Use the WOS emoji format for descriptions and comments. Ask for one explicit approval for the manifest in the current turn. Execute only listed writes after approval. Any new write requires new confirmation.
+## 4. Proceed or stay linear
 
-Deletes are blocked. If cleanup is needed, tell the user exactly what to delete manually in Jira.
+Ask whether to proceed with the proposed collaboration plan. If the user approves, wait for a separate explicit implement instruction before dispatching work. If not, continue with normal single-thread work. Do not create a record of this choice unless the user asks for a handoff.
 
-## Step 5 — Greenlight Or Opt Out
+## 5. Optional implementation dispatch and integration
 
-Ask whether to greenlight orchestration for this project:
+When the user explicitly asks to implement, delegate only approved, independent work. Use isolated worktrees for parallel file-changing work in a Git workspace; use session-only execution for read-only work. Do not delegate unresolved dependencies, conflicting file ownership, manual authorization, unclear boundaries, or production changes without a rollback plan.
 
-- If yes, record the approved execution graph and proceed only when the user says to implement.
-- If no, record that this project is linear and continue with normal single-thread work.
+Give every delegated stream its scope, allowed tracker action scope, and a concise handoff requirement: outcome, files/systems changed, verification, blockers, and recommended next step. For Jira-linked work, subagents may post comments only on their assigned Jira item after current-turn manifest approval; parent updates, descriptions, links, and transitions remain with the orchestrator.
 
-Opt-out is project-specific and does not change global Workflow OS behavior.
+Review handoffs, inspect diffs where applicable, run verification, and resolve conflicts. Do not declare completion while verification is unresolved. After integration, produce a final synthesis and offer an explicit handoff in the selected destination.
 
-## Step 6 — Implementation Dispatch
+## Hard rules
 
-When the user explicitly says to implement, delegate only the approved independent work:
-
-- Use worktree execution for file-changing phases in git-backed workspaces.
-- Use session-only execution for read-only/research/Jira-only phases.
-- Do not delegate phases with unresolved dependencies, conflicts, manual credential flows, or unclear boundaries.
-- Give every agent its assigned Jira key, allowed Jira action scope, model/effort guidance, Superpowers protocol, and required handoff packet.
-
-Subagents may post comments on their assigned Jira item only. Description edits, dependency links, transitions, final synthesis, and parent updates stay with the orchestrator.
-
-## Step 7 — Integrate
-
-Review handoff packets, inspect diffs where applicable, run verification, and resolve conflicts. If verification fails, use `superpowers:systematic-debugging` before declaring completion.
-
-After integration, produce a final synthesis and, with explicit approval, update Jira and write a project checkpoint.
-
-## Hard Rules
-
-- No orchestration before the plan is represented in Jira.
-- No automatic implementation before user greenlight and an explicit implement instruction.
+- No mandatory tracker or automatic implementation.
+- No parallel implementation before the user approves the collaboration plan and explicitly asks to implement.
 - No delegated deletes.
 - No Jira write outside an approved manifest.
-- No secrets in Jira, memory, handoff packets, or `WOS.md`.
+- No secrets in tracker drafts, handoff packets, or `WOS.md`.

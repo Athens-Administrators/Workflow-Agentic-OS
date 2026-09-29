@@ -196,14 +196,12 @@ Steps:
 13. Create a first DR snapshot:
     $dr-snapshot
 14. Ask me which optional plugins I want before installing any of them. Use the numbered optional plugin question above:
-    - wos-memory-engine
     - wos-project
     - wos-task
     - wos-azure-boards, only if my team is Development / DBA or I explicitly ask for Azure Boards
 
 Optional plugin dependency rules:
-- If I choose wos-project, also install wos-memory-engine.
-- If I choose wos-task, also install wos-memory-engine.
+- `wos-project` and `wos-task` are independent optional plugins; recommend Jira for shared work but do not require it.
 - Do not install wos-azure-boards unless my team is Development / DBA or I explicitly ask for it.
 
 Jira rules:
@@ -228,9 +226,8 @@ Expected plugin versions:
 - wos-documentation v0.1.13
 - wos-dr v0.1.2
 - wos-azure-boards v0.1.1 when selected for a Development / DBA profile
-- wos-memory-engine v0.1.3
-- wos-project v0.1.6
-- wos-task v0.1.6
+- wos-project v1.1.0
+- wos-task v1.0.0
 
 Final verification:
 - /plugins shows Workflow OS.
@@ -257,11 +254,10 @@ Skip optional plugins unless the colleague chooses them.
 Offer optional plugins with a numbered choice. Keep the wording simple:
 
 1. Jira, Documentation, and DR only for now.
-2. `wos-memory-engine` - keeps local receipt notes for decisions and outcomes.
-3. `wos-project` - helps manage larger project work. Also installs `wos-memory-engine`.
-4. `wos-task` - helps manage to-do lists and meeting actions. Also installs `wos-memory-engine`.
-5. `wos-azure-boards` - for Azure Boards users. Show only for Development / DBA team profiles or when explicitly requested.
-6. Other / In Addition - help me choose.
+2. `wos-project` - a lightweight project layer with local, Jira-linked, or external tracking.
+3. `wos-task` - helps manage to-do lists and meeting actions.
+4. `wos-azure-boards` - for Azure Boards users. Show only for Development / DBA team profiles or when explicitly requested.
+5. Other / In Addition - help me choose.
 
 ## What Should Stay Human
 

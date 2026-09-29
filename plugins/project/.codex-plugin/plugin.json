@@ -1,23 +1,24 @@
 {
   "name": "wos-project",
-  "version": "1.0.0",
-  "description": "Project lifecycle for scoped work with explicit context orientation, Jira-backed execution, optional WOS.md markers, and no automatic memory hooks.",
+  "version": "1.1.0",
+  "description": "A lightweight Codex project layer with local-first orientation, optional Jira or external tracking, explicit handoffs, and opt-in collaboration planning.",
   "author": {
     "name": "Workflow OS"
   },
   "skills": "./skills/",
   "interface": {
     "displayName": "Workflow OS — Project",
-    "shortDescription": "🪟 v1.0 · Explicit project lifecycle with Jira-backed continuity",
-    "longDescription": "Workflow OS Project manages scoped project lifecycles, including project creation, import, orchestration, checkpointing, resume, and closeout.",
+    "shortDescription": "🪟 v1.1 · Local-first projects with optional tracking",
+    "longDescription": "Workflow OS Project keeps project work lightweight: start or link a workspace, orient deliberately, create explicit handoffs, and opt into Jira or collaboration planning only when useful.",
     "developerName": "Workflow OS",
     "capabilities": [
       "Project lifecycle",
-      "Jira orchestration",
-      "Checkpoints"
+      "Optional Jira tracking",
+      "Explicit handoffs",
+      "Opt-in collaboration planning"
     ],
     "defaultPrompt": [
-      "Start a new Workflow OS project."
+      "Start or link a lightweight Workflow OS project and help me choose local, Jira-linked, or external tracking."
     ],
     "category": "Productivity"
   }

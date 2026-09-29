@@ -20,7 +20,6 @@ Mandatory after onboarding starts:
 
 Optional:
 
-- `wos-memory-engine`
 - `wos-project`
 - `wos-task`
 
@@ -31,9 +30,8 @@ Optional:
 - `wos-documentation` v0.1.12
 - `wos-dr` v0.1.2
 - `wos-azure-boards` v0.1.1 (Development / DBA only; optional)
-- `wos-memory-engine` v0.1.3
-- `wos-project` v0.1.6
-- `wos-task` v0.1.6
+- `wos-project` v1.1.0
+- `wos-task` v1.0.0
 
 ## Prompt To Give Their Codex
 
@@ -86,7 +84,6 @@ Steps:
 13. Create a first disaster recovery snapshot:
     $dr-snapshot
 14. Ask the user which optional plugins they want before installing any of:
-    - wos-memory-engine
     - wos-project
     - wos-task
 
@@ -107,9 +104,8 @@ Verify at the end:
   - wos-jira v0.2.9 or newer
   - wos-documentation v0.1.13
   - wos-dr v0.1.2
-  - wos-memory-engine v0.1.3
-  - wos-project v0.1.6
-  - wos-task v0.1.6
+  - wos-project v1.1.0
+  - wos-task v1.0.0
 ```
 
 ## Quick Human Checklist

@@ -17,7 +17,7 @@ Load these before asking role/tool questions:
 ## Preconditions
 
 1. Run `${plugin_root}/scripts/detect-state.ps1`. Parse the JSON output.
-2. If `state == "installed"`, stop and tell the user Workflow OS is already installed. Suggest `$project-new`, `$project-import`, or `$project-resume` depending on what they want next. Do not offer destructive reset as a normal user flow.
+2. If `state == "installed"`, stop and tell the user Workflow OS is already installed. Suggest `$project-new` for a new or existing workspace, or `$project-resume` for deliberate orientation. Do not offer destructive reset as a normal user flow.
 3. If `state == "partial"` and `setup_missing` is non-empty, tell the user Workflow OS setup is not complete. List the missing mandatory setup markers and route them through `$jira-setup`, `$documentation-setup`, and/or `$dr-setup` as needed. Do not continue to normal project/task/documentation/Jira work until mandatory setup is complete.
 4. If `state == "partial"` for missing files only, list present vs missing files. Ask whether to repair the install. Wipe/restart is a developer-test recovery path only and requires explicit confirmation.
 5. Otherwise (`state == "missing"`), proceed with fresh install.
@@ -222,7 +222,7 @@ Ask which optional plugins the user wants to install, using a numbered picker:
 ```text
 Optional Workflow OS plugins:
 1. wos-memory-lite - companion to native Codex memory; explicit orientation and handoffs, no database or hooks.
-2. wos-project - project lifecycle and destination-backed orchestration.
+2. wos-project - lightweight local-first project lifecycle with optional Jira or external tracking.
 3. wos-task - Codex task agenda, meeting action capture, and optional task-board sync.
 4. wos-azure-boards - Azure Boards destination tooling for the development team. [Show only for Development / DBA team profiles.]
 5. None for now.
@@ -318,8 +318,8 @@ Summarize in 5 bullets max. Tell the user:
 - For Development / DBA team profiles that selected Azure Boards, use Azure Boards and Jira according to the profile's day-to-day tracking answer; neither is greater than the other for dev delivery work.
 - Native Codex memory and the current chat are primary for personal continuity. Use `$memory-lite` only for read-only orientation or explicit handoff guidance.
 - Start project-mode work with `$project-new`.
-- After a project plan is uploaded into Jira as phases, use `$project-orchestrate` when parallel orchestration may help.
-- Import an existing workspace with `$project-import`.
+- Use `$project-orchestrate` only when a dependency or parallel-work review would help; Jira is optional and recommended for shared work.
+- Use `$project-new` for a new or existing workspace.
 - Manage to-do lists and meeting actions with `$task-agenda`.
 - Start one-off task or ticket work with `$task-new`.
 - Use `$task-orchestrate` only for one-off tasks or tickets with clearly independent streams.

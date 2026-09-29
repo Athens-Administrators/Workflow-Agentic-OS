@@ -9,7 +9,7 @@ Validate that WOS Memory Lite complements native memory in Codex and ChatGPT Wor
 Install from the `workflow-os` marketplace through `/plugins`:
 
 - `wos-memory-lite` v1.1.0
-- `wos-project` v1.0.0 (optional)
+- `wos-project` v1.1.0 (optional)
 - `wos-task` v1.0.0 (optional)
 
 Do not install `wos-memory-engine` for this pilot. It is retired from the marketplace and is not required by any Memory Lite v1.1 workflow.
@@ -24,8 +24,8 @@ For ChatGPT Work, a workspace administrator must import or sync the Workflow OS 
 |---|---|---|
 | Open a normal workspace or chat | No WOS dependency install, database activity, automatic resume, or hook error. | No WOS dependency install, database activity, automatic resume, or hook error. |
 | Invoke WOS Memory Lite | A short read-only orientation based on the current chat/native memory and a nearby `WOS.md`, if present. | A short read-only orientation based on workspace/account memory and the current chat or Project; it does not assume a local workspace. |
-| Run `$project-new` | The project can be started with a confirmed `WOS.md` locator and optional active-project pointer, without a database receipt. | Not in scope for this Memory Lite pilot. |
-| Run `$project-resume` | The user names a workspace or Jira key; WOS reads the locator and optionally Jira, then gives a compact orientation. | Not in scope for this Memory Lite pilot. |
+| Run `$project-new` | The project starts Local by default, with Jira offered as an optional recommended shared-work mode; a confirmed `WOS.md` locator and active-project pointer remain optional. | Not in scope for this Memory Lite pilot. |
+| Run `$project-resume` | The user names a workspace; WOS reads the locator and only offers Jira for a Jira-linked project, then gives a compact orientation. | Not in scope for this Memory Lite pilot. |
 | Run `$task-agenda` | A useful task table appears in chat; no hidden local task database is created. | Not in scope for this Memory Lite pilot. |
 | Run `$project-checkpoint` or `$task-checkpoint` | A handoff draft appears in chat first. Jira or `WOS.md` is changed only after the user explicitly chooses and confirms that destination. | Not in scope for this Memory Lite pilot. |
 | Use a Jira-linked workflow | Jira reads remain available; every Jira write still requires a current-turn confirmation and the WOS emoji format. | Use only the workspace-approved Jira app or connector. Every Jira write still requires a current-turn confirmation and the WOS emoji format. |

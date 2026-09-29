@@ -134,8 +134,7 @@ Optional Workflow OS plugins:
 8. Other / In Addition - I want help choosing.
 
 Optional plugin dependency rules:
-- If I choose wos-project, also install wos-memory-engine.
-- If I choose wos-task, also install wos-memory-engine.
+- `wos-project` and `wos-task` are independent optional plugins; recommend Jira for shared work but do not require it.
 - Do not install wos-azure-boards unless I say I use Azure Boards or I am on a Development / DBA team.
 - Do not install Zoom Chat Pull, Zoom Clips Pull, or Codex Security unless they are available in the plugin directory and I approve them.
 - If a plugin is not available on this machine, say so clearly and continue with the rest of setup.

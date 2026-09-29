@@ -166,8 +166,7 @@ Optional Workflow OS plugins:
 9. Other / In Addition - I want help choosing.
 
 Optional plugin dependency rules:
-- If I choose wos-project, also install wos-memory-engine.
-- If I choose wos-task, also install wos-memory-engine.
+- `wos-project` and `wos-task` are independent optional plugins; recommend Jira for shared work but do not require it.
 - Install wos-azure-boards only if I say I use Azure Boards or want it.
 - Do not install Zoom Chat Pull, Zoom Clips Pull, SQL MCP, or other connectors unless they are available and I approve them.
 - If a plugin or connector is not available on this machine, say so clearly and continue with the rest of setup.
@@ -301,9 +300,8 @@ Expected plugin versions:
 - wos-jira v0.2.9 or newer
 - wos-documentation v0.1.13
 - wos-dr v0.1.2
-- wos-memory-engine v0.1.3
-- wos-project v0.1.6
-- wos-task v0.1.6
+- wos-project v1.1.0
+- wos-task v1.0.0
 
 Final verification:
 - /plugins shows Workflow OS.

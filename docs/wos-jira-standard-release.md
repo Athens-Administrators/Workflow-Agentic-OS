@@ -90,7 +90,6 @@ $dr-setup
 Users who want project/task/memory/orchestration workflows can optionally install:
 
 ```text
-wos-memory-engine
 wos-project
 wos-task
 ```

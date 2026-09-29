@@ -29,7 +29,7 @@ foreach ($marketplacePath in $marketplaces) {
 
 $expectedVersions = @{
     'plugins/memory-lite/.codex-plugin/plugin.json' = '1.1.0'
-    'plugins/project/.codex-plugin/plugin.json' = '1.0.0'
+    'plugins/project/.codex-plugin/plugin.json' = '1.1.0'
     'plugins/task/.codex-plugin/plugin.json' = '1.0.0'
 }
 
@@ -67,5 +67,7 @@ foreach ($relativeRoot in $activeRoots) {
     }
 }
 Assert-True ($matches.Count -eq 0) ("Retired memory dependency found in active v1 paths:`n" + (($matches | ForEach-Object { "$($_.Path):$($_.LineNumber)" }) -join "`n"))
+
+Assert-True (-not (Test-Path -LiteralPath (Join-Path $RepositoryRoot 'plugins/project/skills/project-import/SKILL.md'))) 'Project v1.1 must consolidate project-import into project-new'
 
 Write-Host 'WOS Memory Lite v1.1 structural validation passed.' -ForegroundColor Green

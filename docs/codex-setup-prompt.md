@@ -43,7 +43,6 @@ Steps:
 12. Create a first DR snapshot:
    $dr-snapshot
 13. Ask me which optional plugins I want before installing any of these:
-   - wos-memory-engine
    - wos-project
    - wos-task
 
@@ -63,6 +62,5 @@ Stop at the first real failure and show the exact error plus the next recommende
 - `wos-documentation` v0.1.12
 - `wos-dr` v0.1.2
 - `wos-azure-boards` v0.1.1 (Development / DBA only; optional)
-- `wos-memory-engine` v0.1.3
-- `wos-project` v0.1.6
-- `wos-task` v0.1.6
+- `wos-project` v1.1.0
+- `wos-task` v1.0.0
