@@ -12,6 +12,7 @@ Use this flow for supervised coworker installs.
 6. During onboarding, install and finish setup for mandatory `wos-jira`, `wos-documentation`, and `wos-dr`.
 7. Choose any optional plugins.
 8. Verify plugin versions.
+9. For Memory Lite pilots, run the scenarios in `docs/wos-memory-lite-v1-pilot.md`.
 
 ## Prerequisites
 
@@ -70,7 +71,7 @@ After setup:
 7. Create the first DR snapshot:
    - `$dr-snapshot`
 8. Install optional WOS plugins only if selected:
-   - `wos-memory-engine`
+   - `wos-memory-lite`
    - `wos-project`
    - `wos-task`
 
@@ -82,7 +83,7 @@ After setup:
 - Jira tenant: `https://athensadmin.atlassian.net`.
 - Jira keys: `ASD, TPM`.
 - Mandatory plugins: `wos-jira`, `wos-documentation`, `wos-dr`.
-- Optional plugins: `wos-memory-engine`, `wos-project`, `wos-task`.
+- Optional plugins: `wos-memory-lite`, `wos-project`, `wos-task`.
 
 ## Troubleshooting
 
@@ -107,6 +108,15 @@ If Windows PowerShell 5.1 causes parse or encoding issues, install PowerShell 7 
 ### Plugins Show Old Versions
 
 Close Codex, rerun `setup-codex.ps1`, reopen Codex, and reinstall/update WOS plugins in `/plugins`.
+
+### Memory Lite v1 Pilot Checks
+
+- Install `wos-memory-lite`, `wos-project`, and `wos-task` only if the pilot participant chooses them.
+- Confirm no `memory-engine` plugin is installed for this pilot.
+- Open a project workspace with a compact `WOS.md`: no automatic resume, database startup, dependency install, or hook error should occur.
+- Run `$memory-lite` and confirm it gives read-only orientation from the marker/current chat.
+- Run `$project-checkpoint` or `$task-checkpoint` and confirm it first produces a chat handoff, then asks before any Jira or `WOS.md` write.
+- Verify Jira remains the source of truth for active shared work.
 
 ## Safety Notes
 

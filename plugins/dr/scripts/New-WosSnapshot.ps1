@@ -29,26 +29,6 @@ if (Copy-WosDrFileIfPresent -Source $ctx.local_path -Destination (Join-Path $sna
     $included += 'data/.agent/local.json'
 } else { $warnings += "Missing local state: $($ctx.local_path)" }
 
-$memoryDir = Join-Path $ctx.data_root '.index'
-$memoryFiles = @('memory.db', 'memory.db-wal', 'memory.db-shm')
-foreach ($file in $memoryFiles) {
-    $source = Join-Path $memoryDir $file
-    $dest = Join-Path $snapshotRoot ("data/.index/$file")
-    if (Copy-WosDrFileIfPresent -Source $source -Destination $dest) {
-        $included += "data/.index/$file"
-    } elseif ($file -eq 'memory.db') {
-        $warnings += "Missing memory database: $source"
-    }
-}
-
-$userMemory = Join-Path $ctx.data_root 'memory'
-if (Test-Path -LiteralPath $userMemory -PathType Container) {
-    $dest = Join-Path $snapshotRoot 'data/memory'
-    New-Item -ItemType Directory -Force -Path $dest | Out-Null
-    Copy-Item -LiteralPath $userMemory -Destination (Join-Path $snapshotRoot 'data') -Recurse -Force
-    $included += 'data/memory'
-}
-
 $projectRoots = @(Get-WosDrProjectRoots -Context $ctx -OverrideRoots $ProjectsRoot)
 $markers = @(Get-WosDrProjectMarkers -ProjectRoots $projectRoots -ExcludeRoots @($backupRoot))
 $markerRoot = Join-Path $snapshotRoot 'project-markers'

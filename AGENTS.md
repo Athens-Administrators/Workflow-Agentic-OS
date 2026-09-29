@@ -11,7 +11,7 @@ Codex's native AGENTS.md cascade loads this file first, then walks the project t
 3. `<wos_data>/.agent/system.md` — core engine manual. Read on demand.
 4. `<wos_data>/memory/users/<me>/preferences.md` — active user preferences.
 5. Project marker (`WOS.md` in cwd) — project slug for resume.
-6. Current project/task receipts from the local SQLite memory store, if a project or task is active (loaded via memory-engine MCP, not directly).
+6. Optional local active project/task pointers and a nearby `WOS.md` project locator. Native Codex memory and the current chat provide conversational continuity; Jira remains active-work truth.
 
 `<wos_data>` is read from `~/.codex/workflow-os.json` → `data_root`. If that file is missing, Workflow OS is not installed — direct the user to run `bootstrap.ps1` and then `$welcome`.
 
@@ -23,7 +23,7 @@ These are summarized here for visibility; full text in `~/.codex/AGENTS.override
 - **No silent destructive ops.** Confirm in chat before any deletion, force-push, schema drop, or mass write.
 - **No auto-commits.** Code changes stage but don't commit unless the user says so.
 - **No secrets in URLs, logs, or memory writes.** Strip credentials before persisting.
-- **Memory writes go through MCP**, not direct file edits.
+- **Memory Lite has no memory writes.** Do not create a second memory store or automatic session record. Any optional `WOS.md` handoff requires explicit user confirmation.
 - **Sandbox mode does not bypass tool allow-lists or Workflow OS policy** — MCP boundaries and CLI safety rules apply in every mode, including `danger-full-access`.
 
 ## 3. Tool surface (paths)
@@ -31,7 +31,6 @@ These are summarized here for visibility; full text in `~/.codex/AGENTS.override
 Read concrete values from `<wos_data>/.agent/local.json`:
 
 - `data_root` — Workflow OS data directory.
-- `memory_store` — local SQLite memory database path.
 - `onedrive_backup` — backup folder under OneDrive.
 - `jira_tenant` — Jira Cloud base URL.
 - `github_desktop` — GitHub Desktop install path (may be null).
@@ -42,7 +41,7 @@ Read concrete values from `<wos_data>/.agent/local.json`:
 
 Plugins follow Codex's contract: `.codex-plugin/plugin.json` manifest, `skills/<name>/SKILL.md` files invoked as `$<name>`, `hooks/hooks.json` for lifecycle handlers, `.mcp.json` for MCP servers. The framework is also a marketplace — `.agents/plugins/marketplace.json` lists all Workflow OS plugins.
 
-Currently shipped: `onboarding`, `memory-engine`, `jira`, `project`, `task`. Project and task orchestration are explicit skills, not hooks.
+Currently shipped: `onboarding`, `memory-lite`, `jira`, `project`, `task`. Project and task orchestration are explicit skills, not hooks.
 
 Codex's `/plugins` UI is authoritative for which plugins are installed and enabled. Workflow OS does not maintain a parallel registry.
 
@@ -52,7 +51,7 @@ Active user is named in `<wos_data>/.agent/local.json` → `user`. Their prefere
 
 ## 6. When in doubt
 
-- Memory question? Ask the `memory-engine` MCP; local SQLite memory is canonical.
+- Memory question? Use native Codex memory already available in the conversation. Use `$memory-lite` for read-only WOS orientation or an explicit handoff; do not create a second memory store.
 - Jira question? Use the configured Atlassian Rovo Codex app connector first. If Rovo is unavailable or lacks the needed Jira operation, use `acli` under the same Workflow OS policy. For direct chat requests, this same Rovo-first/`acli`-fallback rule applies.
 - Unsure which plugin owns a behavior? `codex /plugins` lists installed plugins.
 - Nothing matches? Tell the user, don't improvise.

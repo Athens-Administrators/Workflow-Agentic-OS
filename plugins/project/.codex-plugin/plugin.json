@@ -1,15 +1,14 @@
 {
   "name": "wos-project",
-  "version": "0.1.6",
-  "description": "Project lifecycle for scoped work: new, import, orchestrate, checkpoint, resume, complete. Auto-resumes on SessionStart and writes session-summary notes on Stop.",
+  "version": "1.0.0",
+  "description": "Project lifecycle for scoped work with explicit context orientation, Jira-backed execution, optional WOS.md markers, and no automatic memory hooks.",
   "author": {
     "name": "Workflow OS"
   },
   "skills": "./skills/",
-  "hooks": "./hooks/hooks.json",
   "interface": {
     "displayName": "Workflow OS — Project",
-    "shortDescription": "🪟 v0.1.6 · Project lifecycle with robust import, Rovo JQL, and memory fallback",
+    "shortDescription": "🪟 v1.0 · Explicit project lifecycle with Jira-backed continuity",
     "longDescription": "Workflow OS Project manages scoped project lifecycles, including project creation, import, orchestration, checkpointing, resume, and closeout.",
     "developerName": "Workflow OS",
     "capabilities": [

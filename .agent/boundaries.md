@@ -27,8 +27,7 @@ These rules are non-negotiable. They apply regardless of plugin, project, user p
 
 - No recursive deletes outside `<data_root>` and `<framework_root>` without confirmation.
 - On Windows OneDrive paths, directory removal uses `cmd /c rd /s /q` via subprocess. Never `shutil.rmtree` directly.
-- Never modify files in `vault/` directly. Use the `memory-engine` MCP.
-- Never modify files in `vault/.obsidian/` programmatically. That's Obsidian's config.
+- Do not create or update a WOS-owned memory vault, database, or automatic session log. Legacy data remains untouched unless the user explicitly requests a migration or removal plan.
 
 ## 3. Secrets
 
@@ -36,11 +35,11 @@ These rules are non-negotiable. They apply regardless of plugin, project, user p
 - Never include secrets in URL parameters.
 - If a secret appears in a tool output, redact it before any further processing.
 
-## 4. Memory writes
+## 4. Memory Lite and handoffs
 
-- Writes go through `memory-engine` MCP. Plugins do not open vault files for write.
-- Frontmatter is mandatory on every note. Missing frontmatter = MCP rejects the write.
-- Session summaries record outcomes and decisions, not transcripts or chain-of-thought.
+- Native Codex memory is primary. Workflow OS must not create a second memory store.
+- A `WOS.md` handoff is an explicit user-requested filesystem write: show the proposed compact text and receive confirmation before writing.
+- Hooks must not create summaries, pointers, Jira updates, or files.
 
 ## 5. Codex hooks
 

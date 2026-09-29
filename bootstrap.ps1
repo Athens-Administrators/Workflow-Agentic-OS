@@ -55,7 +55,7 @@ $required = @(
     '.agent/boundaries.md',
     '.agents/plugins/marketplace.json',
     'plugins/onboarding/.codex-plugin/plugin.json',
-    'plugins/memory-engine/.codex-plugin/plugin.json',
+    'plugins/memory-lite/.codex-plugin/plugin.json',
     'plugins/jira/.codex-plugin/plugin.json',
     'plugins/project/.codex-plugin/plugin.json',
     'plugins/task/.codex-plugin/plugin.json'

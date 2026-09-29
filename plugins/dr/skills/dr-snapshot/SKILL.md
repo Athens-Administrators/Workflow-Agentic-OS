@@ -17,7 +17,7 @@ Report:
 
 - snapshot path
 - included WOS state files
-- memory database status
+- local active-pointer status
 - project marker count
 - any warnings
 

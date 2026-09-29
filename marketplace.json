@@ -2,7 +2,7 @@
   "name": "workflow-os",
   "interface": {
     "displayName": "Workflow OS",
-    "shortDescription": "Codex plugins for Athens IT: mandatory Jira and Documentation setup plus optional memory, projects, tasks, and orchestration"
+    "shortDescription": "Codex plugins for Athens IT: mandatory Jira and Documentation setup plus optional Memory Lite, projects, tasks, and orchestration"
   },
   "plugins": [
     {
@@ -12,9 +12,9 @@
       "category": "Productivity"
     },
     {
-      "name": "wos-memory-engine",
-      "source": { "source": "local", "path": "./plugins/memory-engine" },
-      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "name": "wos-memory-lite",
+      "source": { "source": "local", "path": "./plugins/memory-lite" },
+      "policy": { "installation": "AVAILABLE", "authentication": "NONE" },
       "category": "Productivity"
     },
     {

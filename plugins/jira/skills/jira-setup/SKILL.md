@@ -169,7 +169,7 @@ Tell the user they can now use:
 
 For the standard Workflow OS onboarding baseline, tell them `wos-documentation` is mandatory alongside `wos-jira`. For deeper Workflow OS workflows, they can optionally install:
 
-- `wos-memory-engine`
+- `wos-memory-lite`
 - `wos-project`
 - `wos-task`
 

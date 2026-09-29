@@ -24,8 +24,6 @@ $installed = $false
 $setupMissing = @()
 foreach ($root in $candidates) {
     $marker = Join-Path $root '.agent/local.json'
-    $indexDir = Join-Path $root '.index'
-    $memoryDb = Join-Path $root '.index/memory.db'
     if (Test-Path $marker) {
         try {
             $cfg = Get-Content $marker -Raw | ConvertFrom-Json
@@ -33,19 +31,14 @@ foreach ($root in $candidates) {
             $jiraSetup = $cfg.plugin_state.'wos-jira'.setup_completed_at
             $documentationSetup = $cfg.plugin_state.'wos-documentation'.setup_completed_at
             $drSetup = $cfg.plugin_state.'wos-dr'.setup_completed_at
-            $optionalPlugins = @()
-            if ($cfg.optional_plugins_selected) { $optionalPlugins = @($cfg.optional_plugins_selected) }
             $missingForRoot = @()
             if (-not $jiraSetup) { $missingForRoot += 'wos-jira setup' }
             if (-not $documentationSetup) { $missingForRoot += 'wos-documentation setup' }
             if (-not $drSetup) { $missingForRoot += 'wos-dr setup' }
-            if (($optionalPlugins -contains 'wos-memory-engine') -and -not (Test-Path $memoryDb)) {
-                $missingForRoot += 'wos-memory-engine verification'
-            }
-            if ($state -and $state.disabled -eq $true -and (Test-Path $indexDir) -and $missingForRoot.Count -eq 0) {
+            if ($state -and $state.disabled -eq $true -and $missingForRoot.Count -eq 0) {
                 $installed = $true
                 break
-            } elseif ($state -or (Test-Path $indexDir)) {
+            } elseif ($state) {
                 $setupMissing = $missingForRoot
             }
         } catch {

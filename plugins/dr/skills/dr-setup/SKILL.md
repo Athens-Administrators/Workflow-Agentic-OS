@@ -17,7 +17,7 @@ Guaranteed snapshot scope:
 - `<data_root>/.agent/local.json`
 - `<data_root>/.index/memory.db` plus WAL/SHM companions when present
 - `<data_root>/memory/`
-- WOS task/project receipts stored in memory-engine
+- WOS active-project and active-task pointers
 - Active project/task pointers stored in local state
 - Installed WOS plugin versions from the local cache
 - Project marker inventory from configured OneDrive project roots

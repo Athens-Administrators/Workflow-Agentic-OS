@@ -1,0 +1,16 @@
+{
+  "name": "wos-memory-lite",
+  "version": "1.0.0",
+  "description": "A lightweight Workflow OS companion to native Codex memory: explicit context orientation and optional handoffs, with no MCP server, database, or hooks.",
+  "author": { "name": "Workflow OS" },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Workflow OS — Memory Lite",
+    "shortDescription": "🪶 v1.0 · Native-memory companion with explicit handoffs",
+    "longDescription": "Memory Lite keeps Codex memory primary. It offers read-only context orientation and deliberate handoff guidance without a database, MCP server, or automatic hooks.",
+    "developerName": "Workflow OS",
+    "capabilities": ["Native-memory companion", "Read-only project orientation", "Explicit handoff guidance"],
+    "defaultPrompt": ["Orient me to the current Workflow OS context."],
+    "category": "Productivity"
+  }
+}

@@ -70,7 +70,7 @@ Each delegated stream must return the standard handoff packet.
 
 ## Step 6 — Integrate
 
-Review handoff packets, verify results, update task memory, and prepare any Jira synthesis comment. If verification fails, use `superpowers:systematic-debugging` before declaring completion.
+Review handoff packets, verify results, summarize the task in chat, and prepare any Jira synthesis comment. If verification fails, use `superpowers:systematic-debugging` before declaring completion.
 
 ## Hard Rules
 

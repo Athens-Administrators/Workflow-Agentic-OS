@@ -51,4 +51,4 @@ Load `${plugin_root}/../references/jira-tooling.md` before choosing Jira tooling
 - **No secrets.**
 - **No bulk edits across multiple issues.** This skill edits one key at a time.
 - **No deletes** — even of sections within a description, ask before removing substantial content.
-- **Standalone behavior**: this skill must work with only `wos-jira` installed. Do not require memory-engine, project, or task plugins.
+- **Standalone behavior**: this skill must work with only `wos-jira` installed. Do not require Memory Lite, project, or task plugins.

@@ -20,9 +20,9 @@ Do not rerun first-time onboarding unless the existing install is incomplete or 
 - `wos-jira` v0.2.9 or newer
 - `wos-documentation` v0.1.13
 - `wos-dr` v0.1.2
-- `wos-memory-engine` v0.1.3
-- `wos-project` v0.1.6
-- `wos-task` v0.1.6
+- `wos-memory-lite` v1.0.0
+- `wos-project` v1.0.0
+- `wos-task` v1.0.0
 
 ## Documentation Update Notes
 
@@ -96,15 +96,15 @@ Steps:
     - wos-jira v0.2.9 or newer
     - wos-documentation v0.1.13
     - wos-dr v0.1.2
-    - wos-memory-engine v0.1.3
-    - wos-project v0.1.6
-    - wos-task v0.1.6
+    - wos-memory-lite v1.0.0
+    - wos-project v1.0.0
+    - wos-task v1.0.0
 11. If any mandatory plugin is missing, install it. Do not ask the user to choose whether to install these; they are required for the current Workflow OS baseline:
     - wos-jira
     - wos-documentation
     - wos-dr
 12. If any optional Workflow OS plugins are missing, do not install them automatically. Show the user a short optional missing-plugin list and ask which, if any, they want to add:
-    - wos-memory-engine
+    - wos-memory-lite
     - wos-project
     - wos-task
 13. If `wos-onboarding` is missing, explain that it is mainly for first-time setup and ask before installing it on an existing environment.

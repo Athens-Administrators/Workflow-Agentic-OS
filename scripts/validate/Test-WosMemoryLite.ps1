@@ -1,0 +1,58 @@
+[CmdletBinding()]
+param(
+    [string]$RepositoryRoot = (Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
+)
+
+$ErrorActionPreference = 'Stop'
+
+function Assert-True {
+    param([bool]$Condition, [string]$Message)
+    if (-not $Condition) { throw $Message }
+}
+
+function Read-JsonFile {
+    param([string]$RelativePath)
+    $path = Join-Path $RepositoryRoot $RelativePath
+    Assert-True (Test-Path -LiteralPath $path) "Missing required file: $RelativePath"
+    return (Get-Content -LiteralPath $path -Raw | ConvertFrom-Json)
+}
+
+$marketplaces = @('marketplace.json', '.agents/plugins/marketplace.json')
+foreach ($marketplacePath in $marketplaces) {
+    $marketplace = Read-JsonFile $marketplacePath
+    $names = @($marketplace.plugins | ForEach-Object { $_.name })
+    Assert-True ($names -contains 'wos-memory-lite') "$marketplacePath does not publish wos-memory-lite"
+    Assert-True (-not ($names -contains 'wos-memory-engine')) "$marketplacePath still publishes retired wos-memory-engine"
+}
+
+$expectedVersions = @{
+    'plugins/memory-lite/.codex-plugin/plugin.json' = '1.0.0'
+    'plugins/project/.codex-plugin/plugin.json' = '1.0.0'
+    'plugins/task/.codex-plugin/plugin.json' = '1.0.0'
+}
+foreach ($entry in $expectedVersions.GetEnumerator()) {
+    $manifest = Read-JsonFile $entry.Key
+    Assert-True ($manifest.version -eq $entry.Value) "$($entry.Key) must be version $($entry.Value)"
+    Assert-True (-not ($manifest.PSObject.Properties.Name -contains 'hooks')) "$($entry.Key) must not register hooks in Memory Lite v1"
+}
+
+$activeRoots = @(
+    'plugins/memory-lite',
+    'plugins/project',
+    'plugins/task',
+    'plugins/onboarding',
+    'plugins/dr',
+    'plugins/jira'
+)
+$forbidden = 'memory-engine|memory_write|memory_search|memory_recall|memory_export|session-summary'
+$matches = @()
+foreach ($relativeRoot in $activeRoots) {
+    $root = Join-Path $RepositoryRoot $relativeRoot
+    if (Test-Path -LiteralPath $root) {
+        $matches += @(Get-ChildItem -LiteralPath $root -File -Recurse |
+            Select-String -Pattern $forbidden -CaseSensitive:$false)
+    }
+}
+Assert-True ($matches.Count -eq 0) ("Retired memory dependency found in active v1 paths:`n" + (($matches | ForEach-Object { "$($_.Path):$($_.LineNumber)" }) -join "`n"))
+
+Write-Host 'WOS Memory Lite v1 structural validation passed.' -ForegroundColor Green

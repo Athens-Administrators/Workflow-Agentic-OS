@@ -22,11 +22,7 @@ if (Test-Path $sentinel) {
 if (-not $dataRoot -and $env:WOS_DATA_ROOT) { $dataRoot = $env:WOS_DATA_ROOT }
 if (-not $dataRoot) { $dataRoot = Join-Path $env:USERPROFILE 'workflow-os-data' }
 
-$required = @(
-    '.agent/local.json',
-    'memory/users',
-    '.index'
-)
+$required = @('.agent/local.json')
 
 $mandatorySetup = @(
     'plugin_state.wos-jira.setup_completed_at',
@@ -61,15 +57,6 @@ if (Test-Path (Join-Path $dataRoot '.agent/local.json')) {
     }
 } else {
     $setupMissing += $mandatorySetup
-}
-
-if ($optionalPlugins -contains 'wos-memory-engine') {
-    $memoryDb = Join-Path $dataRoot '.index/memory.db'
-    if (Test-Path $memoryDb) {
-        if ($present -notcontains '.index/memory.db') { $present += '.index/memory.db' }
-    } else {
-        $missing += '.index/memory.db'
-    }
 }
 
 $state = 'missing'

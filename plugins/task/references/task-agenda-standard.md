@@ -77,11 +77,11 @@ When the user says something like "I need to do this on Friday and have it done 
 - status
 - source context
 
-If the date is ambiguous, ask only the minimum clarification. If it is clear from the current date/time, convert it to an absolute date in the table and memory receipt.
+If the date is ambiguous, ask only the minimum clarification. If it is clear from the current date/time, convert it to an absolute date in the table.
 
 ## Memory Records
 
-Simple mode writes `task-state` receipts through memory-engine. Use `project` as the task list slug, normally `personal-agenda` unless the user names a different agenda.
+Simple mode keeps the explicit agenda table in the current conversation. Use a stable agenda slug, normally `personal-agenda` unless the user names a different agenda; it may be stored only as the optional `active_task` pointer.
 
 Use this shape:
 

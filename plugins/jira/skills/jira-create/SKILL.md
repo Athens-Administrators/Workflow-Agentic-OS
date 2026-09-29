@@ -49,7 +49,7 @@ Load `${plugin_root}/../references/jira-tooling.md` before choosing Jira tooling
 
 6. **On yes**: use the Jira tooling order from `jira-tooling.md`. Prefer the current Rovo `createJiraIssue` operation (or its client-exposed wrapper); if it is deferred, discover it and execute through `executeWrite`. If Rovo is unavailable, use the matching `acli jira workitem create` flow after confirming required fields. Capture the returned key and read it back with `getJiraIssue` or `acli`.
 
-7. **On success**, tell the user the key + URL. If Workflow OS memory-engine is available, optionally write a `reference` note linking the new Jira key; if memory is unavailable, do not fail the Jira workflow.
+7. **On success**, tell the user the key + URL. Keep the result in the current conversation; Jira is the durable work reference. Do not write a second WOS memory record.
 
 8. **On no**, ask what to change. Loop on step 4.
 
@@ -61,4 +61,4 @@ Load `${plugin_root}/../references/jira-tooling.md` before choosing Jira tooling
 - **If the project is wrong**, abort and ask. Don't guess.
 - **Project-board safeguard**: for project boards such as `TPM`, `AJD`, `GPT`, `HMB`, or infrastructure boards, do not create a new Epic/project container without first checking relevant existing Epics and getting explicit user confirmation. Prefer Epic / Task / Subtask shapes over ASD-style AI issue/request types.
 - **ASD safeguard**: do not create an ASD ticket until `AI Gen Issue` vs `AI Gen Request` is clarified and the actual AI-related issue type/request type payload is verified. If the tool cannot verify or set the correct ASD issue/request type, stop.
-- **Standalone behavior**: this skill must work with only `wos-jira` installed. Do not require memory-engine, project, or task plugins.
+- **Standalone behavior**: this skill must work with only `wos-jira` installed. Do not require Memory Lite, project, or task plugins.

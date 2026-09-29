@@ -1,23 +1,9 @@
 # WOS Task
 
-`wos-task` manages Codex-native task agendas, meeting action capture, one-off task lifecycle, checkpoints, completion, and optional Jira personal task-board sync.
+`wos-task` manages explicit Codex-conversation task agendas, meeting action capture, one-off task lifecycle, deliberate handoffs, completion, and optional Jira personal task-board sync.
 
-## Optional Dashboard Template
+## Continuity
 
-The static dashboard template lives at:
+The current chat and native Codex memory are primary for personal continuity. Jira is the durable source for shared active work. The optional local `active_task` value is only a convenience pointer for the current machine; it is not a task database.
 
-```text
-plugins/task/templates/task-dashboard
-```
-
-Use it when a user wants a deployable visual task board alongside `$task-agenda`. It is optional: the normal WOS Task agenda still works without a dashboard, GitHub Pages, or a backend.
-
-To create a dashboard that includes the user's existing WOS Task agenda rows, run:
-
-```powershell
-plugins/task/scripts/Export-WosTaskDashboard.ps1 -OutputDir <dashboard-folder>
-```
-
-The exporter reads local `task-state` receipts from `wos-memory-engine`, writes `data/tasks.json`, and injects the same data into `index.html` for local preview.
-
-To publish the dashboard, push the generated dashboard folder to a private standalone GitHub repository and enable GitHub Pages with GitHub Actions.
+Use `$task-checkpoint` when a concise, deliberate handoff is needed. It produces a chat recap or Jira-ready draft only after the user chooses the destination. Task-dashboard export is not part of Memory Lite v1 because it depended on the retired receipt database.

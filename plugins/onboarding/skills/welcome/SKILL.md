@@ -212,7 +212,7 @@ After mandatory plugins are installed, run their first-use setup flows before co
 
 Optional plugin set:
 
-- `wos-memory-engine`
+- `wos-memory-lite`
 - `wos-project`
 - `wos-task`
 - `wos-azure-boards` **only when `is_development_team` is true**
@@ -221,7 +221,7 @@ Ask which optional plugins the user wants to install, using a numbered picker:
 
 ```text
 Optional Workflow OS plugins:
-1. wos-memory-engine - local SQLite receipt/log memory.
+1. wos-memory-lite - companion to native Codex memory; explicit orientation and handoffs, no database or hooks.
 2. wos-project - project lifecycle and destination-backed orchestration.
 3. wos-task - Codex task agenda, meeting action capture, and optional task-board sync.
 4. wos-azure-boards - Azure Boards destination tooling for the development team. [Show only for Development / DBA team profiles.]
@@ -232,8 +232,7 @@ When `is_development_team` is false, omit `wos-azure-boards` from the visible pi
 
 Resolve dependencies before saving:
 
-- Selecting `wos-project` automatically selects `wos-memory-engine`.
-- Selecting `wos-task` automatically selects `wos-memory-engine`.
+- `wos-memory-lite`, `wos-project`, and `wos-task` are independent optional plugins. Recommend Memory Lite alongside Project or Task, but do not force it.
 - Selecting `wos-azure-boards` does not automatically select `wos-project` or `wos-task`.
 - `wos-jira`, `wos-documentation`, and `wos-dr` remain mandatory regardless of optional selections.
 - For development-team profiles, explain that Jira is the shared Athens IT team-space platform while Azure Boards is the development team's delivery-tracking destination; the user may install either destination tooling they actually use, and may use both.
@@ -242,22 +241,17 @@ Install selected optional plugins only when a real headless install verb exists 
 
 ## Step 7 — Write data files
 
-Direct file writes are allowed during onboarding only because onboarding must set `data_root` and persist mandatory setup state before the other Workflow OS plugins can rely on it. After `~/.codex/workflow-os.json` points at the selected `data_root`, verify `memory-engine` only if `wos-memory-engine` is in the resolved optional plugin list.
+Direct file writes are allowed during onboarding only because onboarding must set `data_root` and persist setup state before other Workflow OS plugins can rely on it. Memory Lite requires no runtime or storage verification.
 
 Create:
 
 - `<data_path>/.agent/local.json`
-- `<data_path>/memory/users/<username>/preferences.md`
-- `<data_path>/memory/projects/`
-- `<data_path>/memory/daily/`
-- `<data_path>/.index/`
-- `<data_path>/.logs/`
 
 `local.json` must include at least:
 
 ```json
 {
-  "version": "0.1.0",
+  "version": "1.0.0",
   "user": "<username>",
   "display_name": "<display name>",
   "role_id": "<role id>",
@@ -275,7 +269,6 @@ Create:
   "additional_tool_recommendations": [],
   "data_root": "<data_path>",
   "framework_root": "<framework_path>",
-  "memory_store": "<data_path>/.index/memory.db",
   "onedrive_backup": "<onedrive_path-or-null>",
   "backup_mode": "manual",
   "jira_tenant": "<url>",
@@ -300,41 +293,18 @@ Create:
 }
 ```
 
-The preferences note must include frontmatter `type: preference`, then readable sections for:
-
-- identity and role
-- team profile and team-gated plugin availability
-- role-tailoring answers
-- Codex Work mode preference
-- work style
-- tracking systems, especially Jira and Azure Boards for Development / DBA team profiles
-- additional workflow platforms and matched CLI/MCP/app connector recommendations
-- Jira defaults
-- tool recommendations
-- backup choice
-- mandatory plugin setup status for `wos-jira`, `wos-documentation`, and `wos-dr`
-- optional plugin selections
+Keep the role, work-style, tracking, Jira, tool, backup, and optional-plugin choices in `local.json`. Native Codex memory remains responsible for conversational preferences and continuity; onboarding must not create a second preference-memory store.
 
 Update `~/.codex/workflow-os.json` with `data_root` and `installed: true`.
 
-If `wos-memory-engine` is selected, verify the SQLite memory store:
-
-```powershell
-${plugin_root}/scripts/verify-memory.ps1 -FrameworkRoot "<framework_path>" -Username "<username>"
-```
-
-The verifier must create `<data_path>/.index/memory.db`, write a small `preference` receipt through `wos-memory-engine`, and search it back. If verification fails and `wos-memory-engine` was selected, report that onboarding created the local config but memory-engine is not ready; do not claim Workflow OS is fully installed until memory verification succeeds.
-
-If `wos-memory-engine` is not selected, do not run memory verification and do not require `<data_path>/.index/memory.db`. Still create `<data_path>/.index/` so the user can add memory-engine later.
+If `wos-memory-lite` is selected, confirm only that its plugin is installed and enabled through `/plugins`. Do not start a server, create a database, or write a memory-verification record.
 
 ## Step 8 — Finish
 
 Confirm:
 
 - `local.json` exists.
-- preferences note exists.
-- memory index folder exists.
-- if `wos-memory-engine` was selected, `<data_path>/.index/memory.db` exists and the memory verifier wrote/found an onboarding `preference` receipt.
+- if selected, `wos-memory-lite` is installed and enabled.
 - `plugin_state.wos-jira.setup_completed_at` exists.
 - `plugin_state.wos-documentation.setup_completed_at` exists.
 - `plugin_state.wos-dr.setup_completed_at` exists.
@@ -346,8 +316,7 @@ Summarize in 5 bullets max. Tell the user:
 
 - Use Jira as the shared Athens IT team-space platform for active work visibility.
 - For Development / DBA team profiles that selected Azure Boards, use Azure Boards and Jira according to the profile's day-to-day tracking answer; neither is greater than the other for dev delivery work.
-- If `wos-memory-engine` was selected, use local Workflow OS memory as the receipt/log layer for conversation outcomes and decisions.
-- If `wos-memory-engine` was not selected, tell the user they can add it later from `/plugins` when they want local receipt memory.
+- Native Codex memory and the current chat are primary for personal continuity. Use `$memory-lite` only for read-only orientation or explicit handoff guidance.
 - Start project-mode work with `$project-new`.
 - After a project plan is uploaded into Jira as phases, use `$project-orchestrate` when parallel orchestration may help.
 - Import an existing workspace with `$project-import`.
@@ -359,5 +328,5 @@ Summarize in 5 bullets max. Tell the user:
 
 - **Unwritable path**: stop and report. Do not partially write if the root cannot be created.
 - **User aborts mid-flow**: write partial plugin state only if a data root was already created.
-- **Memory-engine unreachable after sentinel update**: report a partial install. Local config may exist, but Workflow OS is not fully ready until `verify-memory.ps1` succeeds.
+- **Memory Lite missing after sentinel update**: report it as an optional-plugin gap; the base Workflow OS installation remains usable.
 - **Secrets**: never store credentials, tokens, or API keys. Strip tokenized URLs and ask for a clean value.

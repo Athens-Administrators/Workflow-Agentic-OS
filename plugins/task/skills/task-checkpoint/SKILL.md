@@ -1,91 +1,15 @@
 ---
 name: task-checkpoint
-description: Write a deliberate checkpoint for the currently active Workflow OS task or agenda item. Use when the user wants a high-signal save point capturing status, due date, blockers, next action, and narrative.
+description: Prepare a concise, explicit handoff for the current Workflow OS task. The user chooses chat-only or a Jira-ready draft; no automatic memory receipt is created.
 ---
 
-# `$task-checkpoint` — Task Checkpoint
+# `$task-checkpoint` — Create a Deliberate Task Handoff
 
-You are writing a deliberate checkpoint for a task. This is the task equivalent of `$project-checkpoint`, but lighter and focused on task or agenda-item work.
+Resolve the active task through `${plugin_root}/scripts/active-task.ps1` or ask the user for a slug/Jira key. Gather status, blockers, due date if relevant, next action, and a short narrative from the current conversation and optional Jira read.
 
-## Memory access rule
+Present a concise handoff in chat. Offer:
 
-Use the exposed memory-engine MCP tools when available. If `mcp__memory-engine__memory_search` or `mcp__memory-engine__memory_write` is not exposed in the active conversation, use the supported helper instead:
+1. **Chat only** — no write.
+2. **Jira-ready checkpoint draft** — display it and post only after explicit current-turn confirmation.
 
-```powershell
-$argsJson = '<json arguments>'
-node "${memory_plugin_root}/scripts/memory-call.mjs" <memory_search|memory_write|memory_recall> $argsJson
-```
-
-Resolve `memory_plugin_root` from `~/.codex/plugins/cache/workflow-os/wos-memory-engine/<version>`. If the helper fails, stop and report that task memory is unavailable. Do not create repo-local markdown files or other substitutes unless the user explicitly asks for a file export.
-
-## Step 1 — Resolve active task
-
-Call `${plugin_root}/scripts/active-task.ps1`.
-
-If `active_task` is null, ask for a task slug or Jira key and search memory:
-
-```json
-{ "type": "task-state", "query": "<slug-or-jira-key>", "limit": 5 }
-```
-
-Let the user choose one, then call `${plugin_root}/scripts/active-task.ps1 -Set <task-slug>` if they want it active.
-
-## Step 2 — Read current state
-
-Call `mcp__memory-engine__memory_search`:
-
-```json
-{ "type": "task-state", "project": "<task-slug>", "limit": 1 }
-```
-
-Show the current status, Jira key if any, due date if any, blocker, and next action. Confirm whether they are still accurate.
-
-## Step 3 — Gather checkpoint content
-
-Ask for:
-
-1. **Status**: active, waiting, blocked, resolved, cancelled.
-2. **Blockers/dependencies**: empty if none.
-3. **Next action**: one concrete next step.
-4. **Due date/time**: only if new or changed.
-5. **Narrative**: 2-4 sentences about what changed, what is known, and what needs attention.
-
-## Step 4 — Write checkpoint
-
-Call `mcp__memory-engine__memory_write`:
-
-```json
-{
-  "type": "checkpoint",
-  "source": "wos-task",
-  "project": "<task-slug>",
-  "title": "<task-slug>-checkpoint-<short-date>",
-  "body": "<narrative plus optional sections for blockers and next action>",
-  "frontmatter_extras": {
-    "task_slug": "<task-slug>",
-    "scope": "task",
-    "status": "<status>",
-    "due": "<ISO-or-null>",
-    "blockers": ["..."],
-    "next_action": "<next action>"
-  }
-}
-```
-
-## Step 5 — Update task-state
-
-Call `memory_write` again with `type: "task-state"`, `source: "wos-task"`, and `project: "<task-slug>"` to refresh the canonical task state with the latest status, blockers, and next action.
-
-## Step 6 — Optional Jira sync
-
-If the task has a Jira key, ask whether to post a checkpoint comment.
-
-If yes, load `${plugin_root}/../jira/references/emoji-format.md` and `${plugin_root}/../jira/references/jira-tooling.md`, draft the comment, show it, and get explicit confirmation. Then use the Atlassian Rovo Codex app connector's Jira comment tool if exposed in the current session. If no comment tool is exposed, use the `acli` fallback: write the approved comment to a temp file, run `acli jira workitem comment create --key "<key>" --body-file "<tempfile>"`, then remove the temp file.
-
-## Hard rules
-
-- One task checkpoint per invocation.
-- No Jira write without explicit confirmation.
-- No Jira transition from this skill.
-- No deletes.
-- Use `$task-update` for quick lightweight status refreshes; use `$task-checkpoint` for deliberate save points.
+Do not create a file, database record, or automatic session summary. Use `$task-update` for a quick in-chat update.

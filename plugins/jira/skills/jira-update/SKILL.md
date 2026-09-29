@@ -42,7 +42,7 @@ Load `${plugin_root}/../references/jira-tooling.md` before choosing Jira tooling
 
 6. **On yes**: use the current Rovo `addOrEditJiraIssueComment` operation (discover it and invoke with `executeWrite` if deferred). If no comment operation is available, use the `acli` fallback from `${plugin_root}/../references/jira-tooling.md`: write the approved comment to a temp file, run `acli jira workitem comment create --key "<key>" --body-file "<tempfile>"`, then remove the temp file.
 
-7. **On success**, tell the user the comment ID or success result returned. If Workflow OS memory-engine is available and the user indicates time spent, optionally write a `worklog` memory note; if memory is unavailable, do not fail the Jira workflow.
+7. **On success**, tell the user the comment ID or success result returned. Keep the outcome in the current conversation; do not write a second WOS memory record.
 
 8. **On no**, ask what to change. If the user wants it simpler, revise the preview and return to step 4.
 
@@ -52,4 +52,4 @@ Load `${plugin_root}/../references/jira-tooling.md` before choosing Jira tooling
 - **No edits to other people's comments** — `$jira-update` only adds new ones. To edit our own latest, use `$jira-mod`.
 - **No secrets.**
 - **Per-action confirmation** — don't reuse authorization across keys.
-- **Standalone behavior**: this skill must work with only `wos-jira` installed. Do not require memory-engine, project, or task plugins.
+- **Standalone behavior**: this skill must work with only `wos-jira` installed. Do not require Memory Lite, project, or task plugins.

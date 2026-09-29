@@ -1,128 +1,55 @@
 ---
 name: project-new
-description: Start a new Workflow OS project. Use strictly for scoped project work with phases, a workspace, or ongoing continuity. Writes the initial project-state memory note, sets active_project in local.json, drops a WOS.md marker in cwd, then hands off to Codex plan mode for phase scoping.
+description: Start a scoped Workflow OS project using an optional WOS.md locator, a local active-project pointer, native Codex memory, and Jira for shared active work. No separate memory engine is required.
 ---
 
 # `$project-new` — Start a Workflow OS Project
 
-You are creating a new Workflow OS project. This skill is strictly for project-mode work: scoped initiatives with phases, a working directory, durable continuity, or a larger delivery outcome.
+Use project mode only for a scoped initiative with phases, a workspace, or an ongoing delivery outcome. Route one-off work to `$task-new`; route an existing workspace to `$project-import`.
 
-If the user asks for a one-off Jira ticket, support task, quick operational item, or work that does not need a workspace marker and phase plan, stop and route them to `$task-new`. Do not continue inside `$project-new`.
+## 1. Define the project
 
-If the user already has an existing workspace folder they want to bring into Workflow OS, stop and route them to `$project-import`.
+Ask for a short name and one-to-three-sentence description. Derive a lowercase hyphenated slug (30 characters or fewer where practical) and confirm it before writing.
 
-## Step 1 — Name & description
+## 2. Link Jira deliberately
 
-Ask:
-1. **Project name** (short, human-readable).
-2. **Description** (one to three sentences — what is this and why now).
+Ask for an existing Jira epic or project-level ticket. Verify an existing key with Rovo first and `acli` as fallback. If a new Jira item is needed, draft it in the WOS Jira format and obtain explicit current-turn confirmation before creating it.
 
-Derive a **slug** from the name (lowercase, hyphenated, ≤30 chars). Confirm the slug with the user before proceeding.
+Jira is the shared active-work source of truth. Record its key in the project marker when one exists.
 
-## Step 2 — Jira linkage
+## 3. Create the optional workspace locator
 
-Load `${plugin_root}/../jira/references/jira-tooling.md` before choosing Jira tooling.
-
-Ask the user: "Do you have an existing Jira epic or project-level ticket for this project?"
-
-- **If yes**: ask for the Jira key (e.g. `PHX-100`). Prefer `mcp__codex_apps__atlassian_rovo._search` and `mcp__codex_apps__atlassian_rovo._fetch`; if Rovo is unavailable, use `acli jira workitem view "<key>" --json`. Confirm the title/type match what the user means.
-- **If no**: ask whether this should be represented in Jira as an **epic** or a **project-level ticket**. Do not offer one-off task creation here. Creation is a write op — load `${plugin_root}/../jira/references/emoji-format.md` and draft the description in the §2 skeleton. Show the user, get explicit confirmation, then use the Jira tooling order from `jira-tooling.md`: prefer `mcp__codex_apps__atlassian_rovo._createjiraissue`; if Rovo is unavailable, use the matching `acli jira workitem create` flow.
-
-Record the resulting `jira_key` (whether existing or just-created).
-
-## Step 3 — Append initial `project-state` receipt
-
-Call the exposed memory-engine MCP `memory_write` tool when available:
-
-```json
-{
-  "type": "project-state",
-  "source": "wos-project",
-  "project": "<slug>",
-  "title": "<slug>-state",
-  "body": "<markdown body with description, scope, links>",
-  "frontmatter_extras": {
-    "name": "<name>",
-    "jira_key": "<key>",
-    "jira_type": "epic|project-ticket",
-    "phase": null,
-    "status": "active",
-    "next_milestone": null
-  }
-}
-```
-
-If the memory-engine MCP is installed but not exposed as a callable tool in the active conversation, use the supported local helper instead of hand-rolling stdio:
-
-```powershell
-$argsJson = '<json arguments for memory_write>'
-node "${memory_plugin_root}/scripts/memory-call.mjs" memory_write $argsJson
-```
-
-Resolve `memory_plugin_root` from the installed Workflow OS memory-engine plugin path when needed, usually under `~/.codex/plugins/cache/workflow-os/wos-memory-engine/<version>`.
-
-If memory-engine is not installed or the helper fails, stop and report that the project cannot be started yet. Do not create `WOS.md` or update `active_project` without a project-state receipt unless the user explicitly asks for a marker-only recovery.
-
-## Step 4 — Mark cwd as the project's working directory
-
-Drop a `WOS.md` file in cwd with frontmatter:
+With confirmation, write `WOS.md` only in the chosen project workspace:
 
 ```markdown
 ---
 project_slug: <slug>
-jira_key: <key>
+jira_key: <key-or-null>
 created: <ISO timestamp>
 ---
 
-# <Name>
+# <Project name>
 
-<Description>
-
-This file marks the working directory for the `<slug>` Workflow OS project.
+<Short description>
 ```
 
-`WOS.md` is registered as a `project_doc_fallback_filename` in `~/.codex/config.toml`, so Codex will cascade-load it like an AGENTS.md. The `wos-project` plugin's SessionStart hook reads `project_slug` from it for auto-resume.
+Keep this file compact. It identifies the workspace and Jira link; it is not a project log, transcript, or replacement memory store.
 
-## Step 5 — Update `local.json`
+## 4. Set the local pointer
 
-Set `active_project = "<slug>"` in `<data_root>/.agent/local.json`. (Use the memory-engine MCP if a `local_state.write` verb exists; otherwise, this is the documented exception where a plugin script touches local.json directly via `${plugin_root}/scripts/active-project.ps1 -Set <slug>` — see scripts/ for the helper.)
+Ask whether to make the project active. If yes, call `${plugin_root}/scripts/active-project.ps1 -Set <slug>`. This only records the current local selection; it does not save project history.
 
-## Step 6 — Hand off to plan mode
+## 5. Plan and execute
 
-Tell the user:
+Invite the user to use `/plan`. After a plan is visible, show a Jira write manifest for phase items and dependencies, then execute only after explicit current-turn confirmation. `$project-orchestrate` is available only after Jira reflects the approved phase structure.
 
-> Project scaffolded. Enter Codex plan mode with `/plan` to define the phases of this project. When planning is done, I'll upload or update the finalized phases in Jira under `<jira_key>` as **tasks or subtasks** (you'll pick). After Jira reflects the phase structure, `$project-orchestrate` can analyze Jira and offer a dependency-aware execution graph before implementation starts.
+## Continuity rule
 
-Wait for the user to run `/plan` and complete planning. (You're the LLM — the user drives plan mode; you observe.)
-
-## Step 7 — Push phases to Jira (after plan exits)
-
-When the user exits plan mode and the plan is visible, do this:
-
-1. Extract phases from the plan as a numbered list.
-2. Decide parent/child shape:
-   - If `jira_type == "epic"`, phases become **tasks** under the epic.
-   - If `jira_type == "project-ticket"`, phases become **subtasks** under the project-level ticket.
-   - Ask the user to confirm the shape if it's ambiguous.
-3. Show the user a Jira write manifest:
-   ```
-   Jira write plan for <jira_key>
-
-   Create/update these N phase items as <tasks|subtasks>:
-   1. <phase 1 title>
-   2. <phase 2 title>
-   ...
-
-   Link dependencies:
-   - <phase A> blocks <phase B>   # only for real dependencies
-   ```
-4. On explicit confirmation in the current turn, execute only the listed Jira writes using the Jira tooling order from `jira-tooling.md`. Use the emoji-format description skeleton for every description. For real dependencies, create Jira issue links when available and also record the dependency in the description. If linking fails, continue with the dependency text and report the warning.
-5. Record each created/updated key in a new `project-state` receipt, or surface the keys for the user to track.
-6. Offer `$project-orchestrate` only after Jira contains the finalized phase structure. `$project-orchestrate` analyzes Jira before implementation; it does not replace planning or phase upload.
+Use the current conversation and native Codex memory for continuity. For a cross-chat or cross-person handoff, offer a chat recap, Jira-ready draft, or a compact `WOS.md` handoff only when the user explicitly asks.
 
 ## Hard rules
 
-- **No automatic Jira writes.** A batch write manifest may be approved once in the current turn; unlisted writes require fresh confirmation.
-- **No deletes.** If a wrong subtask gets created, the user removes it manually in Jira (per `.agent/boundaries.md` §1).
-- **No secrets in `WOS.md`, project-state, or Jira descriptions.**
-- **The slug is permanent** — once written, don't rename it. Slug collisions: ask the user to pick a new one.
+- No automatic hooks, session summaries, databases, or MCP memory calls.
+- No Jira write without explicit current-turn confirmation.
+- No secrets in `WOS.md` or Jira.
+- No deletes.

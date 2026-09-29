@@ -117,11 +117,11 @@ If Workflow OS local state is available, save the route profile into `<data_root
 
 Preserve existing `plugin_state` entries, existing Jira setup, and existing optional plugin selections.
 
-If Workflow OS Memory Engine is available, also ask whether to save this as a user preference.
+If local Workflow OS configuration is available, ask whether to save only the profile and high-level preference there.
 
-If neither Workflow OS local state nor Memory Engine is available, provide the profile for the user to keep and clearly state that setup is only complete for the current conversation; future Documentation skills may ask for `$documentation-setup` again until a persistent WOS profile exists.
+If local Workflow OS configuration is unavailable, provide the profile for the user to keep and clearly state that setup is only complete for the current conversation; future Documentation skills may ask for `$documentation-setup` again until a persistent WOS profile exists.
 
-If the user confirms, write only the profile and high-level preference through memory-engine MCP. Do not write directly to vault files. Do not store copied page contents unless the user explicitly asks and the content contains no secrets.
+Keep the profile and high-level preference in the onboarding local configuration. Do not create a separate memory record or store copied page contents unless the user explicitly asks for an approved destination and the content contains no secrets.
 
 ## Step 7 - Finish
 

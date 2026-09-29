@@ -8,7 +8,7 @@ $script:WosRepoRelativeFiles = @(
     '.agent/boundaries.md',
     '.agents/plugins/marketplace.json',
     'plugins/onboarding/.codex-plugin/plugin.json',
-    'plugins/memory-engine/.codex-plugin/plugin.json',
+    'plugins/memory-lite/.codex-plugin/plugin.json',
     'plugins/jira/.codex-plugin/plugin.json',
     'plugins/wos-documentation/.codex-plugin/plugin.json',
     'plugins/dr/.codex-plugin/plugin.json',
