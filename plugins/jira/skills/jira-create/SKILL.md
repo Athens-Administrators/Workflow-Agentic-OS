@@ -47,7 +47,7 @@ Load `${plugin_root}/../references/jira-tooling.md` before choosing Jira tooling
    ```
    Ask: "Create this in Jira? (yes/no)"
 
-6. **On yes**: use the Jira tooling order from `jira-tooling.md`. Prefer `mcp__codex_apps__atlassian_rovo._createjiraissue`; if Rovo is unavailable, use the matching `acli jira workitem create` flow after confirming required fields. Capture the returned key.
+6. **On yes**: use the Jira tooling order from `jira-tooling.md`. Prefer the current Rovo `createJiraIssue` operation (or its client-exposed wrapper); if it is deferred, discover it and execute through `executeWrite`. If Rovo is unavailable, use the matching `acli jira workitem create` flow after confirming required fields. Capture the returned key and read it back with `getJiraIssue` or `acli`.
 
 7. **On success**, tell the user the key + URL. If Workflow OS memory-engine is available, optionally write a `reference` note linking the new Jira key; if memory is unavailable, do not fail the Jira workflow.
 

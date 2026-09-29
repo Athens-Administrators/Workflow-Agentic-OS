@@ -107,7 +107,7 @@ If the user names `ASD`, record it as the service-desk path. Explain that ASD cr
 
 Check available Jira tooling when possible:
 
-- Atlassian Rovo app connector availability, if exposed in the current session.
+- Atlassian Rovo MCP connector availability and authentication. Verify that `getAccessibleAtlassianResources` and a Jira exact-key read (`getJiraIssue` or `searchJiraIssuesUsingJql`) are available; do not hard-code legacy connector tool paths.
 - `acli --version`
 - `acli jira auth status`
 

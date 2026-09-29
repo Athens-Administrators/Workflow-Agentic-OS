@@ -4,10 +4,10 @@ This format is mandatory for all writes to Jira originating from Workflow OS —
 
 ## 1. Comment structure
 
-Every Workflow OS comment starts with a status marker and a one-line summary, followed by structured sections. Sections are optional; omit if empty.
+Every Workflow OS structured comment starts with a status marker and a one-line summary, followed by structured sections. Sections are optional; omit if empty. The summary preserves the user's original intent or original comment; refine it only when needed for clarity.
 
 ```
-🟢 STATUS · <one-line summary of the update>
+🟢 SUMMARY · <original intent or original comment; refine only if needed>
 
 📋 What's done
 - <bullet>
@@ -22,9 +22,37 @@ Every Workflow OS comment starts with a status marker and a one-line summary, fo
 🔜 Next
 - <bullet>
 
-🔗 Refs
-- <jira key or url>
 ```
+
+### Concise update
+
+Use this one-line format when the user has supplied a single factual update and it does not need a fuller handoff:
+
+```text
+<status marker> <plain-language update>
+```
+
+Examples:
+
+```text
+🔵 Access was added for Jordan; no further action is needed.
+🛠️ Updated the timeout value in staging.
+```
+
+Use the concise format only when all of the following are true:
+
+- There is one clear, useful fact to record.
+- There is no active blocker, decision request, or material next action to explain.
+- The update is not a transition, worklog, or completion/closure.
+- A teammate can understand the state without a sectioned handoff.
+
+Use the structured format when any of those conditions is not true, when the user asks for detail, or when more than one independent update needs recording. Do not use a bare acknowledgement such as `🟢 Working on it.`
+
+### Agent choice and preview
+
+The agent decides whether a concise or structured comment best fits the user's input. Do not ask the user to choose a format up front.
+
+Before asking to post, show a preview and say which format was selected and why. Ask: **“Is this good, or would you like it simpler?”** If the user asks for a simpler version, revise the preview. A preview is not permission to write: after the content is settled, show the final payload and obtain explicit current-turn confirmation to post it.
 
 Status markers (pick one):
 
@@ -75,14 +103,10 @@ Use exactly one lead emoji at the beginning of the title, followed by concise ac
 When transitioning a Jira item (e.g. To Do → In Progress, In Progress → Done), add a comment using §1's format. For closures, use the ✅ marker and include:
 
 ```
-✅ DONE · <what was delivered>
+✅ SUMMARY · <original intent or original comment; refine only if needed>
 
-📋 Delivered
-- <bullet>
-
-🔗 Refs
-- PR: <url>
-- Worklog: <link>
+- What was done: <completed work>
+- Outcome: <result and effect on the original intent>
 ```
 
 ## 5. Worklog entries
@@ -102,5 +126,8 @@ Categories (pick one): `implementation`, `investigation`, `review`, `meeting`, `
 - **No deletes/archive via writes.** Workflow OS agents must not use Jira delete or archive operations through any path, including `acli`.
 - **No secrets in any field.** Strip tokens, passwords, keys before writing.
 - **One status marker per comment.** Don't stack them.
+- **Concise comments are complete sentences.** Keep them factual and use the structured format when context, a blocker, or a next action matters.
+- **Keep the original intent in the summary.** Do not rewrite it beyond the clarification needed for a teammate to understand it.
+- **Preview before confirmation.** The agent chooses the depth, previews the draft, asks whether it should be simpler, then separately requests explicit permission to post.
 - **Section headings are required** when their content is present. Skip sections you have nothing to put under.
 - **Mention the Jira key only when linking elsewhere**, never as decoration ("for JIRA-123 we did X" — fine; "JIRA-123: did X" — redundant since you're commenting on JIRA-123).

@@ -149,18 +149,19 @@ Use comments to maintain continuity. A good comment should answer:
 - What is currently happening?
 - What is blocked?
 - What happens next?
-- What references matter?
 
 Use the status marker that best fits the update:
 
-- `🟢 STATUS` for normal progress
-- `🟡 STATUS` for risk/caution
-- `🔴 STATUS` for blocked work
-- `🔵 STATUS` for informational updates
-- `✅ DONE` for completion/closure
-- `🛠️ TECHNICAL` for implementation detail
+- `🟢 SUMMARY` for normal progress
+- `🟡 SUMMARY` for risk/caution
+- `🔴 SUMMARY` for blocked work
+- `🔵 SUMMARY` for informational updates
+- `✅ SUMMARY` for completion/closure
+- `🛠️ SUMMARY` for implementation detail
 
 Do not post vague comments such as "working on this" unless paired with useful context.
+
+For a simple, self-contained update, use the concise format in `emoji-format.md`: one status marker and one factual sentence. Use the full structured comment when a teammate needs the outcome, in-progress work, blocker, or next action to understand the handoff. In either format, the agent chooses the appropriate depth, previews it, asks whether it should be simpler, and only then seeks separate approval to post. The summary must retain the original intent or original comment, refined only where clarity requires it. Transitions and closure always use their dedicated structured formats.
 
 ## 8. Closure Standard
 
@@ -168,8 +169,7 @@ Before closing or recommending closure, verify:
 
 - The requested outcome was delivered or explicitly deferred.
 - Any unresolved blocker is documented.
-- The final comment uses the `✅ DONE` structure.
-- References to PRs, worklogs, docs, or related tickets are included when relevant.
+- The final comment uses the `✅ SUMMARY` structure and states what was done and the outcome beneath the summary line.
 - The user has explicitly confirmed any Jira transition or write action.
 
 ## 9. Description Maintenance

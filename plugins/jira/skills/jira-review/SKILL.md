@@ -24,8 +24,8 @@ Ask for exactly one Jira key if the user has not provided it.
 
 Use the Jira tooling order from `jira-tooling.md`:
 
-1. Prefer Rovo JQL for exact keys when exposed: `key = <KEY>`.
-2. Use Rovo Search + Fetch for semantic lookup when the user gives a phrase instead of a key.
+1. Prefer Rovo `getJiraIssue` for exact keys. Use `searchJiraIssuesUsingJql` with `key = <KEY>` when a filtered query is needed.
+2. Use Rovo `search` for semantic lookup when the user gives a phrase instead of a key, then retrieve the chosen item with `getJiraIssue`.
 3. Use `acli jira workitem view "<KEY>" --json` when Rovo is unavailable or lacks the needed read.
 
 Jira reads are allowed. Do not write during this step.
