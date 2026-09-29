@@ -48,7 +48,7 @@ The mandatory baseline remains `wos-jira`, `wos-documentation`, and `wos-dr`.
 ## Teammate update steps
 
 1. Confirm the teammate can open the private repository while signed into
-   GitHub: <https://github.com/acasasAA/Workflow-Agentic-OS>.
+   GitHub: <https://github.com/Athens-Administrators/Workflow-Agentic-OS>.
 2. In a PowerShell terminal, refresh the Git-backed marketplace:
 
    ```powershell
@@ -58,7 +58,7 @@ The mandatory baseline remains `wos-jira`, `wos-documentation`, and `wos-dr`.
    If the marketplace is not registered, add it instead:
 
    ```powershell
-   codex plugin marketplace add https://github.com/acasasAA/Workflow-Agentic-OS.git --ref main
+   codex plugin marketplace add https://github.com/Athens-Administrators/Workflow-Agentic-OS.git --ref main
    ```
 
 3. Fully restart Codex, open `/plugins`, and update/reinstall only the Workflow

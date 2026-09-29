@@ -223,7 +223,7 @@ Ask which optional plugins the user wants to install, using a numbered picker:
 Optional Workflow OS plugins:
 1. wos-memory-lite - companion to native Codex memory; explicit orientation and handoffs, no database or hooks.
 2. wos-project - lightweight local-first project lifecycle with optional Jira or external tracking.
-3. wos-task - Codex task agenda, meeting action capture, and optional task-board sync.
+3. wos-task - universal task intake with a concise in-chat agenda brief.
 4. wos-azure-boards - Azure Boards destination tooling for the development team. [Show only for Development / DBA team profiles.]
 5. None for now.
 ```
@@ -321,8 +321,8 @@ Summarize in 5 bullets max. Tell the user:
 - Use `$project-orchestrate` only when a dependency or parallel-work review would help; Jira is optional and recommended for shared work.
 - Use `$project-new` for a new or existing workspace.
 - Manage to-do lists and meeting actions with `$task-agenda`.
-- Start one-off task or ticket work with `$task-new`.
-- Use `$task-orchestrate` only for one-off tasks or tickets with clearly independent streams.
+- Capture and prioritize action items from any approved source with `$task-agenda`.
+- Focus, update, or resume one action item with `$task`; create an explicit handoff with `$task-handoff`.
 
 ## Failure modes
 

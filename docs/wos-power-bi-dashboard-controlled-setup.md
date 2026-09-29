@@ -22,7 +22,7 @@ Before starting, confirm:
 
 1. The teammate has Codex installed and signed in.
 2. They can open the Workflow OS repository:
-   `https://github.com/acasasAA/Workflow-Agentic-OS`
+   `https://github.com/Athens-Administrators/Workflow-Agentic-OS`
 3. They have Git installed.
 4. They have Node.js LTS installed.
 5. They have PowerShell 7 installed or available as `pwsh`.
@@ -54,7 +54,7 @@ Paste this into a fresh Codex chat on the teammate's machine:
 Please install Workflow OS for the first time on this machine using controlled setup for a Power BI dashboard, reporting, or metrics owner.
 
 Repository:
-https://github.com/acasasAA/Workflow-Agentic-OS.git
+https://github.com/Athens-Administrators/Workflow-Agentic-OS.git
 
 Goal:
 - Set up Codex for Workflow OS.
@@ -162,9 +162,8 @@ Optional Workflow OS plugins:
 2. Add Memory Engine - keeps local receipt notes for decisions and outcomes.
 3. Add Task - helps manage recurring report updates, meeting actions, and dashboard follow-ups. Also adds Memory Engine.
 4. Add Project - helps manage larger dashboard rebuilds, reporting rollouts, or data cleanup projects. Also adds Memory Engine.
-5. Add WOS Task Dashboard - only if wos-task is installed and I want a visual task board.
-6. Add Zoom Chat Pull - only if available, approved, and needed for work-visible Zoom chats.
-7. Add Zoom Clips Pull - only if available, approved, and needed for meeting clips or training/documentation source material.
+5. Add Zoom Chat Pull - only if available, approved, and needed for work-visible Zoom chats.
+6. Add Zoom Clips Pull - only if available, approved, and needed for meeting clips or training/documentation source material.
 8. Add Power Platform or data tools - only if available, approved, and useful for my reporting work.
 9. Other / In Addition - I want help choosing.
 
@@ -247,7 +246,7 @@ DR setup rules:
 
 Install steps:
 1. Confirm I can open this repository while signed into GitHub:
-   https://github.com/acasasAA/Workflow-Agentic-OS
+   https://github.com/Athens-Administrators/Workflow-Agentic-OS
    If I cannot open it, stop. I need repository access first.
 2. Check required tools:
    codex --version
@@ -258,11 +257,11 @@ Install steps:
 3. Find or clone Workflow OS under:
    C:\Users\<current-user>\workflow-os\Workflow-Agentic-OS
    If no valid checkout exists, create C:\Users\<current-user>\workflow-os if needed and clone:
-   git clone https://github.com/acasasAA/Workflow-Agentic-OS.git C:\Users\<current-user>\workflow-os\Workflow-Agentic-OS
+   git clone https://github.com/Athens-Administrators/Workflow-Agentic-OS.git C:\Users\<current-user>\workflow-os\Workflow-Agentic-OS
 4. From the selected checkout, run:
    git pull --ff-only
 5. Register or refresh the Workflow OS marketplace:
-   codex plugin marketplace add https://github.com/acasasAA/Workflow-Agentic-OS.git --ref main
+   codex plugin marketplace add https://github.com/Athens-Administrators/Workflow-Agentic-OS.git --ref main
    If the marketplace already exists, run:
    codex plugin marketplace upgrade workflow-os
 6. From the selected checkout, run:
@@ -312,9 +311,8 @@ Recommended optional additions to consider:
 
 1. `wos-task` - best for recurring dashboard refreshes, meeting actions, follow-ups, and small report changes.
 2. `wos-project` - best for larger dashboard rebuilds, reporting rollouts, metric cleanups, and cross-team handoffs.
-3. WOS Task Dashboard - best if they want a visual task board for report work after `wos-task` is installed.
-4. SharePoint / OneDrive connector - best when dashboard notes, exports, PBIX files, or data dictionaries live in Microsoft 365.
-5. Outlook / Calendar / Teams / Zoom connectors - best when requests and decisions live in meetings or messages.
+3. SharePoint / OneDrive connector - best when dashboard notes, exports, PBIX files, or data dictionaries live in Microsoft 365.
+4. Outlook / Calendar / Teams / Zoom connectors - best when requests and decisions live in meetings or messages.
 6. Power Platform or data tools - only when available, approved, and useful for their reporting work.
 7. Other / In Addition - add role-specific tools only after the teammate confirms they use them.
 

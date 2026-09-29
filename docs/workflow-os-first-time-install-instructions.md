@@ -5,7 +5,7 @@ Use this when a user has never installed Workflow OS on their Codex environment.
 Repository:
 
 ```text
-https://github.com/acasasAA/Workflow-Agentic-OS.git
+https://github.com/Athens-Administrators/Workflow-Agentic-OS.git
 ```
 
 ## Goal
@@ -31,7 +31,7 @@ Optional:
 - `wos-dr` v0.1.2
 - `wos-azure-boards` v0.1.1 (Development / DBA only; optional)
 - `wos-project` v1.1.0
-- `wos-task` v1.0.0
+- `wos-task` v1.1.0
 
 ## Prompt To Give Their Codex
 
@@ -39,7 +39,7 @@ Optional:
 Please install Workflow OS for the first time on this machine.
 
 Repository:
-https://github.com/acasasAA/Workflow-Agentic-OS.git
+https://github.com/Athens-Administrators/Workflow-Agentic-OS.git
 
 Safety:
 - Do not delete, move, or rename user folders.
@@ -50,7 +50,7 @@ Safety:
 
 Steps:
 1. Confirm the user can open this repo in a browser while signed into GitHub:
-   https://github.com/acasasAA/Workflow-Agentic-OS
+   https://github.com/Athens-Administrators/Workflow-Agentic-OS
    If they cannot open it, stop. They need repo access first.
 2. Check required tools:
    codex --version
@@ -61,7 +61,7 @@ Steps:
 3. Find or clone the Workflow OS repo under:
    C:\Users\<current-user>\workflow-os\Workflow-Agentic-OS
    If no valid checkout exists, create C:\Users\<current-user>\workflow-os if needed and clone:
-   git clone https://github.com/acasasAA/Workflow-Agentic-OS.git C:\Users\<current-user>\workflow-os\Workflow-Agentic-OS
+   git clone https://github.com/Athens-Administrators/Workflow-Agentic-OS.git C:\Users\<current-user>\workflow-os\Workflow-Agentic-OS
 4. From the selected checkout, run:
    pwsh -NoProfile -File .\scripts\install\preflight.ps1
 5. If preflight reports missing required prerequisites or tracked local changes, stop and show only the blocker and fix.
@@ -105,7 +105,7 @@ Verify at the end:
   - wos-documentation v0.1.13
   - wos-dr v0.1.2
   - wos-project v1.1.0
-  - wos-task v1.0.0
+  - wos-task v1.1.0
 ```
 
 ## Quick Human Checklist

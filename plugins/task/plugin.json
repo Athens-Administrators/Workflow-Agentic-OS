@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "wos-task",
+  "version": "1.1.0",
+  "description": "Universal task intake and concise agenda delivery for approved work sources.",
+  "author": {
+    "name": "Workflow OS"
+  }
+}

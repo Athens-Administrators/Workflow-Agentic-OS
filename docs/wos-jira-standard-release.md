@@ -62,7 +62,7 @@ For `ASD`, WOS Jira must clarify whether the user needs `AI Gen Issue` or `AI Ge
 First add the Workflow OS marketplace:
 
 ```powershell
-codex plugin marketplace add https://github.com/acasasAA/Workflow-Agentic-OS.git --ref main
+codex plugin marketplace add https://github.com/Athens-Administrators/Workflow-Agentic-OS.git --ref main
 ```
 
 Then open Codex:

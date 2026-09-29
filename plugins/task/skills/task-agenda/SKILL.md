@@ -1,16 +1,16 @@
 ---
 name: task-agenda
-description: Build or update a Workflow OS task agenda table from manual entries, meeting actions, tickets, calendar, or Zoom when relevant connectors are available. The table is explicit in the current conversation; Jira sync is optional and confirmation-gated.
+description: Build, refresh, filter, or prioritize a concise Workflow OS agenda from chat, meetings, documents, Jira, or any available approved source. Default to an in-chat agenda brief; external writes are never automatic.
 ---
 
-# `$task-agenda` — Task Keeper and Agenda
+# `$task-agenda` — Universal Task Inbox
 
-Load `${plugin_root}/references/task-agenda-standard.md` and follow its filtering and table rules.
+Load `${plugin_root}/references/task-agenda-standard.md` and follow its source, normalization, and delivery rules.
 
-Use simple Codex-only mode by default. Build the agenda in the current conversation from user-provided items or requested source reads. Do not create a database record or assume a Jira project key.
+Accept action items and deliverables from user-supplied content first, then read an approved connector only when the user asks or it is clearly needed. Do not invent unseen source data.
 
-For Jira board sync, only proceed when the user asks. Confirm target project, issue type, fields, and exact rows; show a write manifest and obtain explicit current-turn confirmation before writing.
+Default to the agenda brief. Return the full table only when the user asks for detail, needs to edit rows, or needs a Jira-ready export. Do not create HTML, a dashboard, a database record, a local agenda file, or an automatic handoff.
 
-If the user wants the agenda selected for this machine, call `${plugin_root}/scripts/active-task.ps1 -Set <agenda-slug>`. This is a pointer, not durable task history.
+If the user asks to make an agenda active in Codex-local mode, call `${plugin_root}/scripts/active-task.ps1 -Set <agenda-slug>`. In ChatGPT Work or any surface without local scripts, acknowledge that the agenda remains in the conversation and do not attempt a local write.
 
-Return the table first, then identify unavailable source pulls and whether Jira sync occurred. For cross-chat continuity, offer a copyable recap or Jira-ready draft; do not save automatically.
+For Jira, prepare a draft and route any actual write through `wos-jira` with explicit current-turn confirmation.

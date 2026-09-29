@@ -22,7 +22,7 @@ Before starting, confirm:
 
 1. The teammate has Codex installed and signed in.
 2. They can open the Workflow OS repository:
-   `https://github.com/acasasAA/Workflow-Agentic-OS`
+   `https://github.com/Athens-Administrators/Workflow-Agentic-OS`
 3. They have Git installed.
 4. They have Node.js LTS installed.
 5. They have PowerShell 7 installed or available as `pwsh`.
@@ -39,7 +39,7 @@ Paste this into a fresh Codex chat on the teammate's machine:
 Please install Workflow OS for the first time on this machine using controlled setup for a security analyst or security-focused IT teammate.
 
 Repository:
-https://github.com/acasasAA/Workflow-Agentic-OS.git
+https://github.com/Athens-Administrators/Workflow-Agentic-OS.git
 
 Goal:
 - Set up Codex for Workflow OS.
@@ -187,7 +187,7 @@ Security documentation rules:
 
 Install steps:
 1. Confirm I can open this repository while signed into GitHub:
-   https://github.com/acasasAA/Workflow-Agentic-OS
+   https://github.com/Athens-Administrators/Workflow-Agentic-OS
    If I cannot open it, stop. I need repository access first.
 2. Check required tools:
    codex --version
@@ -198,7 +198,7 @@ Install steps:
 3. Find or clone Workflow OS under:
    C:\Users\<current-user>\workflow-os\Workflow-Agentic-OS
    If no valid checkout exists, create C:\Users\<current-user>\workflow-os if needed and clone:
-   git clone https://github.com/acasasAA/Workflow-Agentic-OS.git C:\Users\<current-user>\workflow-os\Workflow-Agentic-OS
+   git clone https://github.com/Athens-Administrators/Workflow-Agentic-OS.git C:\Users\<current-user>\workflow-os\Workflow-Agentic-OS
 4. From the selected checkout, run:
    pwsh -NoProfile -File .\scripts\install\preflight.ps1
 5. If preflight reports missing required prerequisites or tracked local changes, stop and show only the blocker and fix.

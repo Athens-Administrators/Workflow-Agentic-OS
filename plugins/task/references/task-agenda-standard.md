@@ -1,144 +1,72 @@
 # Workflow OS Task Agenda Standard
 
-This standard makes `wos-task` a practical task keeper, not only a Jira ticket wrapper. The simple setup is Codex-only and writes to Workflow OS memory. The advanced setup can optionally sync selected tasks to Jira after the user configures a personal board project key and approves each write.
+`wos-task` is a universal, source-neutral task inbox. It captures action items, deliverables, follow-ups, and commitments from any user-supplied material or available approved connector, then presents the work in a concise agenda.
 
-## Setup Boundary
+## Source boundary
 
-Keep simple and advanced setup separate.
+Supported sources include:
 
-Simple setup:
+- `manual` — typed chat input or a stated commitment.
+- `meeting` — supplied notes, transcript, recording summary, or approved meeting connector.
+- `jira` — a Jira issue or search read through the available approved Jira tool.
+- `email` — an approved email connector or user-supplied email content.
+- `calendar` — an approved calendar connector or user-supplied event.
+- `zoom` — an approved Zoom source or supplied meeting content.
+- `document` — an uploaded or supplied document, spreadsheet, slide deck, or policy.
+- `other-approved` — any other source the user has authorized and the active surface can read.
 
-- Captures manual to-do items, meeting notes, and user-provided action items inside Codex.
-- May read from available connectors when the user asks, but stores the agenda only in Workflow OS memory.
-- Outputs a table every time.
-- Requires no Jira project key, board id, issue type, workflow field, or assignee mapping.
-- Performs no external writes.
+Never claim to pull a source that is not available. State the gap briefly, then accept pasted text, an upload, or a manual item instead. Source pulls are read-only unless the user separately asks for and confirms an external write.
 
-Advanced setup:
+## Normalize every item
 
-- Includes everything in simple setup.
-- Adds optional Jira personal task-board sync.
-- Requires the user's Jira task-board project key and any project-specific issue type or field mapping.
-- Stays user-agnostic and project-key-agnostic until the user provides setup values.
-- Performs Jira writes only after a current-turn write manifest and explicit confirmation.
+For each actionable item, preserve:
 
-Do not drift simple setup into advanced behavior. If the user only wants a Codex-managed agenda, do not ask for Jira board details.
+| Field | Rule |
+| --- | --- |
+| ID | Stable short ID, for example `T-001`. |
+| Task | Concrete action or deliverable; begin with a verb where practical. |
+| Source | One supported source label. |
+| Owner | `me` by default; retain another explicit owner. |
+| Status | `new`, `active`, `waiting`, `blocked`, `done`, or `cancelled`. |
+| Due | Absolute date/time when the source makes it clear; otherwise `none`. |
+| Next action | The next concrete move. |
+| Link | Source link, Jira key, document name, meeting name, or `none`. |
 
-## Task Sources
+Prioritize actions assigned to the current user. Exclude tasks clearly assigned to someone else unless the user asks for a team agenda. If ownership is ambiguous, use `me?` or `unassigned?` and ask only if a decision is needed.
 
-Supported sources:
+## Default delivery: agenda brief
 
-- `manual` - typed by the user during chat or a meeting.
-- `email` - Outlook Email connector, when installed and exposed.
-- `ticket` - Jira via Atlassian Rovo first, then `acli` fallback.
-- `calendar` - Outlook Calendar connector, when installed and exposed.
-- `zoom` - Zoom connector or meeting transcript/summary, when installed and exposed.
+When the user asks to show, refresh, or summarize an agenda, return an in-chat brief, not HTML or a file. Surface at most seven open items:
 
-If a connector is missing, continue in simple Codex-only mode and say which source could not be pulled live. Do not invent unseen email, calendar, ticket, or Zoom content.
+```text
+TODAY — <count>
+• <task> — <due or priority cue>
+  Next: <next action>
 
-## Meeting Action Filtering
+NEXT — <count>
+• <task>
 
-When collecting meeting data, identify action items directed to the current Workflow OS user first. Use the active user's configured display name, username, email identity, or clear first-person phrasing such as "I will" or "I need to" when available.
+WAITING / BLOCKED — <count>
+• <task> — waiting on <owner or dependency>
 
-Default behavior:
-
-- Include action items assigned to the current user.
-- Include unassigned action items only when they are phrased as the user's own commitment or the user asks to track unassigned actions.
-- Exclude tasks clearly assigned to someone else unless the user asks for a team agenda, follow-up tracker, or delegation list.
-- Preserve the original assignee in `Owner` when the user explicitly asks for team-wide actions.
-
-If assignment is ambiguous, set `Owner` to `me?` or `unassigned?` and ask a concise clarification only when the task would be written to memory or Jira.
-
-## Agenda Table
-
-Always present the working agenda as a table with these columns:
-
-| ID | Task | Source | Owner | Status | Due | Next Action | Links |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-
-Rules:
-
-- `ID` is a stable short id such as `T-001`.
-- `Task` is an action someone can do, starting with a verb when possible.
-- `Source` is one of the supported source labels.
-- `Owner` defaults to `me` unless the source clearly says otherwise.
-- `Status` is `new`, `active`, `waiting`, `blocked`, `done`, or `cancelled`.
-- `Due` should be an absolute date/time when the user gives relative wording.
-- `Next Action` is the next concrete move, not a vague goal.
-- `Links` contains Jira keys, email subjects, calendar event names, Zoom meeting names, or `none`.
-
-## Manual Capture
-
-When the user says something like "I need to do this on Friday and have it done by 3 PM", extract:
-
-- task text
-- due date and time
-- owner
-- status
-- source context
-
-If the date is ambiguous, ask only the minimum clarification. If it is clear from the current date/time, convert it to an absolute date in the table.
-
-## Memory Records
-
-Simple mode keeps the explicit agenda table in the current conversation. Use a stable agenda slug, normally `personal-agenda` unless the user names a different agenda; it may be stored only as the optional `active_task` pointer.
-
-Use this shape:
-
-```json
-{
-  "type": "task-state",
-  "source": "wos-task",
-  "project": "<agenda-slug>",
-  "title": "<agenda-slug>-agenda",
-  "body": "<agenda table plus brief notes>",
-  "frontmatter_extras": {
-    "task_slug": "<agenda-slug>",
-    "scope": "agenda",
-    "mode": "codex-only",
-    "status": "active",
-    "tasks": [
-      {
-        "id": "T-001",
-        "task": "<action>",
-        "source": "manual|email|ticket|calendar|zoom",
-        "owner": "me",
-        "status": "new|active|waiting|blocked|done|cancelled",
-        "due": "<ISO-or-null>",
-        "next_action": "<next action>",
-        "links": ["..."]
-      }
-    ]
-  }
-}
+FOCUS
+<one highest-value next action>
 ```
 
-Memory is the continuity ledger. Do not create repo-local agenda files unless the user explicitly asks for an export.
+Order Today by overdue and due time, Next by due date and impact, and Waiting/Blocked separately. Do not add decorative metrics or a dashboard. If there are no items in a section, omit it.
 
-## Advanced Jira Board Mode
+## Detail on request
 
-Advanced mode is optional and user-agnostic. Never hardcode a Jira project key, board id, issue type, user, assignee, component, or label.
+- **Full agenda**: show the complete table using the fields above.
+- **Source view**: filter by source, for example Jira, meeting, email, or document.
+- **Time view**: show today, this week, overdue, or a user-named date range.
+- **Task card**: show one item with its full provenance, status, blocker, and next action.
+- **Prioritization**: recommend the top three with one concise reason each.
 
-Before any Jira task creation or update:
+## Continuity and Jira
 
-1. Ask which Jira project key backs the user's personal task board.
-2. Read or confirm acceptable issue type and fields for that project.
-3. Show a write manifest listing exactly which tasks will be created or updated.
-4. Get explicit confirmation in the current turn.
+Keep the working agenda in the current conversation and native memory already available on the active surface. Do not create a database, local agenda file, memory receipt, or automatic summary.
 
-Jira reads are allowed. Jira writes require current-turn confirmation. Jira deletes and archive operations remain blocked.
+In Codex-local mode only, a user may choose to set an `active_task` pointer. It is never required and is unavailable in ChatGPT Work.
 
-Jira-synced tasks should still be written to memory with `mode: "jira-board"` and a `jira_key` or `jira_project_key` when known.
-
-## Source Pull Behavior
-
-Use available connectors in this order when the user asks for an agenda from multiple places:
-
-1. Meeting context supplied in chat.
-2. Active task memory.
-3. Tickets/Jira.
-4. Calendar.
-5. Email.
-6. Zoom.
-
-For each source, summarize only actionable items and ignore FYIs unless the user asks to track them.
+For durable shared work, prepare a Jira-ready draft and route the actual create, update, comment, or transition through `wos-jira`. All Jira writes require the current-turn confirmation and WOS emoji format; deletes and archives are blocked.

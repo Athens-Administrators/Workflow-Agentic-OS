@@ -5,7 +5,7 @@ description: Start or link a scoped Codex workspace with local-first continuity 
 
 # `$project-new` — Start a Workflow OS Project
 
-Use project mode for a scoped initiative with a workspace or an ongoing delivery outcome. It works for a new initiative or an existing user-named workspace. Route one-off work to `$task-new`.
+Use project mode for a scoped initiative with a workspace or an ongoing delivery outcome. It works for a new initiative or an existing user-named workspace. Route one-off work to `$task`.
 
 ## 1. Define the project
 

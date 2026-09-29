@@ -14,6 +14,7 @@ $script:WosRepoRelativeFiles = @(
     'plugins/dr/.codex-plugin/plugin.json',
     'plugins/wos-azure-boards/.codex-plugin/plugin.json',
     'plugins/project/.codex-plugin/plugin.json',
+    'plugins/task/plugin.json',
     'plugins/task/.codex-plugin/plugin.json'
 )
 

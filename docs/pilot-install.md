@@ -115,7 +115,7 @@ Close Codex, rerun `setup-codex.ps1`, reopen Codex, and reinstall/update WOS plu
 - Confirm no `memory-engine` plugin is installed for this pilot.
 - Open a project workspace with a compact `WOS.md`: no automatic resume, database startup, dependency install, or hook error should occur.
 - Run `$memory-lite` and confirm it gives read-only orientation from the marker/current chat.
-- Run `$project-checkpoint` or `$task-checkpoint` and confirm it first produces a chat handoff, then asks before any Jira or `WOS.md` write.
+- Run `$project-checkpoint` or `$task-handoff` and confirm it first produces a chat handoff, then asks before any Jira or `WOS.md` write.
 - Verify Jira remains the source of truth for active shared work.
 
 ## Safety Notes

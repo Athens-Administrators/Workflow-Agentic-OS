@@ -1,27 +1,28 @@
 {
   "name": "wos-task",
-  "version": "1.0.0",
-  "description": "Explicit task and agenda workflow for Codex conversations with optional Jira sync, no local memory database, and no automatic context hooks.",
+  "version": "1.1.0",
+  "description": "Universal task intake and concise agenda delivery for approved work sources, with no database or automatic hooks.",
   "author": {
     "name": "Workflow OS"
   },
   "skills": "./skills/",
   "interface": {
     "displayName": "Workflow OS — Task",
-    "shortDescription": "⭐ v1.0 · Explicit Codex task workflow with optional Jira sync",
-    "longDescription": "Workflow OS Task manages personal task agendas, manual and meeting action capture for the current user, one-off ticket work, checkpoints, orchestration, completion, a separate optional user-configured Jira task-board sync, and an optional GitHub Pages-ready dashboard template.",
+    "shortDescription": "v1.1 · Universal intake with a concise agenda brief",
+    "longDescription": "Workflow OS Task pulls action items, deliverables, and follow-ups from chat, meetings, documents, Jira, and available approved connectors. It delivers a clear in-chat agenda brief by default, with full detail available on request and explicit Jira-ready handoffs when needed.",
     "developerName": "Workflow OS",
     "capabilities": [
       "Task agenda",
-      "Meeting action capture",
-      "Connector source pull",
-      "Optional Jira board sync",
-      "Explicit handoffs",
-      "Optional user-requested task export"
+      "Universal action-item intake",
+      "Approved connector source pull",
+      "Concise agenda briefs",
+      "Task focus and handoffs",
+      "Jira-ready drafts"
     ],
     "defaultPrompt": [
-      "Capture my tasks into a Workflow OS agenda table.",
-      "Create an explicit handoff for my active task."
+      "Show my agenda.",
+      "Pull action items from my meeting notes and add them to my agenda.",
+      "Help me prioritize my task agenda."
     ],
     "category": "Productivity"
   }

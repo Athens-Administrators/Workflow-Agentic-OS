@@ -6,7 +6,7 @@ Follow these instructions to install or update WOS Jira and test the latest Jira
 
 Confirm the user can open this repo in a browser while signed into GitHub:
 
-[https://github.com/acasasAA/Workflow-Agentic-OS](https://github.com/acasasAA/Workflow-Agentic-OS)
+[https://github.com/Athens-Administrators/Workflow-Agentic-OS](https://github.com/Athens-Administrators/Workflow-Agentic-OS)
 
 If the user cannot open the repo, stop. They need repo access before continuing.
 
@@ -15,13 +15,13 @@ If the user cannot open the repo, stop. They need repo access before continuing.
 Use this Git-backed Workflow OS marketplace source:
 
 ```text
-https://github.com/acasasAA/Workflow-Agentic-OS.git
+https://github.com/Athens-Administrators/Workflow-Agentic-OS.git
 ```
 
 If the marketplace is not already registered, add it:
 
 ```powershell
-codex plugin marketplace add https://github.com/acasasAA/Workflow-Agentic-OS.git --ref main
+codex plugin marketplace add https://github.com/Athens-Administrators/Workflow-Agentic-OS.git --ref main
 ```
 
 If the marketplace already exists, upgrade it:
@@ -34,7 +34,7 @@ If upgrade fails because the marketplace is not Git-backed, remove and re-add it
 
 ```powershell
 codex plugin marketplace remove workflow-os
-codex plugin marketplace add https://github.com/acasasAA/Workflow-Agentic-OS.git --ref main
+codex plugin marketplace add https://github.com/Athens-Administrators/Workflow-Agentic-OS.git --ref main
 ```
 
 ## 3. Install WOS Onboarding First

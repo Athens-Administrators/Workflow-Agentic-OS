@@ -5,7 +5,7 @@ Use this when a user already has Workflow OS in Codex and needs the latest marke
 Repository:
 
 ```text
-https://github.com/acasasAA/Workflow-Agentic-OS.git
+https://github.com/Athens-Administrators/Workflow-Agentic-OS.git
 ```
 
 ## Goal
@@ -22,7 +22,7 @@ Do not rerun first-time onboarding unless the existing install is incomplete or 
 - `wos-dr` v0.2.0
 - `wos-memory-lite` v1.0.0
 - `wos-project` v1.1.0
-- `wos-task` v1.0.0
+- `wos-task` v1.1.0
 
 ## Documentation Update Notes
 
@@ -60,7 +60,7 @@ Expected behavior:
 Please update the existing Workflow OS install on this machine.
 
 Repository:
-https://github.com/acasasAA/Workflow-Agentic-OS.git
+https://github.com/Athens-Administrators/Workflow-Agentic-OS.git
 
 Safety:
 - Preserve the user's existing Workflow OS data and settings.
@@ -74,7 +74,7 @@ Steps:
 1. Confirm Codex CLI is available:
    codex --version
 2. Confirm the user can open this repo in a browser while signed into GitHub:
-   https://github.com/acasasAA/Workflow-Agentic-OS
+   https://github.com/Athens-Administrators/Workflow-Agentic-OS
    If they cannot open it, stop. They need repo access before updating from the Git-backed marketplace.
 3. Inspect the current Codex config:
    $config = "$env:USERPROFILE\.codex\config.toml"
@@ -82,10 +82,10 @@ Steps:
 4. If `workflow-os` is already configured as a Git marketplace, run:
    codex plugin marketplace upgrade workflow-os
 5. If `workflow-os` is missing, add it:
-   codex plugin marketplace add https://github.com/acasasAA/Workflow-Agentic-OS.git --ref main
+   codex plugin marketplace add https://github.com/Athens-Administrators/Workflow-Agentic-OS.git --ref main
 6. If `workflow-os` is configured as a local marketplace or upgrade says it is not Git-backed, ask the user before changing it. If they confirm they want the standard Git-backed team marketplace, run:
    codex plugin marketplace remove workflow-os
-   codex plugin marketplace add https://github.com/acasasAA/Workflow-Agentic-OS.git --ref main
+   codex plugin marketplace add https://github.com/Athens-Administrators/Workflow-Agentic-OS.git --ref main
 7. Fully close and reopen Codex.
 8. Open /plugins.
 9. Inventory which Workflow OS plugins are currently installed and enabled. Use /plugins as the source of truth. If you inspect files, also check:
@@ -98,7 +98,7 @@ Steps:
     - wos-dr v0.2.0
     - wos-memory-lite v1.1.0
     - wos-project v1.1.0
-    - wos-task v1.0.0
+    - wos-task v1.1.0
 11. If any mandatory plugin is missing, install it. Do not ask the user to choose whether to install these; they are required for the current Workflow OS baseline:
     - wos-jira
     - wos-documentation
@@ -162,7 +162,7 @@ If upgrade reports that `workflow-os` is not Git-backed, the machine is likely p
 
 ```powershell
 codex plugin marketplace remove workflow-os
-codex plugin marketplace add https://github.com/acasasAA/Workflow-Agentic-OS.git --ref main
+codex plugin marketplace add https://github.com/Athens-Administrators/Workflow-Agentic-OS.git --ref main
 ```
 
 ### Setup Is Incomplete

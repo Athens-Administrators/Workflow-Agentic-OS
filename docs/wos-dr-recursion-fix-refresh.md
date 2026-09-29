@@ -23,7 +23,7 @@ Steps:
 1. Run:
    codex plugin marketplace upgrade workflow-os
 2. If the marketplace is missing, run:
-   codex plugin marketplace add https://github.com/acasasAA/Workflow-Agentic-OS.git --ref main
+   codex plugin marketplace add https://github.com/Athens-Administrators/Workflow-Agentic-OS.git --ref main
 3. Fully close and reopen Codex.
 4. Open /plugins.
 5. Update or reinstall only:

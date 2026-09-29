@@ -1,9 +1,11 @@
 # WOS Task
 
-`wos-task` manages explicit Codex-conversation task agendas, meeting action capture, one-off task lifecycle, deliberate handoffs, completion, and optional Jira personal task-board sync.
+`wos-task` is Workflow OS's universal task inbox. It turns action items, deliverables, and follow-ups from chat, meeting notes, documents, Jira, and available approved connectors into a clear in-chat agenda.
 
 ## Continuity
 
-The current chat and native Codex memory are primary for personal continuity. Jira is the durable source for shared active work. The optional local `active_task` value is only a convenience pointer for the current machine; it is not a task database.
+The default delivery is an **agenda brief**: Today, Next, Waiting/Blocked, and one Focus item. Ask for a full agenda, a source view, a time view, or an individual task card only when more detail is useful.
 
-Use `$task-checkpoint` when a concise, deliberate handoff is needed. It produces a chat recap or Jira-ready draft only after the user chooses the destination. Task-dashboard export is not part of Memory Lite v1 because it depended on the retired receipt database.
+The current chat and native memory are the personal continuity layer. Jira is the durable source for shared active work. The optional `active_task` local pointer is a Codex-local convenience only, not a task database; ChatGPT Work never depends on it.
+
+Use `$task-handoff` for a concise handoff, completion recap, or Jira-ready draft. External writes remain explicit and confirmation-gated.

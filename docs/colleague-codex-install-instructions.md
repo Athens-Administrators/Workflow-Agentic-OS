@@ -3,12 +3,12 @@
 Follow these instructions to install Workflow OS from the Git-backed marketplace.
 
 Repository:
-[acasasAA/Workflow-Agentic-OS](https://github.com/acasasAA/Workflow-Agentic-OS)
+[Athens-Administrators/Workflow-Agentic-OS](https://github.com/Athens-Administrators/Workflow-Agentic-OS)
 
 Repo URL:
 
 ```text
-https://github.com/acasasAA/Workflow-Agentic-OS.git
+https://github.com/Athens-Administrators/Workflow-Agentic-OS.git
 ```
 
 ## Goal
@@ -27,12 +27,12 @@ Confirm these are installed or available:
 - Git
 - Node.js LTS
 - PowerShell 7 preferred
-- Access to the private GitHub repo: `acasasAA/Workflow-Agentic-OS`
+- Access to the private GitHub repo: `Athens-Administrators/Workflow-Agentic-OS`
 
 First, confirm the user can open this link in a browser while signed into GitHub:
 
 ```text
-https://github.com/acasasAA/Workflow-Agentic-OS
+https://github.com/Athens-Administrators/Workflow-Agentic-OS
 ```
 
 If the browser cannot open the repo, stop. The user needs GitHub repo access before continuing.
@@ -75,7 +75,7 @@ This avoids pinning a service tier that a newer Codex runtime may reject. Leave 
 Run:
 
 ```powershell
-codex plugin marketplace add https://github.com/acasasAA/Workflow-Agentic-OS.git --ref main
+codex plugin marketplace add https://github.com/Athens-Administrators/Workflow-Agentic-OS.git --ref main
 ```
 
 If it says the marketplace already exists, refresh it:
@@ -88,7 +88,7 @@ If upgrade fails because the marketplace is not Git-backed, remove and re-add it
 
 ```powershell
 codex plugin marketplace remove workflow-os
-codex plugin marketplace add https://github.com/acasasAA/Workflow-Agentic-OS.git --ref main
+codex plugin marketplace add https://github.com/Athens-Administrators/Workflow-Agentic-OS.git --ref main
 ```
 
 ## Step 4: Restart Codex
@@ -159,7 +159,7 @@ Useful checks:
 codex --version
 git --version
 node --version
-codex plugin marketplace add https://github.com/acasasAA/Workflow-Agentic-OS.git --ref main
+codex plugin marketplace add https://github.com/Athens-Administrators/Workflow-Agentic-OS.git --ref main
 ```
 
 Do not delete or move folders unless the user explicitly confirms.

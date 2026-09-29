@@ -30,7 +30,7 @@ foreach ($marketplacePath in $marketplaces) {
 $expectedVersions = @{
     'plugins/memory-lite/.codex-plugin/plugin.json' = '1.1.0'
     'plugins/project/.codex-plugin/plugin.json' = '1.1.0'
-    'plugins/task/.codex-plugin/plugin.json' = '1.0.0'
+    'plugins/task/.codex-plugin/plugin.json' = '1.1.0'
 }
 
 $chatGptMetadata = Join-Path $RepositoryRoot 'plugins/memory-lite/skills/memory-lite/agents/openai.yaml'

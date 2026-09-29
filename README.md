@@ -47,7 +47,7 @@ v2/
 - **Onboarding.** `$welcome` is role-tailored for Athens IT users, validates foundation tools, defaults Jira to ASD/TPM, requires `wos-jira`, `wos-documentation`, and `wos-dr` setup, lets users pick optional Memory Lite/project/task plugins, and records preferences.
 - **Role-based tools.** Missing optional tools such as Azure DevOps/Azure Boards, AWS CLI/MCP, Microsoft Learn MCP/CLI, and Superpowers are not required on every machine. `$welcome` recommends them only when the selected teammate role or director focus needs them.
 - **Platform discovery.** After minimum tools are satisfied, `$welcome` asks what other platforms the teammate uses, searches for matching CLIs and Codex MCP/app connectors, and records those as teammate-specific additions rather than global requirements.
-- **Projects and tasks.** `$project-new` starts or links a scoped workspace with Local tracking by default, optional recommended Jira tracking for shared work, or copy-ready external-tracker drafts. `$project-orchestrate` is an opt-in dependency and collaboration review, not a prerequisite. `$task-agenda` manages a task table in the current Codex conversation from manual entries, meeting actions, and available email/ticket/calendar/Zoom sources, with optional user-configured Jira board sync. `$task-new` handles one-off tasks or Jira tickets without creating a project, and `$task-orchestrate` offers lightweight orchestration only when a task has independent streams. Durable handoffs are explicit, never automatic.
+- **Projects and tasks.** `$project-new` starts or links a scoped workspace with Local tracking by default, optional recommended Jira tracking for shared work, or copy-ready external-tracker drafts. `$project-orchestrate` is an opt-in dependency and collaboration review, not a prerequisite. `$task-agenda` is a universal inbox for action items and deliverables from chat, meetings, documents, Jira, and available approved connectors; it returns a concise in-chat agenda brief by default. `$task` focuses one item, and `$task-handoff` creates an explicit handoff or Jira-ready draft. Durable handoffs are explicit, never automatic.
 - **DR.** WOS-owned state → scheduled OneDrive-backed DR snapshots. DR v1 captures the WOS sentinel, local setup, active pointers, plugin versions, and project marker inventory. Restore covers WOS continuity, not private Codex chat/sidebar internals.
 
 ## Upgrade flow
@@ -61,7 +61,7 @@ For machines still registered to a local path, switch once:
 
 ```powershell
 codex plugin marketplace remove workflow-os
-codex plugin marketplace add https://github.com/acasasAA/Workflow-Agentic-OS.git --ref main
+codex plugin marketplace add https://github.com/Athens-Administrators/Workflow-Agentic-OS.git --ref main
 ```
 
 After that, `/plugins` can upgrade from Git whenever `main` changes.

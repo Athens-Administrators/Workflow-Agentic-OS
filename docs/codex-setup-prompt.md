@@ -63,4 +63,4 @@ Stop at the first real failure and show the exact error plus the next recommende
 - `wos-dr` v0.1.2
 - `wos-azure-boards` v0.1.1 (Development / DBA only; optional)
 - `wos-project` v1.1.0
-- `wos-task` v1.0.0
+- `wos-task` v1.1.0
