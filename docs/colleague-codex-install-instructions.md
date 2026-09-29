@@ -54,7 +54,7 @@ Check:
 ```powershell
 $config = "$env:USERPROFILE\.codex\config.toml"
 if (Test-Path $config) {
-  Select-String -Path $config -Pattern 'service_tier = "default"'
+  Select-String -Path $config -Pattern '^service_tier\s*='
 }
 ```
 
@@ -64,11 +64,11 @@ If it returns a match, back up the config and remove only that line:
 $config = "$env:USERPROFILE\.codex\config.toml"
 $backup = "$config.bak-$(Get-Date -Format yyyyMMdd-HHmmss)"
 Copy-Item $config $backup -Force
-(Get-Content $config) | Where-Object { $_ -ne 'service_tier = "default"' } | Set-Content $config
+(Get-Content $config) | Where-Object { $_ -notmatch '^service_tier\s*=' } | Set-Content $config
 Write-Host "Backed up config to $backup"
 ```
 
-This is needed because newer Codex versions may reject `service_tier = "default"`.
+This avoids pinning a service tier that a newer Codex runtime may reject. Leave the setting absent unless Codex documents a value that is supported by the installed runtime.
 
 ## Step 3: Add Workflow OS Marketplace
 

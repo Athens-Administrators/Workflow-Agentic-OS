@@ -10,7 +10,7 @@ This standard applies to every document created or reviewed through the `wos-doc
 
 - Confluence is the system of record for published documentation.
 - Every documentation request must first be routed to one of four documentation routes: Help Desk, Infrastructure, DEV/DBA team, or Public-facing for Athens employees.
-- Each route has an assigned Confluence space and template configured during setup.
+- Each route has an assigned Confluence space and template configured during setup. Help Desk and Public-facing for Athens employees use HelpDesk Knowledge / `HK`.
 - A different Confluence space may be used for a single request, but that override does not change the route default.
 - Documentation should be useful, concise, source-backed, and easy to scan.
 - Prefer one continuous Confluence article. Treat PDF-style page counts only as a planning limit, not as a reason to split a Confluence article.
@@ -18,8 +18,6 @@ This standard applies to every document created or reviewed through the `wos-doc
 - Internal documentation may be deeper than public-facing documentation, but avoid multi-page sprawl. When multiple pages are truly required, keep the set to five pages maximum and prefer fewer.
 - Do not include secrets, credentials, personal access tokens, private keys, or sensitive customer data.
 - Do not publish or materially update Confluence without explicit user confirmation in the current turn.
-
-## Audience Modes
 
 ## Documentation Routes
 
@@ -34,6 +32,8 @@ Use for systems, network, identity, device management, cloud operations, access,
 ### DEV/DBA Team
 
 Use for application, database, integration, automation, deployment, data, and development-support documentation owned by DEV/DBA.
+
+DEV/DBA document types are not yet standardized. Use the route's configured template and record `Owning team: DEV/DBA`; do not ask the Infrastructure Runbook-versus-Business-Process question unless the user explicitly asks to use that model.
 
 ### Public-Facing For Athens Employees
 
@@ -118,6 +118,7 @@ For very short public-facing docs, combine Scope and Support when the result is 
 
 ## Confluence Page Rules
 
+- Every newly created page must place the `Related to:` slug from `duplicate-submission-check.md` immediately below the H1. Use a canonical Confluence link for a related candidate; otherwise state that no similar article was identified in the target space. Do not invent a related-article link.
 - Use Confluence headings in order. Do not skip from H1 to H3.
 - Keep one idea per section.
 - Use tables only when comparison, ownership, or field mapping is clearer than prose.

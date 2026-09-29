@@ -32,10 +32,10 @@ Briefly tell the user:
 
 Ask for the Confluence space key or space name for each route:
 
-- Help Desk. Known Help Desk defaults are `HelpDesk System Processes` / `AIH` for system-process and internal how-to documentation, `HelpDesk Troubleshooting` / `AHI` for troubleshooting articles, and `HelpDesk Public` / `AEHT` for public-facing Help Desk content.
+- Help Desk. The confirmed Help Desk and public-facing default is `HelpDesk Knowledge` / `HK`; article purpose selects the template, not a separate space.
 - Infrastructure. The confirmed Infrastructure team space is `Internal Infrastructure KB` / `IIK`.
 - DEV/DBA team. The confirmed DEV/DBA team space is `Dev Team KB` / `DTK`.
-- Public-facing for Athens employees. The confirmed public-facing space is `HelpDesk Public` / `AEHT`.
+- Public-facing for Athens employees. The confirmed public-facing space is `HelpDesk Knowledge` / `HK`.
 
 If multiple routes share a space, record the same space on each route. If the user wants to leave a route unconfigured, allow it and make the skill ask for that space before publishing later.
 
@@ -58,7 +58,7 @@ Built-in choices:
 
 If the user does not have a template for a route yet, record the best built-in choice rather than a vague `fallback`.
 
-During setup, Infrastructure and DEV/DBA routes can record a default template, but operational drafting must still ask whether each new document is a Runbook KB article or a Business Process KB article. After that, ask whether the document is internal or public-facing for Athens employees.
+During setup, Infrastructure and DEV/DBA routes can record a default template. Operational drafting asks Infrastructure whether each new document is a Runbook KB article or a Business Process KB article. DEV/DBA uses its configured route template while its document-type model is pending team confirmation; employee-facing material uses the Public-facing for Athens employees route instead of a second audience question.
 
 ## Step 4 - Optional Default Parent Pages
 
@@ -75,12 +75,7 @@ Show the final profile in concise JSON-like form. Include a setup completion tim
   "documentation_routes": {
     "help_desk": {
       "label": "Help Desk",
-      "space": "AIH",
-      "spaces": {
-        "system_processes": "AIH",
-        "troubleshooting": "AHI",
-        "public": "AEHT"
-      },
+      "space": "HK",
       "template": "ahi_how_to",
       "default_parent": "https://..."
     },
@@ -98,7 +93,7 @@ Show the final profile in concise JSON-like form. Include a setup completion tim
     },
     "public_athens": {
       "label": "Public-facing for Athens employees",
-      "space": "AEHT",
+      "space": "HK",
       "template": "ahi_how_to",
       "default_parent": "https://..."
     }

@@ -10,16 +10,16 @@ Use these built-in template choices when a route does not have a configured Conf
 |---|---|---|---|
 | `ahi_how_to` | Help Desk | Infrastructure, DEV/DBA team, Public-facing for Athens employees | AHI Template - How-to guide |
 | `ahi_troubleshooting` | Help Desk | Infrastructure, DEV/DBA team | AHI Template - Troubleshooting article |
-| `infra_dev_standard` | Infrastructure, DEV/DBA team | None | Infrastructure/DEV Confluence standard template |
-| `infra_dev_break_fix_runbook` | Infrastructure, DEV/DBA team | None | IIK Runbook Template |
+| `infra_dev_standard` | Infrastructure | DEV/DBA team when its configured route template selects it | Infrastructure/DEV Confluence standard template |
+| `infra_dev_break_fix_runbook` | Infrastructure | DEV/DBA team when its configured route template selects it | IIK Runbook Template |
 
 When documenting work that was run, ask the user which template choice applies after the route is selected if the route has more than one valid choice. For Help Desk, offer `ahi_how_to` first and `ahi_troubleshooting` second.
 
 Every built-in template must use its defined emoji section headings. Do not remove the emoji from a section title, even when the source material or user wording does not include emojis.
 
-Infrastructure and DEV/DBA share template structure only. They do not share Confluence spaces. Use the route-selected space from setup or the per-document walkthrough.
+Infrastructure and DEV/DBA share template structure only. They do not share Confluence spaces. DEV/DBA's document-type model is pending team confirmation; use its configured template and record `Owning team: DEV/DBA`. Use the route-selected space from setup or the per-document walkthrough.
 
-For Infrastructure and DEV/DBA, ask whether the document is a Runbook KB article or a Business Process KB article:
+For Infrastructure, ask whether the document is a Runbook KB article or a Business Process KB article:
 
 - Runbook KB article maps to `infra_dev_break_fix_runbook`.
 - Business Process KB article maps to `infra_dev_standard`.
@@ -75,7 +75,7 @@ Use for internal agent troubleshooting guides, especially Help Desk internal tro
 
 ## Infrastructure/DEV Standard Page
 
-Use for general Infrastructure and DEV/DBA documentation that is not specifically a break/fix runbook. Use this exact section order and section emoji standard.
+Use for general Infrastructure documentation that is not specifically a break/fix runbook, and for DEV/DBA only when its configured route template selects it. Use this exact section order and section emoji standard.
 
 ```text
 # <Title>
@@ -116,7 +116,7 @@ Use [TBD] if references are expected but unavailable.
 
 ## Infrastructure/DEV Break/Fix Runbook
 
-Use for Infrastructure and DEV/DBA break/fix runbooks. Keep the document brief, use direct language, preserve exact errors and commands, and use placeholders for missing values.
+Use for Infrastructure break/fix runbooks, and for DEV/DBA only when its configured route template selects it. Keep the document brief, use direct language, preserve exact errors and commands, and use placeholders for missing values.
 
 ```text
 # <Runbook title>

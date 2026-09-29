@@ -1,6 +1,6 @@
 {
   "name": "wos-documentation",
-  "version": "0.1.9",
+  "version": "0.1.13",
   "description": "Workflow OS documentation standard for route-based drafting, reviewing, and publishing to assigned Confluence spaces and templates.",
   "author": {
     "name": "Workflow OS"
@@ -8,20 +8,24 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Workflow OS - Documentation",
-    "shortDescription": "📚 v0.1.9 - Strict questions and emoji sections",
-    "longDescription": "Workflow OS Documentation standardizes how Help Desk, Infrastructure, DEV/DBA, and Athens employee-facing documentation is drafted, refreshed, reviewed, placed, and published in assigned Confluence spaces using route-specific or built-in AHI, Infrastructure, and DEV/DBA templates with defined section emojis, KB article type selection, internal/public audience routing, explicit TBD handling for the DEV/DBA space, KB Refresh for existing articles, conservative long-source handling, strict question gates for missing intake details, and required emoji section headings for all built-in templates.",
+    "shortDescription": "📚 v0.1.13 - HK routing and simpler intake",
+    "longDescription": "Workflow OS Documentation standardizes how Help Desk, Infrastructure, DEV/DBA, and Athens employee-facing documentation is drafted, refreshed, reviewed, placed, and published in HelpDesk Knowledge and assigned team Confluence spaces. It applies route-specific or built-in templates with defined section emojis, Infrastructure KB article type selection, DEV/DBA ownership recording while its document-type model is pending team confirmation, KB Refresh, conservative long-source handling, strict question gates for missing intake details, optional visual-asset workflows, and a target-space duplicate or similar-KB preflight with comparison, user choice, and a required Related to header slug.",
     "developerName": "Workflow OS",
     "category": "Productivity",
     "capabilities": [
       "Confluence",
       "Documentation",
       "Review",
-      "KB Refresh"
+      "KB Refresh",
+      "Visual Assets",
+      "Duplicate KB Check"
     ],
     "defaultPrompt": [
       "Set up my route-based Confluence documentation defaults.",
       "Draft documentation for work I ran.",
       "KB Refresh this existing article.",
+      "Add screenshots or diagrams to this documentation.",
+      "Check this new KB for duplicates before publishing.",
       "Publish this doc to the right Confluence space."
     ]
   }

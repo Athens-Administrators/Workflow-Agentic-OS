@@ -16,8 +16,8 @@ Before running any Documentation operational skill other than `$documentation-se
 If none of those are true, run the per-document walkthrough and collect:
 
 - Documentation route: Help Desk, Infrastructure, DEV/DBA team, or Public-facing for Athens employees.
-- For Infrastructure or DEV/DBA, KB article type: Runbook KB article or Business Process KB article.
-- For Infrastructure or DEV/DBA, audience: internal or public-facing for Athens employees.
+- For Infrastructure, KB article type: Runbook KB article or Business Process KB article.
+- For DEV/DBA, use the configured route template and record DEV/DBA as the owning team. Its document-type model is intentionally pending team confirmation.
 - Template choice: configured route template, `ahi_how_to`, `ahi_troubleshooting`, `infra_dev_standard`, or `infra_dev_break_fix_runbook`.
 - Target Confluence space.
 - Placement: root, configured/default parent, existing parent page, or new parent page.

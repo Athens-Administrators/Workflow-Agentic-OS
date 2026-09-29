@@ -14,6 +14,8 @@ Load these before reviewing:
 - `${plugin_root}/../references/setup-gate.md`
 - `${plugin_root}/../references/documentation-standard.md`
 - `${plugin_root}/../references/confluence-workflow.md`
+- `${plugin_root}/../references/templates.md`
+- `${plugin_root}/../references/visual-assets.md`
 
 Apply `setup-gate.md` before reading, reviewing, or rewriting documentation. If persistent Documentation setup is not complete, use the per-document walkthrough when route/template/space context is needed.
 
@@ -30,13 +32,14 @@ Identify or ask for the documentation route:
 
 Use the selected route's expected template and Confluence space as review criteria when available.
 
-If the document is a Help Desk or public-facing how-to, check it against `ahi_how_to`. If it is an internal agent troubleshooting guide, check it against `ahi_troubleshooting`. If it is Infrastructure or DEV/DBA documentation, check it against `infra_dev_standard` or `infra_dev_break_fix_runbook`. For every built-in template, verify the section emoji standard from `templates.md` is preserved.
+If the document is a Help Desk or public-facing how-to, check it against `ahi_how_to`. If it is an internal agent troubleshooting guide, check it against `ahi_troubleshooting`. If it is Infrastructure documentation, check it against `infra_dev_standard` or `infra_dev_break_fix_runbook`. For DEV/DBA, check it against the configured route template and confirm `Owning team: DEV/DBA` is recorded when applicable. For every built-in template, verify the section emoji standard from `templates.md` is preserved.
 
-For Infrastructure or DEV/DBA documentation, verify the draft clearly identifies:
+For Infrastructure documentation, verify the draft clearly identifies:
 
 - KB article type: Runbook KB article or Business Process KB article.
-- Audience: internal or public-facing for Athens employees.
-- Correct space routing: internal Infrastructure pages use `Internal Infrastructure KB` / `IIK`; internal DEV/DBA pages use `Dev Team KB` / `DTK`; public-facing pages use `HelpDesk Public` / `AEHT`; Help Desk troubleshooting pages use `HelpDesk Troubleshooting` / `AHI`; Help Desk system-process and internal how-to pages use `HelpDesk System Processes` / `AIH`.
+- Correct space routing: Infrastructure pages use `Internal Infrastructure KB` / `IIK`; DEV/DBA pages use `Dev Team KB` / `DTK`; Help Desk and public-facing pages use `HelpDesk Knowledge` / `HK`.
+
+For DEV/DBA documentation, verify the owning team is recorded and the configured route template is used. Do not require an Infrastructure document-type classification while the DEV/DBA model is pending team confirmation.
 
 If reviewing a Confluence page:
 
@@ -54,6 +57,7 @@ Lead with actionable findings ordered by severity:
 - Missing validation/support/ownership.
 - Source gaps.
 - Secret or sensitive-data concerns.
+- Missing, unsafe, or poorly placed visual assets.
 
 If there are no significant issues, say that clearly.
 
@@ -75,6 +79,9 @@ Check:
 - Confluence target space and page placement are clear when publish readiness is requested.
 - Sources are linked or named.
 - No secrets are present.
+- Screenshots, frames, and diagrams follow `visual-assets.md` when visuals are present or needed.
+- Missing screenshots use exact placeholders rather than vague notes.
+- Included visuals have captions or alt text where needed and have been checked for sensitive content.
 
 ## Output
 

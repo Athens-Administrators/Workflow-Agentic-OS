@@ -13,27 +13,23 @@ Every time the plugin documents work that someone ran, it must ask which documen
 
 The selected route determines the default Confluence space and template for that document. Do not skip this question unless the user already made one of these four choices in the same request.
 
-After the route is selected, apply the route's configured template. If the route does not have a configured template, offer the built-in template choices from `templates.md`. Help Desk should offer the AHI How-To Guide first and the AHI Troubleshooting Article second. Public-facing Athens employee documentation should use the AHI How-To Guide. Infrastructure and DEV/DBA should offer the Infrastructure/DEV Standard Page first and the Infrastructure/DEV Break/Fix Runbook second; they share these templates but keep separate Confluence spaces.
+After the route is selected, apply the route's configured template. If the route does not have a configured template, offer the built-in template choices from `templates.md`. Help Desk should offer the AHI How-To Guide first and the AHI Troubleshooting Article second. Public-facing Athens employee documentation should use the AHI How-To Guide. Infrastructure should offer the Infrastructure/DEV Standard Page first and the Infrastructure/DEV Break/Fix Runbook second. DEV/DBA uses its configured route template while its document-type model is pending team confirmation.
 
-For Help Desk routing:
+For Help Desk and Public-facing Athens employee routing:
 
-- Public-facing Athens employee Help Desk content goes to `HelpDesk Public` / `AEHT`.
-- Help Desk troubleshooting articles go to `HelpDesk Troubleshooting` / `AHI`.
-- Help Desk process, system-process, and internal how-to documentation goes to `HelpDesk System Processes` / `AIH`.
+- All Help Desk and public-facing Athens employee content goes to `HelpDesk Knowledge` / `HK`.
+- Article purpose selects the template, not a different Confluence space.
 
-For Infrastructure and DEV/DBA routes, ask two follow-up questions before drafting:
+For Infrastructure, ask whether the document is a Runbook KB article or a Business Process KB article before drafting. Infrastructure documentation is internal by default. Employee-facing documentation uses the Public-facing for Athens employees route, with Infrastructure recorded as the owning team when relevant.
 
-1. Ask whether the document is a Runbook KB article or a Business Process KB article.
-2. Ask whether the document is internal or public-facing for Athens employees.
-
-If the user does not know the difference:
+If the user does not know the Infrastructure document-type difference:
 
 - Runbook KB article: use this for break/fix or operational steps that resolve an issue, restore service, perform a technical task, run commands, validate a system state, or roll back a change.
 - Business Process KB article: use this for a repeatable workflow, intake process, handoff, approval path, team procedure, or non-break/fix process where the main goal is to explain how work moves from start to finish.
 
-Use `infra_dev_break_fix_runbook` for Runbook KB articles. Use `infra_dev_standard` for Business Process KB articles.
+Use `infra_dev_break_fix_runbook` for Infrastructure Runbook KB articles. Use `infra_dev_standard` for Infrastructure Business Process KB articles.
 
-If an Infrastructure or DEV/DBA document is internal, use that route's configured team space. The confirmed Infrastructure team space is `Internal Infrastructure KB` with space key `IIK`. The confirmed DEV/DBA team space is `Dev Team KB` with space key `DTK`. If an Infrastructure or DEV/DBA document is public-facing for Athens employees, use `HelpDesk Public` / `AEHT` instead and keep the source team visible in the draft preface.
+Infrastructure uses `Internal Infrastructure KB` / `IIK`; DEV/DBA uses `Dev Team KB` / `DTK`. Employee-facing content uses `HelpDesk Knowledge` / `HK`; preserve its owning team in the draft preface when it originated with Infrastructure or DEV/DBA.
 
 ## Route Configuration
 
@@ -41,9 +37,7 @@ Each route has an assigned Confluence space and template. During setup, collect 
 
 Current known route spaces:
 
-- Help Desk public-facing: `HelpDesk Public` / `AEHT`.
-- Help Desk system processes and internal how-to: `HelpDesk System Processes` / `AIH`.
-- Help Desk troubleshooting: `HelpDesk Troubleshooting` / `AHI`.
+- Help Desk and Public-facing for Athens employees: `HelpDesk Knowledge` / `HK`.
 - Infrastructure: `Internal Infrastructure KB` / `IIK`.
 - DEV/DBA: `Dev Team KB` / `DTK`.
 
@@ -56,12 +50,7 @@ The setup profile shape is:
   "documentation_routes": {
     "help_desk": {
       "label": "Help Desk",
-      "space": "AIH",
-      "spaces": {
-        "system_processes": "AIH",
-        "troubleshooting": "AHI",
-        "public": "AEHT"
-      },
+      "space": "HK",
       "template": "Confluence page URL, page id, named template, ahi_how_to, or ahi_troubleshooting",
       "default_parent": "optional Confluence page URL or page id"
     },
@@ -74,12 +63,12 @@ The setup profile shape is:
     "dev_dba": {
       "label": "DEV/DBA team",
       "space": "DTK",
-      "template": "Confluence page URL, page id, named template, infra_dev_standard, or infra_dev_break_fix_runbook",
+      "template": "Confluence page URL, page id, named template, or current DEV/DBA fallback template",
       "default_parent": "optional Confluence page URL or page id"
     },
     "public_athens": {
       "label": "Public-facing for Athens employees",
-      "space": "AEHT",
+      "space": "HK",
       "template": "Confluence page URL, page id, named template, or ahi_how_to",
       "default_parent": "optional Confluence page URL or page id"
     }
@@ -168,8 +157,9 @@ When no template is available:
 
 - Use `documentation-standard.md` and `templates.md`.
 - Use the built-in template choice that matches the selected route and document type.
-- For Infrastructure or DEV/DBA, use `infra_dev_standard` unless the user is documenting a break/fix incident or runbook, then use `infra_dev_break_fix_runbook`.
-- For public-facing Infrastructure or DEV/DBA content, remove internal-only implementation detail, commands, privileged access notes, and escalation details that employees should not use directly.
+- For Infrastructure, use `infra_dev_standard` unless the user is documenting a break/fix incident or runbook, then use `infra_dev_break_fix_runbook`.
+- For DEV/DBA, use its configured route template; its document-type model remains pending team confirmation.
+- For employee-facing content owned by Infrastructure or DEV/DBA, remove internal-only implementation detail, commands, privileged access notes, and escalation details that employees should not use directly.
 - Do not include `JSM Optimization Advisory` in WOS Documentation route defaults unless a future request explicitly brings it into scope.
 
 ## Publishing Flow
@@ -181,9 +171,10 @@ Before a Confluence create or update:
 3. Identify the route template or fallback template.
 4. Ask where the page should be placed: root, route default parent, existing parent page, or new parent page.
 5. Resolve and confirm parent page when needed.
-6. Show the proposed title, route, space, placement, and concise change summary.
-7. Ask for explicit confirmation to publish or update.
-8. After a successful write, return the Confluence link and summarize what changed.
+6. For a new page create, apply `duplicate-submission-check.md` in the selected target space. Compare any exact, overlapping, or related candidate with the proposed page and obtain the user's skip-or-create-with-a-different-title decision. Put the required `Related to:` slug directly below the H1 before the page is created.
+7. Show the proposed title, route, space, placement, duplicate-check result, related-article slug, and concise change summary.
+8. Ask for explicit confirmation to publish or update.
+9. After a successful write, return the Confluence link and summarize what changed.
 
 Never treat draft approval as publish approval unless the user explicitly says to publish/update Confluence.
 

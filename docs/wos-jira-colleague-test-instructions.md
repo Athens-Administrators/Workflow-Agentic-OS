@@ -56,18 +56,19 @@ Then run `$welcome`. When onboarding asks, install mandatory:
 ```text
 wos-jira
 wos-documentation
+wos-dr
 ```
 
 Expected Jira version:
 
 ```text
-v0.2.5
+v0.2.9 or newer
 ```
 
 Expected Documentation version:
 
 ```text
-v0.1.7
+v0.1.12
 ```
 
 Memory, project, and task plugins are optional unless the current rollout owner explicitly asks them to install more.
@@ -103,7 +104,7 @@ $jira-mod
 Make sure the installed plugin is:
 
 ```text
-wos-jira v0.2.5
+wos-jira v0.2.9 or newer
 ```
 
 That is the version with:

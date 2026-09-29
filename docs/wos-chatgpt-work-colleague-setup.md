@@ -195,26 +195,24 @@ Documentation rules:
   3. DEV/DBA - development, database, application, or technical delivery documentation.
   4. Public-facing for Athens employees - instructions meant for general Athens employees.
   5. Other / In Addition - I am not sure where this belongs.
-- For Infrastructure or DEV/DBA docs, ask whether the document is:
+- For Infrastructure docs, ask whether the document is:
   1. Runbook KB article - steps for fixing, checking, or operating something.
   2. Business Process KB article - how a process, handoff, or workflow works.
   3. Other / In Addition - I am not sure.
-- Then ask whether the document is internal or public-facing.
+- For DEV/DBA docs, use the configured route template and record the owning team; its document-type model is pending team confirmation.
 - Resolve route, template, Confluence space, and parent/root placement before publishing.
 - Confluence reads are allowed when I have access.
 - Confluence creates and updates require my explicit approval in the current turn.
 
 Documentation defaults:
-- Help Desk public-facing: HelpDesk Public / AEHT
-- Help Desk troubleshooting: HelpDesk Troubleshooting / AHI
-- Help Desk process or internal how-to: HelpDesk System Processes / AIH
+- Help Desk and public-facing: HelpDesk Knowledge / HK
 - Infrastructure internal: Internal Infrastructure KB / IIK
 - DEV/DBA internal: Dev Team KB / DTK
-- Public-facing Infrastructure or DEV/DBA: HelpDesk Public / AEHT
+- Employee-facing Infrastructure or DEV/DBA content: HelpDesk Knowledge / HK, with the owning team recorded
 - Public how-to template: ahi_how_to
 - Help Desk troubleshooting template: ahi_troubleshooting
-- Infrastructure or DEV/DBA Business Process KB template: infra_dev_standard
-- Infrastructure or DEV/DBA Runbook KB template: infra_dev_break_fix_runbook
+- Infrastructure Business Process KB template: infra_dev_standard
+- Infrastructure Runbook KB template: infra_dev_break_fix_runbook
 
 Memory and continuity:
 - Use Jira for active work status.

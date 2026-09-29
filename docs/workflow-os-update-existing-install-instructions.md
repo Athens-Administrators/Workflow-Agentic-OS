@@ -17,9 +17,9 @@ Do not rerun first-time onboarding unless the existing install is incomplete or 
 ## Latest Expected Versions
 
 - `wos-onboarding` v0.1.9
-- `wos-jira` v0.2.5
-- `wos-documentation` v0.1.9
-- `wos-dr` v0.1.1
+- `wos-jira` v0.2.9 or newer
+- `wos-documentation` v0.1.13
+- `wos-dr` v0.1.2
 - `wos-memory-engine` v0.1.3
 - `wos-project` v0.1.6
 - `wos-task` v0.1.6
@@ -29,6 +29,13 @@ Do not rerun first-time onboarding unless the existing install is incomplete or 
 `wos-documentation` v0.1.8 adds conservative long-document handling for KB Refresh and documentation drafting.
 
 `wos-documentation` v0.1.9 adds stricter intake behavior, Help Desk emoji section enforcement, and the confirmed public-facing and team Confluence space defaults.
+
+`wos-documentation` v0.1.13 consolidates Help Desk and public-facing documentation in `HelpDesk Knowledge` / `HK`, removes the redundant Infrastructure/DEV/DBA audience follow-up, keeps the Infrastructure document-type choice, and records DEV/DBA ownership while its document-type model is pending team confirmation. It retains visual-asset guidance and the required target-space duplicate/similar KB preflight before every new Confluence page create.
+
+`wos-jira` v0.2.9 adds previewed concise or structured Jira updates while retaining Rovo-first access, ACLI fallback, emoji formatting, explicit write confirmation, and no delete/archive operations.
+
+`wos-dr` v0.1.2 hardens OneDrive snapshot handling against recursive backup scans and path-length failures.
+
 
 When `KB Refresh` or `$documentation-draft` receives long, unstructured, OneNote-derived, or PDF-like source material, the plugin treats the source as raw material instead of copying its length or page shape.
 
@@ -44,7 +51,7 @@ Expected behavior:
 - Ask direct questions before drafting when required source details are missing.
 - Do not output a completed draft after a "Gaps To Confirm" list.
 - Preserve required emoji section headings for all built-in templates, including Help Desk how-to and troubleshooting templates.
-- Use confirmed WOS Documentation spaces by default: `HelpDesk Public` / `AEHT`, `HelpDesk Troubleshooting` / `AHI`, `HelpDesk System Processes` / `AIH`, `Internal Infrastructure KB` / `IIK`, and `Dev Team KB` / `DTK`.
+- Use confirmed WOS Documentation spaces by default: `HelpDesk Knowledge` / `HK`, `Internal Infrastructure KB` / `IIK`, and `Dev Team KB` / `DTK`.
 - Keep `JSM Optimization Advisory` out of WOS Documentation route defaults.
 
 ## Prompt To Give Their Codex
@@ -86,9 +93,9 @@ Steps:
    - $env:USERPROFILE\.codex\plugins\cache\workflow-os
 10. Update or reinstall only the Workflow OS plugins the user already has installed so those installed plugins match the latest expected versions:
     - wos-onboarding v0.1.9
-    - wos-jira v0.2.5
-    - wos-documentation v0.1.9
-    - wos-dr v0.1.1
+    - wos-jira v0.2.9 or newer
+    - wos-documentation v0.1.13
+    - wos-dr v0.1.2
     - wos-memory-engine v0.1.3
     - wos-project v0.1.6
     - wos-task v0.1.6

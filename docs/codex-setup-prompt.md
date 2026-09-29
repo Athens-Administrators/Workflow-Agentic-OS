@@ -59,9 +59,10 @@ Stop at the first real failure and show the exact error plus the next recommende
 ## Expected Plugin Versions
 
 - `wos-onboarding` v0.1.9
-- `wos-jira` v0.2.5
-- `wos-documentation` v0.1.9
-- `wos-dr` v0.1.1
+- `wos-jira` v0.2.9 or newer
+- `wos-documentation` v0.1.12
+- `wos-dr` v0.1.2
+- `wos-azure-boards` v0.1.1 (Development / DBA only; optional)
 - `wos-memory-engine` v0.1.3
 - `wos-project` v0.1.6
 - `wos-task` v0.1.6

@@ -15,6 +15,7 @@ Load these before drafting:
 - `${plugin_root}/../references/documentation-standard.md`
 - `${plugin_root}/../references/confluence-workflow.md`
 - `${plugin_root}/../references/templates.md`
+- `${plugin_root}/../references/visual-assets.md`
 
 Apply `setup-gate.md` before drafting. If persistent Documentation setup is not complete, run the per-document walkthrough for the current document.
 
@@ -36,15 +37,11 @@ For Help Desk, offer:
 
 For Help Desk internal troubleshooting, use `ahi_troubleshooting` with the required emoji section headings from `templates.md`.
 
-For Public-facing for Athens employees, use `ahi_how_to`.
+For Public-facing for Athens employees, use `ahi_how_to` in `HelpDesk Knowledge` / `HK`.
 
-Use these known Confluence spaces unless the user gives a temporary override:
+Use `HelpDesk Knowledge` / `HK` for all Help Desk and public-facing Athens employee content unless the user gives a temporary override. Article purpose selects the template, not a different space.
 
-- Help Desk public-facing content: `HelpDesk Public` / `AEHT`.
-- Help Desk troubleshooting articles: `HelpDesk Troubleshooting` / `AHI`.
-- Help Desk system-process and internal how-to documentation: `HelpDesk System Processes` / `AIH`.
-
-For Infrastructure and DEV/DBA, offer:
+For Infrastructure, offer:
 
 1. Runbook KB article - use `infra_dev_break_fix_runbook` for break/fix or technical operations.
 2. Business Process KB article - use `infra_dev_standard` for repeatable workflows, handoffs, approvals, and team procedures.
@@ -54,21 +51,23 @@ If the user is unsure, explain the difference plainly:
 - A Runbook KB article is for fixing or operating something technical: symptoms, commands, validation, rollback, or expected system state.
 - A Business Process KB article is for explaining how a repeatable business or team workflow should happen from start to finish.
 
-After the KB article type is clear for Infrastructure or DEV/DBA, ask whether it is internal or public-facing for Athens employees.
+For DEV/DBA, use the configured route template and record `Owning team: DEV/DBA` in the draft preface. Its document-type model is pending team confirmation. Do not ask a separate internal-or-public audience question; employee-facing content uses the Public-facing for Athens employees route.
 
 ## Inputs To Determine
 
 Determine from the request or ask only when necessary:
 
 - Route: `help_desk`, `infrastructure`, `dev_dba`, or `public_athens`.
-- KB article type for Infrastructure or DEV/DBA: Runbook KB article or Business Process KB article.
-- Audience: `public-facing` for `public_athens`; for Infrastructure or DEV/DBA, ask whether the specific page is internal or public-facing for Athens employees.
+- KB article type for Infrastructure: Runbook KB article or Business Process KB article. DEV/DBA uses its configured template while its document-type model is pending team confirmation.
+- Audience: derived from the selected route. `public_athens` is employee-facing; the other routes are internal.
+- Owning team: required for DEV/DBA and for public-facing material that originates with Infrastructure or DEV/DBA.
 - Topic and goal.
-- Target Confluence space: route-assigned space unless the user gives a temporary override. Infrastructure internal documentation uses `Internal Infrastructure KB` / `IIK`; DEV/DBA internal documentation uses `Dev Team KB` / `DTK`; public-facing documentation uses `HelpDesk Public` / `AEHT`; Help Desk troubleshooting uses `HelpDesk Troubleshooting` / `AHI`; Help Desk system-process and internal how-to documentation uses `HelpDesk System Processes` / `AIH`.
+- Target Confluence space: route-assigned space unless the user gives a temporary override. Help Desk and public-facing documentation use `HelpDesk Knowledge` / `HK`; Infrastructure uses `Internal Infrastructure KB` / `IIK`; DEV/DBA uses `Dev Team KB` / `DTK`.
 - Template source: route-assigned Confluence template, supplied Confluence URL, `ahi_how_to`, `ahi_troubleshooting`, `infra_dev_standard`, or `infra_dev_break_fix_runbook`.
 - Intended placement, if the user already knows it: root, route default parent, existing parent page, or new parent page.
 - Source material: pasted notes, files, Jira tickets, Confluence pages, or user explanation.
 - Whether the user wants a draft only or wants to publish after review.
+- Whether the article needs screenshots, extracted video frames, diagrams, or visual callouts.
 
 ## Required Question Gate
 
@@ -92,9 +91,9 @@ For Help Desk troubleshooting articles, ask direct questions when any of these a
 - Use `ahi_how_to` for public-facing how-tos and Help Desk how-to documentation.
 - Use `ahi_troubleshooting` for internal agent troubleshooting guides.
 - Preserve the exact emoji section headings for all built-in templates, including Help Desk templates.
-- Infrastructure and DEV/DBA share `infra_dev_standard` and `infra_dev_break_fix_runbook` templates, but not Confluence spaces.
-- For Infrastructure and DEV/DBA, use `infra_dev_break_fix_runbook` for Runbook KB articles and `infra_dev_standard` for Business Process KB articles.
-- For public-facing Infrastructure or DEV/DBA content, keep it employee-safe: concise, no internal-only commands, no privileged access steps, and no internal escalation detail that employees should not act on directly.
+- Infrastructure and DEV/DBA may use the shared templates, but do not share Confluence spaces. DEV/DBA uses the configured route template until its document-type model is confirmed.
+- For Infrastructure, use `infra_dev_break_fix_runbook` for Runbook KB articles and `infra_dev_standard` for Business Process KB articles.
+- For employee-facing material owned by Infrastructure or DEV/DBA, use the Public-facing for Athens employees route and keep it employee-safe: concise, no internal-only commands, no privileged access steps, and no internal escalation detail that employees should not act on directly.
 - Use the exact section emojis defined in `templates.md`.
 - Keep public-facing docs simple, concise, and action-oriented.
 - Keep internal docs practical and complete, but usually one page.
@@ -104,6 +103,9 @@ For Help Desk troubleshooting articles, ask direct questions when any of these a
 - Include support path or ownership.
 - Link to sources rather than copying long source content.
 - Do not include secrets or sensitive values.
+- Apply `visual-assets.md` when visuals are mentioned or useful. If screenshots, video frames, or diagrams are needed, include a compact visual asset register before the draft unless the visuals are already available and obvious.
+- If a visual is not available, include an exact placeholder such as `[Screenshot needed: <exact screen or state>]`.
+- Use available screenshot/image files when provided. Use optional video-frame extraction only when a compatible helper is installed and usable; otherwise create timestamped screenshot capture targets.
 
 ## Output
 
@@ -113,10 +115,12 @@ Include a short preface with:
 
 - Audience.
 - Route.
+- Owning team, when applicable.
 - Target space.
 - Template used, if any.
 - Intended placement, if known.
 - Any source gaps or assumptions.
+- Visual assets, placeholders, or capture targets when visuals are needed.
 
 Do not include a "Gaps To Confirm" section followed by a completed draft. If gaps are blocking, output only the questions to answer next.
 

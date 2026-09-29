@@ -170,12 +170,10 @@ Documentation setup:
 - Confluence creates and updates require my explicit approval in the current turn.
 
 Known documentation defaults:
-- Help Desk public-facing: HelpDesk Public / AEHT
-- Help Desk troubleshooting: HelpDesk Troubleshooting / AHI
-- Help Desk process or internal how-to: HelpDesk System Processes / AIH
+- Help Desk and public-facing: HelpDesk Knowledge / HK
 - Infrastructure internal: Internal Infrastructure KB / IIK
 - DEV/DBA internal: Dev Team KB / DTK
-- Public-facing Infrastructure or DEV/DBA: HelpDesk Public / AEHT
+- Employee-facing Infrastructure or DEV/DBA content: HelpDesk Knowledge / HK, with the owning team recorded
 - Public how-to template: ahi_how_to
 - Help Desk troubleshooting template: ahi_troubleshooting
 - Infrastructure or DEV/DBA Business Process KB template: infra_dev_standard

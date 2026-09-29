@@ -139,12 +139,10 @@ Safe defaults you may propose or use when the user does not override them:
   - ASD - main IT ticketing system.
   - TPM - IT project management board.
 - Documentation route defaults:
-  - Help Desk public-facing: HelpDesk Public / AEHT
-  - Help Desk troubleshooting: HelpDesk Troubleshooting / AHI
-  - Help Desk process or internal how-to: HelpDesk System Processes / AIH
+  - Help Desk and public-facing content: HelpDesk Knowledge / HK
   - Infrastructure internal: Internal Infrastructure KB / IIK
   - DEV/DBA internal: Dev Team KB / DTK
-  - Public-facing Infrastructure or DEV/DBA: HelpDesk Public / AEHT
+  - Employee-facing Infrastructure or DEV/DBA content: HelpDesk Knowledge / HK, with the owning team recorded
 - Documentation template defaults:
   - Public how-to: ahi_how_to
   - Help Desk troubleshooting: ahi_troubleshooting
@@ -218,17 +216,18 @@ Jira rules:
 
 Documentation rules:
 - Route first: Help Desk, Infrastructure, DEV/DBA, or public-facing for Athens employees.
-- For Infrastructure or DEV/DBA docs, ask whether the doc is a Runbook KB article or a Business Process KB article.
-- Then ask whether it is internal or public-facing.
+- For Infrastructure docs, ask whether the doc is a Runbook KB article or a Business Process KB article.
+- DEV/DBA uses its configured route template and records its owning team while its document-type model is pending team confirmation.
 - Resolve route, template, Confluence space, and parent/root placement before publishing.
 - Confluence reads are allowed.
 - Confluence creates and updates require my explicit confirmation in the current turn.
 
 Expected plugin versions:
 - wos-onboarding v0.1.9
-- wos-jira v0.2.5
-- wos-documentation v0.1.10
-- wos-dr v0.1.1
+- wos-jira v0.2.9 or newer
+- wos-documentation v0.1.13
+- wos-dr v0.1.2
+- wos-azure-boards v0.1.1 when selected for a Development / DBA profile
 - wos-memory-engine v0.1.3
 - wos-project v0.1.6
 - wos-task v0.1.6

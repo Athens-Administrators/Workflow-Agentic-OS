@@ -1,8 +1,8 @@
 # Workflow OS Jira Standard
 
-Workflow OS Jira is the lightweight Jira module for consistent Jira work across Athens IT.
+Workflow OS Jira v0.2.9 is the lightweight Jira module for consistent Jira work across Athens IT.
 
-It can still run standalone for focused Jira testing, but the standard Workflow OS onboarding baseline installs both `wos-jira` and `wos-documentation` and requires `$jira-setup` before any other Jira skill continues.
+It can still run standalone for focused Jira testing, but the standard Workflow OS onboarding baseline installs `wos-jira`, `wos-documentation`, and `wos-dr`, and requires `$jira-setup` before any other Jira skill continues.
 
 ## Purpose
 
@@ -76,6 +76,7 @@ Install `wos-onboarding` first. During `$welcome`, install mandatory:
 ```text
 wos-jira
 wos-documentation
+wos-dr
 ```
 
 Then finish:
@@ -83,6 +84,7 @@ Then finish:
 ```text
 $jira-setup
 $documentation-setup
+$dr-setup
 ```
 
 Users who want project/task/memory/orchestration workflows can optionally install:
