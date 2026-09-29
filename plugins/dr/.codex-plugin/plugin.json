@@ -1,6 +1,6 @@
 {
   "name": "wos-dr",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Workflow OS disaster recovery snapshots for WOS setup, memory, task/project continuity, and OneDrive-backed restore points.",
   "author": {
     "name": "Workflow OS"

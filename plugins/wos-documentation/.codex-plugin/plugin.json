@@ -1,6 +1,6 @@
 {
   "name": "wos-documentation",
-  "version": "0.1.13",
+  "version": "0.2.0",
   "description": "Workflow OS documentation standard for route-based drafting, reviewing, and publishing to assigned Confluence spaces and templates.",
   "author": {
     "name": "Workflow OS"

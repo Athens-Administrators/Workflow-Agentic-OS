@@ -16,10 +16,10 @@ Do not rerun first-time onboarding unless the existing install is incomplete or 
 
 ## Latest Expected Versions
 
-- `wos-onboarding` v0.1.9
-- `wos-jira` v0.2.9 or newer
-- `wos-documentation` v0.1.13
-- `wos-dr` v0.1.2
+- `wos-onboarding` v1.0.0
+- `wos-jira` v0.3.0
+- `wos-documentation` v0.2.0
+- `wos-dr` v0.2.0
 - `wos-memory-lite` v1.0.0
 - `wos-project` v1.0.0
 - `wos-task` v1.0.0
@@ -91,11 +91,11 @@ Steps:
 9. Inventory which Workflow OS plugins are currently installed and enabled. Use /plugins as the source of truth. If you inspect files, also check:
    - $env:USERPROFILE\.codex\config.toml
    - $env:USERPROFILE\.codex\plugins\cache\workflow-os
-10. Update or reinstall only the Workflow OS plugins the user already has installed so those installed plugins match the latest expected versions:
-    - wos-onboarding v0.1.9
-    - wos-jira v0.2.9 or newer
-    - wos-documentation v0.1.13
-    - wos-dr v0.1.2
+10. Update or reinstall only the Workflow OS plugins the user already has installed so those installed plugins match the latest expected versions. If `wos-memory-engine` is installed, tell the user it is retired; they should remove it manually in `/plugins`, then restart Codex before installing Memory Lite:
+    - wos-onboarding v1.0.0
+    - wos-jira v0.3.0
+    - wos-documentation v0.2.0
+    - wos-dr v0.2.0
     - wos-memory-lite v1.0.0
     - wos-project v1.0.0
     - wos-task v1.0.0
