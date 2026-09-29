@@ -75,8 +75,7 @@ Open questions
 - <question>
 ```
 
-8. If direct inspection is blocked or available tools only expose identity/organization metadata, switch to `$azure-boards-intake` and ask the user for a screenshot, copied work item fields, or a small manually summarized card sample.
-9. If Workflow OS memory-engine is available and the user asks to persist the result, write a concise `reference` receipt. Do not persist raw card content.
+8. If Workflow OS memory-engine is available and the user asks to persist the result, write a concise `reference` receipt. Do not persist raw card content.
 
 ## Hard Rules
 
@@ -85,3 +84,4 @@ Open questions
 - No bulk export of board content.
 - No secrets or sensitive card details in outputs or receipts.
 - Discovery findings must be user-agnostic and configurable.
+

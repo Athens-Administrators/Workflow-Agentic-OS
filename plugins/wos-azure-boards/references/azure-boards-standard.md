@@ -6,7 +6,7 @@ This standard defines how Workflow OS agents should inspect, create, update, mai
 
 Azure Boards is the development team's delivery tracking destination. A work item should make the next action clear to a teammate who was not in the original conversation.
 
-Use `work-item-format.md` for titles, descriptions, comments, transition notes, and closure notes. Use `access-policy.md` before any project-specific action. Use `dev-workflow-model.md` when translating a real board or user-provided reference observations into reusable Workflow OS behavior.
+Use `work-item-format.md` for titles, descriptions, comments, transition notes, and closure notes. Use `access-policy.md` before any project-specific action. Use `dev-workflow-model.md` when translating a real board into reusable Workflow OS behavior.
 
 ## 2. Work Item Type Decision Rules
 
@@ -41,7 +41,7 @@ Before any write, verify the target project. If the project is `ClaimImport`, st
 
 ## 3.1 Reference Board Discovery
 
-Use `$azure-boards-discover` to inspect `ClaimImport` read-only and identify reusable workflow patterns. If direct inspection is unavailable, use `$azure-boards-intake` with user-provided screenshots, copied fields, or summaries. Discovery and intake may inform:
+Use `$azure-boards-discover` to inspect `ClaimImport` read-only and identify reusable workflow patterns. Discovery may inform:
 
 - Work item templates.
 - Review criteria.
@@ -50,7 +50,7 @@ Use `$azure-boards-discover` to inspect `ClaimImport` read-only and identify reu
 - Completion evidence.
 - Candidate child-item splitting.
 
-Discovery and intake must not create a hardcoded `ClaimImport` workflow. Treat observed values as configurable examples unless setup confirms them for the user's target project.
+Discovery must not create a hardcoded `ClaimImport` workflow. Treat observed values as configurable examples unless setup confirms them for the user's target project.
 
 ## 4. Creation Quality Checklist
 
