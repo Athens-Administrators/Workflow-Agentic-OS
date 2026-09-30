@@ -11,7 +11,7 @@
     "composerIcon": "./assets/jira-favicon.png",
     "logo": "./assets/jira-favicon.png",
     "logoDark": "./assets/jira-favicon.png",
-    "shortDescription": "\u2705 v0.2.9 \u00b7 Previewed concise or structured Jira updates",
+    "shortDescription": "\u2705 v0.3.0 \u00b7 Previewed concise or structured Jira updates",
     "longDescription": "Workflow OS Jira provides mandatory first-use Jira setup plus agent-selected, previewed concise or structured updates, issue creation, reviews, and description maintenance backed by the current Atlassian Rovo MCP connector and ACLI fallback.",
     "developerName": "Workflow OS",
     "capabilities": [
