@@ -1,6 +1,6 @@
 {
   "name": "wos-onboarding",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Workflow OS first-run setup and Suite 2 Beta upgrade guidance. Creates local workflow-os-data only for a new profile, requires Jira and Documentation setup, guides optional plugin selection, and routes existing profiles to the profile-preserving migration assistant.",
   "author": {
     "name": "Workflow OS"
@@ -9,7 +9,7 @@
   "hooks": "./hooks/hooks.json",
   "interface": {
     "displayName": "Workflow OS — Onboarding",
-    "shortDescription": "🧩 v1.0.1 · Jira/Documentation setup and Suite 2 upgrade",
+    "shortDescription": "🧩 v1.0.2 · Jira/Documentation setup and Suite 2 upgrade",
     "longDescription": "Workflow OS Onboarding runs first-time setup only when no usable profile exists. Suite 2 Beta keeps existing profiles intact, requires Jira and Documentation setup, recommends Memory Lite as the native-memory companion, and provides a one-action retirement assistant for legacy Engine and DR artifacts.",
     "developerName": "Workflow OS",
     "capabilities": [

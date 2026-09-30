@@ -3,6 +3,7 @@ param(
     [ValidateSet('Inventory', 'Apply')]
     [string]$Mode = 'Inventory',
     [string]$SentinelPath = (Join-Path $env:USERPROFILE '.codex\workflow-os.json'),
+    [string]$LegacyDataRoot,
     [string]$CodexConfigPath = (Join-Path $env:USERPROFILE '.codex\config.toml'),
     [string]$ScheduledTaskName = 'Workflow OS DR Snapshot',
     [switch]$ConfirmRetirement
@@ -41,14 +42,45 @@ function Remove-WosTomlTables {
 function Get-WosScheduledTask {
     param([string]$TaskName)
     $tasks = @(Get-ScheduledTask -TaskName $TaskName -ErrorAction SilentlyContinue)
-    return @($tasks | Where-Object { $_.TaskPath -eq '\\' })
+    return @($tasks | Where-Object { $_.TaskPath -eq '\' })
 }
 
-$sentinel = Read-WosJson -Path $SentinelPath -Label 'Workflow OS sentinel'
-if (-not $sentinel.data_root) { throw "Workflow OS sentinel has no data_root: $SentinelPath" }
-$dataRoot = [string]$sentinel.data_root
-$localPath = Join-Path $dataRoot '.agent\local.json'
-$local = Read-WosJson -Path $localPath -Label 'Workflow OS local profile'
+$sentinelPresent = Test-Path -LiteralPath $SentinelPath -PathType Leaf
+$sentinel = $null
+$dataRoot = $null
+$localPath = $null
+$local = $null
+$profileSource = $null
+
+if ($sentinelPresent) {
+    $sentinel = Read-WosJson -Path $SentinelPath -Label 'Workflow OS sentinel'
+    if (-not $sentinel.data_root) { throw "Workflow OS sentinel has no data_root: $SentinelPath" }
+    $dataRoot = [string]$sentinel.data_root
+    $localPath = Join-Path $dataRoot '.agent\local.json'
+    $local = Read-WosJson -Path $localPath -Label 'Workflow OS local profile'
+    $profileSource = 'sentinel'
+} else {
+    $legacyCandidates = @($LegacyDataRoot, $env:WOS_DATA_ROOT, (Join-Path $env:USERPROFILE 'workflow-os-data')) |
+        Where-Object { -not [string]::IsNullOrWhiteSpace($_) } |
+        Select-Object -Unique
+
+    foreach ($candidate in $legacyCandidates) {
+        $candidateLocalPath = Join-Path $candidate '.agent\local.json'
+        if (-not (Test-Path -LiteralPath $candidateLocalPath -PathType Leaf)) { continue }
+        try {
+            $candidateLocal = Read-WosJson -Path $candidateLocalPath -Label 'Legacy Workflow OS local profile'
+            $dataRoot = $candidate
+            $localPath = $candidateLocalPath
+            $local = $candidateLocal
+            $profileSource = 'legacy-data-root'
+            break
+        } catch { continue }
+    }
+
+    if (-not $local) {
+        throw "No usable Workflow OS profile was found. Checked WOS_DATA_ROOT and $($env:USERPROFILE)\workflow-os-data for .agent\local.json; use first-time onboarding only if the existing profile is not available."
+    }
+}
 
 $configText = if (Test-Path -LiteralPath $CodexConfigPath -PathType Leaf) { Get-Content -LiteralPath $CodexConfigPath -Raw } else { '' }
 $retiredPluginTables = @(
@@ -73,7 +105,9 @@ $inventory = [ordered]@{
     mode = $Mode
     profile = [ordered]@{
         sentinel = $SentinelPath
+        sentinel_present = $sentinelPresent
         local_profile = $localPath
+        source = $profileSource
         usable = $true
         jira_setup = if ($setupMissing -contains 'jira') { 'incomplete' } else { 'complete' }
         documentation_setup = if ($setupMissing -contains 'documentation') { 'incomplete' } else { 'complete' }
@@ -106,6 +140,18 @@ if ($Mode -eq 'Inventory') {
 
 if (-not $ConfirmRetirement) {
     throw 'Apply requires -ConfirmRetirement. Run Inventory first, show the concise confirmation, then rerun Apply only after approval.'
+}
+
+if (-not $sentinelPresent) {
+    $sentinelDirectory = Split-Path -Parent $SentinelPath
+    if (-not (Test-Path -LiteralPath $sentinelDirectory -PathType Container)) {
+        New-Item -ItemType Directory -Path $sentinelDirectory -Force | Out-Null
+    }
+    [ordered]@{
+        framework_root = if ($local.framework_root) { $local.framework_root } else { $null }
+        data_root = $dataRoot
+        installed = $true
+    } | ConvertTo-Json | Set-Content -LiteralPath $SentinelPath -Encoding utf8
 }
 
 $updatedConfig = Remove-WosTomlTables -Content $configText -Headers ($retiredPluginTables + $engineRuntimeTables)
@@ -141,6 +187,7 @@ foreach ($task in $drTasks) {
     release = 'WOS Suite 2.0 Beta'
     applied = $true
     changed_local_profile = $localChanged
+    created_missing_sentinel = (-not $sentinelPresent)
     removed_wos_dr_scheduled_tasks = $removedTasks
     preserved = $inventory.preserved
     next = 'Use the Codex Plugins Directory to uninstall wos-memory-engine and wos-dr, then restart Codex in a fresh chat. This script deliberately does not delete plugin caches or legacy data.'

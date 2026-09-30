@@ -9,8 +9,8 @@ Use this skill only for an existing Workflow OS profile. It is an **upgrade**, n
 
 ## Required sequence
 
-1. Run `${plugin_root}/scripts/migrate/Invoke-WosSuite2BetaMigration.ps1 -Mode Inventory` and read its JSON.
-2. If `profile.usable` is false, do not modify anything. Offer first-time onboarding only when no usable profile exists.
+1. Run `${plugin_root}/scripts/migrate/Invoke-WosSuite2BetaMigration.ps1 -Mode Inventory` and read its JSON. The inventory first checks the normal sentinel, then the legacy `WOS_DATA_ROOT` and default `%USERPROFILE%\\workflow-os-data` locations for an existing `.agent\\local.json`.
+2. If a valid legacy profile is found without a sentinel, treat it as an upgrade: preserve its profile and create only the missing sentinel pointer during Apply. If `profile.usable` is false after those checks, do not modify anything. Offer first-time onboarding only when no usable profile exists.
 3. If Jira is incomplete, tell the user to run only `$jira-setup`. If Documentation is incomplete, tell the user to run only `$documentation-setup`. A missing DR marker is never an incomplete-profile condition.
 4. Treat the user's explicit Upgrade or Install action as the one migration confirmation. Before applying it, show one concise inventory that names only the present retired artifacts: `wos-memory-engine`, `wos-dr`, the Memory Engine MCP/hook registration, and the exact `Workflow OS DR Snapshot` task when present. State that local profile fields, WOS.md markers, legacy SQLite data, plugin caches, and OneDrive snapshots will remain untouched.
 5. Run `${plugin_root}/scripts/migrate/Invoke-WosSuite2BetaMigration.ps1 -Mode Apply -ConfirmRetirement` as part of that confirmed upgrade/install action. Do not ask for a second confirmation.
