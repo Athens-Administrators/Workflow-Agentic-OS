@@ -1,5 +1,7 @@
 # WOS Controlled Setup for a Power BI Dashboard Owner
 
+> **Archived WOS 1.x guide.** Do not use these DR or Memory Engine instructions for a new install or upgrade. Use the Suite 2 Beta first-time or existing-install guide; legacy version references below are historical only.
+
 Use this guide for a supervised first-time Workflow OS setup with a teammate who owns Power BI dashboards, reporting, metrics, or recurring business data reviews.
 
 This setup is role/user agnostic. It should not copy another person's name, Windows path, Jira projects, report folders, Power BI workspaces, or preferences.

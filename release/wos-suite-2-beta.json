@@ -1,0 +1,36 @@
+{
+  "release": "WOS Suite 2.0 Beta",
+  "status": "beta-version-approved",
+  "purpose": "Compatibility matrix for the profile-preserving Suite 2 Beta migration.",
+  "components": [
+    { "name": "wos-onboarding", "source_version": "1.0.0", "release_status": "included" },
+    { "name": "wos-jira", "source_version": "0.3.0", "release_status": "included" },
+    { "name": "wos-documentation", "source_version": "0.2.0", "release_status": "included" },
+    { "name": "wos-memory-lite", "source_version": "2.0.0-beta", "release_status": "approved-beta" },
+    { "name": "wos-project", "source_version": "1.1.0", "release_status": "included" },
+    { "name": "wos-task", "source_version": "1.1.0", "release_status": "included" }
+  ],
+  "retired": [
+    { "name": "wos-memory-engine", "source_version": "0.1.3", "data_policy": "Keep legacy SQLite data and caches untouched." },
+    { "name": "wos-dr", "source_version": "0.2.0", "data_policy": "Keep existing OneDrive snapshots untouched; remove only the WOS-owned schedule after confirmation." }
+  ],
+  "not_in_suite_beta": ["wos-azure-boards"],
+  "profile_contract": {
+    "preserve": [
+      "workflow-os.json",
+      "local.json role, work style, Jira, Documentation, and plugin-choice fields",
+      "WOS.md markers",
+      "active pointers",
+      "legacy SQLite data",
+      "existing OneDrive backups",
+      "unrelated Codex configuration and repositories"
+    ],
+    "never": [
+      "rerun welcome for a complete profile",
+      "delete legacy SQLite data",
+      "delete plugin caches",
+      "delete OneDrive snapshots",
+      "modify unrelated Codex configuration"
+    ]
+  }
+}

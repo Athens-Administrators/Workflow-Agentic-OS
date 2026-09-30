@@ -28,7 +28,7 @@ foreach ($marketplacePath in $marketplaces) {
 }
 
 $expectedVersions = @{
-    'plugins/memory-lite/.codex-plugin/plugin.json' = '1.1.0'
+    'plugins/memory-lite/.codex-plugin/plugin.json' = '2.0.0-beta'
     'plugins/project/.codex-plugin/plugin.json' = '1.1.0'
     'plugins/task/.codex-plugin/plugin.json' = '1.1.0'
 }
@@ -63,6 +63,7 @@ foreach ($relativeRoot in $activeRoots) {
     $root = Join-Path $RepositoryRoot $relativeRoot
     if (Test-Path -LiteralPath $root) {
         $matches += @(Get-ChildItem -LiteralPath $root -File -Recurse |
+            Where-Object { $_.FullName -notmatch '[\\/]skills[\\/]suite-2-migration[\\/]' } |
             Select-String -Pattern $forbidden -CaseSensitive:$false)
     }
 }
@@ -70,4 +71,4 @@ Assert-True ($matches.Count -eq 0) ("Retired memory dependency found in active v
 
 Assert-True (-not (Test-Path -LiteralPath (Join-Path $RepositoryRoot 'plugins/project/skills/project-import/SKILL.md'))) 'Project v1.1 must consolidate project-import into project-new'
 
-Write-Host 'WOS Memory Lite v1.1 structural validation passed.' -ForegroundColor Green
+Write-Host 'WOS Memory Lite v2.0.0-beta structural validation passed.' -ForegroundColor Green

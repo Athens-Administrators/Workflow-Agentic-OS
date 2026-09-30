@@ -1,5 +1,7 @@
 # Workflow OS Team Update — September 29, 2026
 
+> **Archived WOS 1.x update.** This page records the prior DR-based rollout and is not install or migration guidance. Use [WOS Suite 2.0 Beta — Existing Install Migration](workflow-os-update-existing-install-instructions.md) or [WOS Suite 2.0 Beta — First-Time Install](workflow-os-first-time-install-instructions.md). Legacy version references below are historical only.
+
 Use this guide to refresh an existing Workflow OS installation. It covers the
 current mandatory baseline and the optional Development / DBA Azure Boards
 capability without changing a teammate's local Workflow OS data or optional

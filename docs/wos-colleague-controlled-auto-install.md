@@ -1,5 +1,7 @@
 # Workflow OS Controlled Colleague Setup
 
+> **Archived WOS 1.x guide.** Do not use these DR or Memory Engine instructions for a new install or upgrade. Use the Suite 2 Beta first-time or existing-install guide; legacy version references below are historical only.
+
 Use this guide for a supervised first-time Workflow OS setup on a colleague's Codex environment.
 
 The goal is to let Codex move quickly through safe setup work while pausing for answers that must come from the person being onboarded. Questions should be easy to answer, even for someone who is not technical.

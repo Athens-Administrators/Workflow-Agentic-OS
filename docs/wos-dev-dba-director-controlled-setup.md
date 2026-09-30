@@ -1,5 +1,7 @@
 # WOS Controlled Setup for a Dev/DBA Director
 
+> **Archived WOS 1.x guide.** Do not use these DR or Memory Engine instructions for a new install or upgrade. Use the Suite 2 Beta first-time or existing-install guide; legacy version references below are historical only.
+
 Use this guide for a supervised first-time Workflow OS setup with a Dev/DBA Director or senior technical leader.
 
 This setup is role/user agnostic. Do not copy another person's name, Windows username, local path, Jira projects, Azure Boards projects, database names, server names, or preferences.

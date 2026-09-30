@@ -1,8 +1,8 @@
 {
-  "name": "workflow-os",
+  "name": "workflow-os-suite-2-beta",
   "interface": {
-    "displayName": "Workflow OS",
-    "shortDescription": "Codex plugins for Athens IT: mandatory Jira and Documentation setup plus optional memory, projects, tasks, and orchestration"
+    "displayName": "WOS Suite 2.0 Beta",
+    "shortDescription": "Isolated beta lane: Jira and Documentation baseline with Memory Lite 2.0.0-beta"
   },
   "plugins": [
     {
@@ -38,18 +38,6 @@
     {
       "name": "wos-documentation",
       "source": { "source": "local", "path": "./plugins/wos-documentation" },
-      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
-      "category": "Productivity"
-    },
-    {
-      "name": "wos-dr",
-      "source": { "source": "local", "path": "./plugins/dr" },
-      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
-      "category": "Productivity"
-    },
-    {
-      "name": "wos-azure-boards",
-      "source": { "source": "local", "path": "./plugins/wos-azure-boards" },
       "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
       "category": "Productivity"
     }

@@ -1,5 +1,7 @@
 # Workflow OS Install Instructions for Codex
 
+> **Archived WOS 1.x guide.** Do not use this DR-based installation sequence. Use [WOS Suite 2.0 Beta — First-Time Install](workflow-os-first-time-install-instructions.md) or [WOS Suite 2.0 Beta — Existing Install Migration](workflow-os-update-existing-install-instructions.md).
+
 Follow these instructions to install Workflow OS from the Git-backed marketplace.
 
 Repository:

@@ -1,12 +1,12 @@
 {
   "name": "wos-memory-lite",
-  "version": "1.1.0",
+  "version": "2.0.0-beta",
   "description": "A lightweight Workflow OS companion to native memory in ChatGPT Work and Codex: explicit context orientation and optional handoffs, with no MCP server, database, or hooks.",
   "author": { "name": "Workflow OS" },
   "skills": "./skills/",
   "interface": {
     "displayName": "WOS Memory Lite",
-    "shortDescription": "🪶 v1.1 · Native-memory companion with explicit handoffs",
+    "shortDescription": "🪶 v2.0.0-beta · Native-memory companion with explicit handoffs",
     "longDescription": "WOS Memory Lite keeps the native memory of the active surface primary. It offers read-only context orientation and deliberate handoff guidance in ChatGPT Work and Codex without a database, MCP server, or automatic hooks.",
     "developerName": "Workflow OS",
     "capabilities": ["Native-memory companion", "Cross-surface orientation", "Explicit handoff guidance"],

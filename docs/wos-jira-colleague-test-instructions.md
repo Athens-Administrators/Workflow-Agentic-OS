@@ -1,5 +1,7 @@
 # WOS Jira Colleague Test Instructions
 
+> **Archived WOS 1.x guide.** This former DR-based setup path is no longer current. Use the Suite 2 Beta guides; version references below are historical only.
+
 Follow these instructions to install or update WOS Jira and test the latest Jira standard changes.
 
 ## 1. Confirm GitHub Repo Access

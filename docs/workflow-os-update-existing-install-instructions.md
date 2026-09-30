@@ -1,177 +1,40 @@
-# Workflow OS Existing Install Update Instructions
+# WOS Suite 2.0 Beta — Existing Install Migration
 
-Use this when a user already has Workflow OS in Codex and needs the latest marketplace/plugin updates.
+Use this guide for an existing Workflow OS profile. It is an upgrade, not a reinstall.
 
-Repository:
+## What it preserves
 
-```text
-https://github.com/Athens-Administrators/Workflow-Agentic-OS.git
-```
+- `~/.codex/workflow-os.json` and `<data_root>/.agent/local.json`
+- User role, work style, Jira defaults, Documentation routes, plugin choices, WOS.md markers, active pointers, legacy SQLite data, and OneDrive snapshots
+- Unrelated Codex configuration and local repositories
 
-## Goal
+## One-action migration
 
-Refresh the existing Workflow OS marketplace, update the WOS plugins the user already has installed, preserve local Workflow OS data, require the mandatory Jira, Documentation, and Disaster Recovery plugins, configure DR v1, and offer any other missing plugins as choices.
+1. Sync the `workflow-os` marketplace from `https://github.com/Athens-Administrators/Workflow-Agentic-OS.git`.
+2. Start a fresh chat and run `$suite-2-migration`.
+3. Review its inventory. It will not rerun `$welcome` for a usable profile.
+4. Confirm the one retirement action only if the inventory is correct. It removes WOS Memory Engine/DR configuration, deregisters the Memory Engine runtime and hook, and removes the exact `Workflow OS DR Snapshot` scheduled task when present.
+5. In the same confirmed action, uninstall only `wos-memory-engine` and `wos-dr` in `/plugins` if the host exposes an uninstall control. Do not delete their caches, legacy SQLite data, or OneDrive snapshots.
+6. Update only the Suite 2 plugins the user already has installed. Preserve optional Memory Lite, Project, and Task choices; Memory Lite is the recommended context companion if the user asks to add one.
+7. Restart Codex and validate in a fresh chat.
 
-Do not rerun first-time onboarding unless the existing install is incomplete or broken. `wos-jira`, `wos-documentation`, and `wos-dr` are mandatory and must be installed if missing. Do not install any other missing plugin unless the user explicitly chooses it.
+## Completeness rules
 
-## Latest Expected Versions
+- A complete profile continues silently.
+- An incomplete Jira profile prompts only for `$jira-setup`.
+- An incomplete Documentation profile prompts only for `$documentation-setup`.
+- DR is never a Suite 2 completeness requirement.
+- Offer `$welcome` only when there is no usable profile.
 
-- `wos-onboarding` v1.0.0
-- `wos-jira` v0.3.0
-- `wos-documentation` v0.2.0
-- `wos-dr` v0.2.0
-- `wos-memory-lite` v1.0.0
-- `wos-project` v1.1.0
-- `wos-task` v1.1.0
+## Compatibility matrix
 
-## Documentation Update Notes
+The source compatibility matrix is [wos-suite-2-beta.json](../release/wos-suite-2-beta.json). `wos-memory-lite` is approved as `2.0.0-beta`; the remaining component versions stay as recorded in the matrix. Sync this beta lane for testing before any production marketplace release.
 
-`wos-documentation` v0.1.8 adds conservative long-document handling for KB Refresh and documentation drafting.
+## Pilot exit checks
 
-`wos-documentation` v0.1.9 adds stricter intake behavior, Help Desk emoji section enforcement, and the confirmed public-facing and team Confluence space defaults.
-
-`wos-documentation` v0.1.13 consolidates Help Desk and public-facing documentation in `HelpDesk Knowledge` / `HK`, removes the redundant Infrastructure/DEV/DBA audience follow-up, keeps the Infrastructure document-type choice, and records DEV/DBA ownership while its document-type model is pending team confirmation. It retains visual-asset guidance and the required target-space duplicate/similar KB preflight before every new Confluence page create.
-
-`wos-jira` v0.2.9 adds previewed concise or structured Jira updates while retaining Rovo-first access, ACLI fallback, emoji formatting, explicit write confirmation, and no delete/archive operations.
-
-`wos-dr` v0.1.2 hardens OneDrive snapshot handling against recursive backup scans and path-length failures.
-
-
-When `KB Refresh` or `$documentation-draft` receives long, unstructured, OneNote-derived, or PDF-like source material, the plugin treats the source as raw material instead of copying its length or page shape.
-
-Expected behavior:
-
-- Prefer one continuous Confluence article whenever practical.
-- Keep public-facing documentation simple, concise, and employee-safe.
-- Keep internal documentation practical and complete without unnecessary sprawl.
-- Split into multiple Confluence pages only when separate reader workflows genuinely justify it.
-- Do not exceed five pages when a split is truly required, and prefer fewer pages.
-- Preserve verified facts, exact errors, commands, paths, and required operational details.
-- Use `[TBD]` or `<PLACEHOLDER>` for missing information instead of inventing content.
-- Ask direct questions before drafting when required source details are missing.
-- Do not output a completed draft after a "Gaps To Confirm" list.
-- Preserve required emoji section headings for all built-in templates, including Help Desk how-to and troubleshooting templates.
-- Use confirmed WOS Documentation spaces by default: `HelpDesk Knowledge` / `HK`, `Internal Infrastructure KB` / `IIK`, and `Dev Team KB` / `DTK`.
-- Keep `JSM Optimization Advisory` out of WOS Documentation route defaults.
-
-## Prompt To Give Their Codex
-
-```text
-Please update the existing Workflow OS install on this machine.
-
-Repository:
-https://github.com/Athens-Administrators/Workflow-Agentic-OS.git
-
-Safety:
-- Preserve the user's existing Workflow OS data and settings.
-- Do not delete, move, or rename user folders.
-- Do not overwrite tracked local changes.
-- Do not bypass Jira delete/archive protections, email/send guardrails, or no-auto-commit policy.
-- Use $env:USERPROFILE for user-specific paths. Do not hardcode another user's username.
-- Stop at the first real failure and show the exact error plus the next recommended action.
-
-Steps:
-1. Confirm Codex CLI is available:
-   codex --version
-2. Confirm the user can open this repo in a browser while signed into GitHub:
-   https://github.com/Athens-Administrators/Workflow-Agentic-OS
-   If they cannot open it, stop. They need repo access before updating from the Git-backed marketplace.
-3. Inspect the current Codex config:
-   $config = "$env:USERPROFILE\.codex\config.toml"
-   if (Test-Path $config) { Select-String -Path $config -Pattern '\[marketplaces\.workflow-os\]' -Context 0,4 }
-4. If `workflow-os` is already configured as a Git marketplace, run:
-   codex plugin marketplace upgrade workflow-os
-5. If `workflow-os` is missing, add it:
-   codex plugin marketplace add https://github.com/Athens-Administrators/Workflow-Agentic-OS.git --ref main
-6. If `workflow-os` is configured as a local marketplace or upgrade says it is not Git-backed, ask the user before changing it. If they confirm they want the standard Git-backed team marketplace, run:
-   codex plugin marketplace remove workflow-os
-   codex plugin marketplace add https://github.com/Athens-Administrators/Workflow-Agentic-OS.git --ref main
-7. Fully close and reopen Codex.
-8. Open /plugins.
-9. Inventory which Workflow OS plugins are currently installed and enabled. Use /plugins as the source of truth. If you inspect files, also check:
-   - $env:USERPROFILE\.codex\config.toml
-   - $env:USERPROFILE\.codex\plugins\cache\workflow-os
-10. Update or reinstall only the Workflow OS plugins the user already has installed so those installed plugins match the latest expected versions. If `wos-memory-engine` is installed, tell the user it is retired; they should remove it manually in `/plugins`, then restart Codex before installing Memory Lite:
-    - wos-onboarding v1.0.0
-    - wos-jira v0.3.0
-    - wos-documentation v0.2.0
-    - wos-dr v0.2.0
-    - wos-memory-lite v1.1.0
-    - wos-project v1.1.0
-    - wos-task v1.1.0
-11. If any mandatory plugin is missing, install it. Do not ask the user to choose whether to install these; they are required for the current Workflow OS baseline:
-    - wos-jira
-    - wos-documentation
-    - wos-dr
-12. If any optional Workflow OS plugins are missing, do not install them automatically. Show the user a short optional missing-plugin list and ask which, if any, they want to add:
-    - wos-memory-lite
-    - wos-project
-    - wos-task
-13. If `wos-onboarding` is missing, explain that it is mainly for first-time setup and ask before installing it on an existing environment.
-14. Configure WOS DR v1 if it is not already configured:
-    $dr-setup
-    Use weekly snapshots by default. If the user wants faster coverage, use every-other-day snapshots. Use the user's OneDrive backup folder when available. If the user has a designated OneDrive folder for Codex project folders, provide that path during DR setup.
-15. Create an immediate first snapshot:
-    $dr-snapshot
-16. Verify DR status:
-    $dr-status
-17. Verify mandatory setup. If `wos-jira` setup is incomplete, run:
-    $jira-setup
-    If `wos-documentation` setup is incomplete, run:
-    $documentation-setup
-18. If the user declines a missing optional plugin, move on and finish the update.
-
-Verification:
-- /plugins shows the latest expected versions for installed WOS plugins.
-- wos-jira, wos-documentation, and wos-dr are installed at the latest expected versions.
-- WOS DR status shows a OneDrive-backed backup root, schedule, and latest snapshot.
-- Missing optional WOS plugins were offered to the user instead of installed automatically.
-- Jira and Documentation setup are complete.
-- Existing Workflow OS data path is preserved.
-- If the user previously had optional plugins installed, they still work after restart.
-```
-
-## Quick Human Checklist
-
-1. Confirm GitHub repo access.
-2. Upgrade or re-add the `workflow-os` marketplace.
-3. Restart Codex.
-4. Update only currently installed WOS plugins in `/plugins`.
-5. Install `wos-jira`, `wos-documentation`, and `wos-dr` if any are missing; they are mandatory.
-6. Run `$dr-setup`, then `$dr-snapshot`.
-7. Run `$dr-status`.
-8. Offer missing optional plugins as choices; do not install optional plugins automatically.
-9. Confirm Jira and Documentation setup is complete.
-10. Leave optional plugins alone unless the user wants them.
-
-## Common Outcomes
-
-### Marketplace Upgrade Works
-
-If this succeeds:
-
-```powershell
-codex plugin marketplace upgrade workflow-os
-```
-
-restart Codex, update installed plugins from `/plugins`, install missing `wos-jira`, `wos-documentation`, and `wos-dr`, configure DR, create a first snapshot, and offer other missing plugins as choices.
-
-### Marketplace Is Not Git-Backed
-
-If upgrade reports that `workflow-os` is not Git-backed, the machine is likely pointed at a local checkout. For a normal teammate install, switch it back to the Git-backed marketplace only with user confirmation:
-
-```powershell
-codex plugin marketplace remove workflow-os
-codex plugin marketplace add https://github.com/Athens-Administrators/Workflow-Agentic-OS.git --ref main
-```
-
-### Setup Is Incomplete
-
-Run the missing mandatory setup flow:
-
-```text
-$jira-setup
-$documentation-setup
-```
-
-Do not rerun `$welcome` unless onboarding itself is incomplete or the user wants to redo first-time setup.
+- No repeat onboarding.
+- Jira and Documentation setup markers remain intact.
+- No Memory Engine startup hook runs.
+- No `Workflow OS DR Snapshot` task remains.
+- Legacy data, WOS.md markers, user preferences, and OneDrive snapshots are unchanged.
+- The fresh chat shows the approved Suite 2 component versions.

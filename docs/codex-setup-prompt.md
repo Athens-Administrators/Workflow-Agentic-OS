@@ -1,5 +1,7 @@
 # Workflow OS Codex Setup Prompt
 
+> **Archived WOS 1.x prompt.** It retains historical component references and must not be used for a Suite 2 install or migration. Use the current Suite 2 Beta guides instead.
+
 Paste this into Codex after the prerequisite installer has run, or when helping a teammate over Zoom.
 
 ```text

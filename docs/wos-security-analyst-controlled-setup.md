@@ -1,5 +1,7 @@
 # WOS Controlled Setup for a Security Analyst
 
+> **Archived WOS 1.x guide.** Do not use these DR or Memory Engine instructions for a new install or upgrade. Use the Suite 2 Beta first-time or existing-install guide; legacy version references below are historical only.
+
 Use this guide for a supervised first-time Workflow OS setup with a security analyst or security-focused IT teammate.
 
 This setup is different from the DEV/DBA path. It should prioritize secure handling of tickets, documentation, evidence, reviews, policies, vendor/security questionnaires, and local files. Do not assume the teammate writes code, uses Azure Boards, or needs a developer workflow.

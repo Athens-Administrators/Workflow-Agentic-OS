@@ -1,5 +1,7 @@
 # Workflow OS Jira Standard
 
+> **Archived WOS 1.x release note.** Current Suite 2 Beta has no DR onboarding requirement. Use the current Suite 2 guides for installation and migration; old version references below are historical only.
+
 Workflow OS Jira v0.2.9 is the lightweight Jira module for consistent Jira work across Athens IT.
 
 It can still run standalone for focused Jira testing, but the standard Workflow OS onboarding baseline installs `wos-jira`, `wos-documentation`, and `wos-dr`, and requires `$jira-setup` before any other Jira skill continues.

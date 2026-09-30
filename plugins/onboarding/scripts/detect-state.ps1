@@ -26,8 +26,7 @@ $required = @('.agent/local.json')
 
 $mandatorySetup = @(
     'plugin_state.wos-jira.setup_completed_at',
-    'plugin_state.wos-documentation.setup_completed_at',
-    'plugin_state.wos-dr.setup_completed_at'
+    'plugin_state.wos-documentation.setup_completed_at'
 )
 
 $present = @()
@@ -48,8 +47,6 @@ if (Test-Path (Join-Path $dataRoot '.agent/local.json')) {
                 if (-not $local.plugin_state.'wos-jira'.setup_completed_at) { $setupMissing += $key }
             } elseif ($key -eq 'plugin_state.wos-documentation.setup_completed_at') {
                 if (-not $local.plugin_state.'wos-documentation'.setup_completed_at) { $setupMissing += $key }
-            } elseif ($key -eq 'plugin_state.wos-dr.setup_completed_at') {
-                if (-not $local.plugin_state.'wos-dr'.setup_completed_at) { $setupMissing += $key }
             }
         }
     } catch {

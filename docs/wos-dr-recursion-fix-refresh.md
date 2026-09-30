@@ -1,5 +1,7 @@
 # WOS DR OneDrive Path Fix Refresh
 
+> **Archived WOS 1.x DR note.** WOS DR is retired in Suite 2 Beta. Preserve existing OneDrive snapshots, but do not install, update, configure, or restart the DR schedule. Use the Suite 2 migration assistant instead.
+
 Use this after Workflow OS setup is fully done on a colleague's Codex.
 
 Paste this into a fresh Codex chat:

@@ -14,7 +14,7 @@ Install from the `workflow-os` marketplace through `/plugins`:
 
 Do not install `wos-memory-engine` for this pilot. It is retired from the marketplace and is not required by any Memory Lite v1.1 workflow.
 
-If an existing machine already has `wos-memory-engine` installed, have its user remove that retired plugin in `/plugins`, then fully restart Codex before testing. Do not delete its legacy data folder during the pilot.
+If an existing machine already has `wos-memory-engine` installed, run `$suite-2-migration` first. It inventories the retirement, asks for one confirmation, and preserves legacy data and caches before the app uninstall/restart step.
 
 For ChatGPT Work, a workspace administrator must import or sync the Workflow OS marketplace from GitHub and grant the pilot users access to the plugin. Test in a new ChatGPT Work chat or Project after installation.
 

@@ -11,8 +11,6 @@ $script:WosRepoRelativeFiles = @(
     'plugins/memory-lite/.codex-plugin/plugin.json',
     'plugins/jira/.codex-plugin/plugin.json',
     'plugins/wos-documentation/.codex-plugin/plugin.json',
-    'plugins/dr/.codex-plugin/plugin.json',
-    'plugins/wos-azure-boards/.codex-plugin/plugin.json',
     'plugins/project/.codex-plugin/plugin.json',
     'plugins/task/plugin.json',
     'plugins/task/.codex-plugin/plugin.json'
@@ -242,7 +240,7 @@ function Find-WosRepoRoot {
 function Get-WosMarketplaceSource {
     param([string]$FrameworkRoot)
 
-    $source = 'https://github.com/acasasAA/Workflow-Agentic-OS.git'
+    $source = 'https://github.com/Athens-Administrators/Workflow-Agentic-OS.git'
     $ref = 'main'
     $git = Get-Command git -ErrorAction SilentlyContinue
     if ($git -and $FrameworkRoot -and (Test-Path -LiteralPath (Join-Path $FrameworkRoot '.git'))) {
@@ -280,7 +278,7 @@ function Merge-WosCodexConfig {
     param(
         [string]$ConfigPath = (Join-Path $env:USERPROFILE '.codex/config.toml'),
         [string]$TemplatePath,
-        [string]$MarketplaceSource = 'https://github.com/acasasAA/Workflow-Agentic-OS.git',
+        [string]$MarketplaceSource = 'https://github.com/Athens-Administrators/Workflow-Agentic-OS.git',
         [string]$MarketplaceRef = 'main'
     )
 

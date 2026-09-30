@@ -1,5 +1,7 @@
 # SQL MCP Install for a Dev/DBA Director
 
+> **Archived prerequisite note.** Its former DR baseline is retired. Establish the Suite 2 Beta baseline with the current first-time or existing-install guide before using any SQL MCP instructions below.
+
 Use this after the Dev/DBA Director's WOS baseline setup is complete.
 
 Source pattern: this is the Dev/DBA Director-ready copy of the earlier colleague setup file at `C:\Users\acasas\Documents\Codex\2026-09-01\https-github-com-bilims-mcp-sqlserver\outputs\sql-mcp-colleague-codex-setup.md`.

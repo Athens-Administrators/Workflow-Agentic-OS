@@ -1,11 +1,11 @@
 ---
 name: welcome
-description: Run the Workflow OS first-time setup. Use this when the user has just installed Workflow OS and needs role-tailored onboarding, foundation tool validation, local workflow-os-data scaffolding, mandatory Jira, Documentation, and DR setup, optional plugin selection, Jira defaults, OneDrive backup setup, and installation guidance. Should normally run once per machine.
+description: Run the Workflow OS first-time setup. Use this when the user has no usable Workflow OS profile and needs role-tailored onboarding, foundation tool validation, local workflow-os-data scaffolding, mandatory Jira and Documentation setup, optional Suite 2 plugin selection, Jira defaults, and installation guidance. Should normally run once per machine.
 ---
 
 # Workflow OS — First-Run Setup
 
-You are running the `welcome` skill from the `wos-onboarding` plugin. Your job is to complete a deployable, one-and-done Workflow OS setup for an Athens IT user. Do not skip steps. Ask concise questions, explain why each path/tool matters in plain language, and never run install commands or external writes without explicit confirmation. Do not mark onboarding complete until mandatory Jira setup, mandatory Documentation setup, and mandatory DR setup are complete.
+You are running the `welcome` skill from the `wos-onboarding` plugin. Your job is to complete a deployable, one-and-done Workflow OS setup for an Athens IT user. Do not skip steps. Ask concise questions, explain why each path/tool matters in plain language, and never run install commands or external writes without explicit confirmation. Do not mark onboarding complete until mandatory Jira and Documentation setup are complete. Existing usable profiles are upgrades, not first-time onboarding: route them to `$suite-2-migration` instead of rerunning `$welcome`.
 
 ## References
 
@@ -18,7 +18,7 @@ Load these before asking role/tool questions:
 
 1. Run `${plugin_root}/scripts/detect-state.ps1`. Parse the JSON output.
 2. If `state == "installed"`, stop and tell the user Workflow OS is already installed. Suggest `$project-new` for a new or existing workspace, or `$project-resume` for deliberate orientation. Do not offer destructive reset as a normal user flow.
-3. If `state == "partial"` and `setup_missing` is non-empty, tell the user Workflow OS setup is not complete. List the missing mandatory setup markers and route them through `$jira-setup`, `$documentation-setup`, and/or `$dr-setup` as needed. Do not continue to normal project/task/documentation/Jira work until mandatory setup is complete.
+3. If `state == "partial"` and `setup_missing` is non-empty, tell the user Workflow OS setup is not complete. List the missing mandatory setup markers and route them through `$jira-setup` and/or `$documentation-setup` only. Do not continue to normal project/task/documentation/Jira work until mandatory setup is complete.
 4. If `state == "partial"` for missing files only, list present vs missing files. Ask whether to repair the install. Wipe/restart is a developer-test recovery path only and requires explicit confirmation.
 5. Otherwise (`state == "missing"`), proceed with fresh install.
 
@@ -84,7 +84,7 @@ Use the answers to build:
 Run `${plugin_root}/scripts/detect-tools.ps1`. Summarize in three groups:
 
 - Required for Workflow OS core: Codex CLI, Git, Node.js.
-- Recommended for Athens users: GitHub Desktop, local Workflow OS memory engine, Atlassian Rovo app connector, Atlassian CLI (`acli`), Outlook Email connector, Outlook Calendar connector, Zoom connector.
+- Recommended for Athens users: GitHub Desktop, WOS Memory Lite as the native-memory companion, Atlassian Rovo app connector, Atlassian CLI (`acli`), Outlook Email connector, Outlook Calendar connector, Zoom connector.
 - Optional / role-based: SharePoint MCP, Azure CLI, Azure DevOps CLI Extension, Azure Boards, AWS CLI or AWS MCP/connector, Power BI CLI/MCP, Power Automate CLI/MCP, Microsoft Learn MCP/CLI, Superpowers Plugin.
 
 For each item, report:
@@ -198,44 +198,37 @@ Mandatory plugin set for every role:
 
 - `wos-jira`
 - `wos-documentation`
-- `wos-dr`
 
 Try to install mandatory plugins only if a real headless install verb exists in this CLI. If not available, instruct the user:
 
-> Type `/plugins` in Codex, then install: `wos-jira`, `wos-documentation`, and `wos-dr`. Press Enter here when all three are installed.
+> Type `/plugins` in Codex, then install: `wos-jira` and `wos-documentation`. Press Enter here when both are installed.
 
 After mandatory plugins are installed, run their first-use setup flows before continuing:
 
 1. Run the `$jira-setup` flow and capture the final Jira profile. Use the Jira tenant and project keys already collected in Step 5 as defaults, but still ask the Jira setup questions. If the user abandons or declines to finish Jira setup, stop onboarding and tell them Workflow OS cannot continue until `$jira-setup` is complete.
 2. Run the `$documentation-setup` flow and capture the final Documentation route profile. If the user does not know every route yet, allow specific routes to be marked unconfigured, but the setup flow itself must finish and record the profile shape. If the user abandons or declines to finish Documentation setup, stop onboarding and tell them Workflow OS cannot continue until `$documentation-setup` is complete.
-3. Run the `$dr-setup` flow and configure OneDrive-backed WOS DR v1 snapshots. Use weekly snapshots by default unless the user chooses every-other-day snapshots. If the user has a designated OneDrive folder for Codex project folders, provide that path during DR setup. Then run `$dr-snapshot` once. If the user abandons or declines to finish DR setup, stop onboarding and tell them Workflow OS cannot continue until `$dr-setup` is complete.
 
 Optional plugin set:
 
 - `wos-memory-lite`
 - `wos-project`
 - `wos-task`
-- `wos-azure-boards` **only when `is_development_team` is true**
 
 Ask which optional plugins the user wants to install, using a numbered picker:
 
 ```text
 Optional Workflow OS plugins:
-1. wos-memory-lite - companion to native Codex memory; explicit orientation and handoffs, no database or hooks.
+1. wos-memory-lite - recommended companion to native Codex memory; explicit orientation and handoffs, no database or hooks.
 2. wos-project - lightweight local-first project lifecycle with optional Jira or external tracking.
 3. wos-task - universal task intake with a concise in-chat agenda brief.
-4. wos-azure-boards - Azure Boards destination tooling for the development team. [Show only for Development / DBA team profiles.]
-5. None for now.
+4. None for now.
 ```
-
-When `is_development_team` is false, omit `wos-azure-boards` from the visible picker and renumber "None for now" naturally.
 
 Resolve dependencies before saving:
 
 - `wos-memory-lite`, `wos-project`, and `wos-task` are independent optional plugins. Recommend Memory Lite alongside Project or Task, but do not force it.
-- Selecting `wos-azure-boards` does not automatically select `wos-project` or `wos-task`.
-- `wos-jira`, `wos-documentation`, and `wos-dr` remain mandatory regardless of optional selections.
-- For development-team profiles, explain that Jira is the shared Athens IT team-space platform while Azure Boards is the development team's delivery-tracking destination; the user may install either destination tooling they actually use, and may use both.
+- `wos-jira` and `wos-documentation` remain mandatory regardless of optional selections.
+- Azure Boards is not part of WOS Suite 2 Beta. Do not surface or install it from this onboarding flow unless separately approved.
 
 Install selected optional plugins only when a real headless install verb exists in this CLI. If not available, instruct the user to install the resolved optional list through `/plugins`, then press Enter here when done. Do not pressure-install optional plugins the user did not select.
 
@@ -281,14 +274,13 @@ Create:
   "tool_status": {},
   "active_project": null,
   "active_task": null,
-  "available_plugins": ["wos-onboarding", "wos-jira", "wos-documentation", "wos-dr", "<team-gated optional plugins>"],
-  "installed_plugins": ["wos-onboarding", "wos-jira", "wos-documentation", "wos-dr", "<selected optional plugins>"],
+  "available_plugins": ["wos-onboarding", "wos-jira", "wos-documentation", "wos-memory-lite", "wos-project", "wos-task"],
+  "installed_plugins": ["wos-onboarding", "wos-jira", "wos-documentation", "<selected optional plugins>"],
   "optional_plugins_selected": ["<resolved optional plugin list>"],
   "plugin_state": {
     "wos-onboarding": { "disabled": true, "completed_at": "<ISO timestamp>" },
     "wos-jira": { "mandatory": true, "setup_completed_at": "<ISO timestamp>" },
-    "wos-documentation": { "mandatory": true, "setup_completed_at": "<ISO timestamp>" },
-    "wos-dr": { "mandatory": true, "setup_completed_at": "<ISO timestamp>", "backup_root": "<onedrive-backup-path>", "frequency": "Weekly|EveryOtherDay", "latest_snapshot": "<snapshot-path>" }
+    "wos-documentation": { "mandatory": true, "setup_completed_at": "<ISO timestamp>" }
   }
 }
 ```
@@ -307,8 +299,6 @@ Confirm:
 - if selected, `wos-memory-lite` is installed and enabled.
 - `plugin_state.wos-jira.setup_completed_at` exists.
 - `plugin_state.wos-documentation.setup_completed_at` exists.
-- `plugin_state.wos-dr.setup_completed_at` exists.
-- WOS DR has created a first snapshot in the configured OneDrive backup root.
 - sentinel points to the selected data root.
 - detector reports installed.
 
