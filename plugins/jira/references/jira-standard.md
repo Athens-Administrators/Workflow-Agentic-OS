@@ -100,28 +100,39 @@ Team default: most users create Tasks or Subtasks in project boards. Epic creati
 
 `ASD` is the IT Team Ticketing System. Treat it as the service-desk path, not as a project board.
 
-Before creating anything in `ASD`, ask the ASD ticket-type question the first time a team member asks Workflow OS to create an ASD ticket in the current setup/context:
+For `ASD`, complete the ordered preliminary questions below before drafting. The final intake question selects the work type and its linked request type:
 
-- `AI Gen Issue`: use when the user is reporting a problem, symptom, incident, broken behavior, access issue, or something that needs investigation/resolution.
-- `AI Gen Request`: use when the user is requesting planned work, setup, configuration, fulfillment, follow-up, or a non-incident action.
+- Issue: use for a problem, symptom, incident, broken behavior, access issue, or investigation. The configured mapping is work type `AI Gen Issue` and request type `AI Generated Issue`.
+- Request/task: use for planned work, setup, configuration, fulfillment, follow-up, or a non-incident action. The configured mapping is work type `AI Gen Task` and request type `AI Generated Request`.
 
-Ask this explicitly when the user's wording is ambiguous. Do not guess between issue and request.
+Do not ask the task-or-issue question ahead of requester, department, and urgency.
 
-Important: for `ASD`, the Jira issue type and the user-facing service/request type may be separate fields. The exact display names may vary. Resolve available issue types and request types when tooling exposes them, then choose the matching AI-related value:
+Important: for `ASD`, the Jira work type and customer request type are separate. The mappings above are a known baseline, not a substitute for live verification. Resolve the current matching work type, request type, required request-form fields and allowed values for the selected path before creating. Do not substitute a Jira work type for a customer request type.
 
-- Jira issue type must be either an AI-related request type or an AI-related issue type, preferably `AI Gen Request` or `AI Gen Issue` when those exact names exist.
-- Service/request type must also be an AI-related request type when the selected create path supports service-desk request types.
-- If several request types contain `AI`, choose the one that matches the user's issue-vs-request answer; if still unclear, show the candidates and ask.
+### Preliminary questions
+
+Use this same sequence in Codex and ChatGPT. Ask one question at a time, in order, and finish each answer before advancing. Reuse explicit answers already provided rather than asking the user to repeat them. Never fabricate a required answer.
+
+1. **Requester:** "Should this ticket be submitted under your name or on behalf of someone else?" If on behalf of someone else, ask for that person's name, email address, or both, and use the supplied identity to resolve the exact Jira account. If a name matches multiple people, ask for their email address before continuing. For self-submission resolve the authenticated Jira user. The selected person is the **reporter**, not the assignee; verify the actual tool parameter using `jira-tooling.md`.
+2. **Department:** For self-submission ask "What department are you a part of?" For submission on behalf of someone else ask "What department is that person a part of?" Map the answer to a currently allowed Department Category choice; clarify ambiguous answers. This is the selected reporter's department.
+3. **Urgency:** "Is this urgent, or is this not urgent?" Map urgent to the current **Urgent** choice and not urgent to **Routine Business** in Acknowledgement of Urgency. Select only the matching checkbox option, not both. Preserve any current instructions attached to the urgent choice. Do not substitute the separate Priority or Urgency field for this acknowledgement.
+4. **Classification:** "Is this a task, or is this an issue?" Task maps to `AI Gen Task` plus its linked `AI Generated Request` request type; issue maps to `AI Gen Issue` plus its linked `AI Generated Issue` request type. Verify the live mapping before submission.
+
+Workflow OS generates the ticket title from the user's context and sends it as Jira **Summary**. Do not add a separate Summary question. Generate the description from the provided problem or requested outcome using the emoji format. After the four answers are complete, generate the ticket preview and request approval. If essential problem context or a newly required field is missing, ask only the necessary follow-up before drafting; do not invent the content.
+
+The last verified required form fields for both mappings are Summary, Department Category, and Acknowledgement of Urgency. Recheck live requirements and allowed choices; generic issue-create metadata may omit request-form requirements. If current request-form requirements or choices cannot be verified, explain the limitation and do not claim completeness or request final submission approval. The known baseline can guide intake, but does not prove the create payload is valid.
 
 Before writing, show the user both values the tool will send:
 
 ```text
 Project: ASD
 Jira issue type: <exact issue type that will be sent>
-Service/request type: <exact AI-related request type to send, or n/a if the tool path has no separate request type field>
+Service/request type: <exact matching request type to send>
+Reporter/requester: <resolved Jira account>
+Required request fields: <each field and selected value>
 ```
 
-If the selected Rovo or `acli` create path cannot verify or set the required AI-related ASD issue/request type, stop before writing and tell the user that the tool cannot guarantee the correct helpdesk type. Do not create a best-effort ASD ticket with the wrong type.
+If the selected Rovo or `acli` create path cannot verify and set the matching request type, reporter, or required fields, stop before writing and explain the limitation. Never create a best-effort ASD ticket without a customer request type. After creation read back the reporter, request type, and required values; report any mismatch or unverified field rather than claiming customer visibility. Customer portal visibility and notification delivery require separate verification.
 
 ## 6. Creation Quality Checklist
 
@@ -130,7 +141,7 @@ Before creating a Jira item, verify:
 - The project key is correct.
 - The issue type is correct.
 - For project boards, existing relevant Epics were checked before creating a new Epic or standalone Task.
-- For `ASD`, `AI Gen Issue` vs `AI Gen Request` was clarified and the actual AI-related Jira issue type/request type payload was shown.
+- For `ASD`, issue vs request/task was clarified, preliminary required answers were collected before drafting, and the exact work type, customer request type, reporter, and required values were shown in the approval preview.
 - The title has exactly one lead emoji and is action-oriented.
 - The objective explains why the work exists.
 - Scope says what is in and out where useful.

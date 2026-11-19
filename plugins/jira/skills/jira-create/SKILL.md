@@ -9,14 +9,14 @@ You are creating a Jira work item on the user's explicit request.
 
 ## Required reference
 
-Load `${plugin_root}/../references/setup-gate.md` first. If Jira setup is not complete, stop and send the user to `$jira-setup` before doing anything else.
+Use known Jira tenant and project context, or resolve the missing details through the connector and user. Do not require a setup completion marker or `$jira-setup` before carrying out work.
 Load `${plugin_root}/../references/jira-standard.md` before asking for fields. Use it to choose the smallest correct issue type and project default.
 Load `${plugin_root}/../references/emoji-format.md` before drafting any text. The description **must** follow that format (Objective / Scope / Acceptance / Links / Notes).
 Load `${plugin_root}/../references/jira-tooling.md` before choosing Jira tooling.
 
 ## Steps
 
-1. **Ask the user for:**
+1. **Identify the project and creation route from the request.** For ASD support tickets, use the four preliminary questions in `jira-standard.md` in this exact order: requester, reporter's department, urgency acknowledgement, then task or issue. Do not start by asking for a title, Summary, or task/issue classification. Generate the title as Summary from the user's context after intake. For non-ASD work, collect missing details as appropriate:
    - **Type**: epic, task, subtask, or helpdesk/support ticket. Use `jira-standard.md` if the user is unsure.
    - **Project key** (e.g. `ASD`, `TPM`). If unknown, use the Athens defaults in `jira-standard.md` and ask the user to confirm.
    - **Parent key**, if applicable (task under an epic, subtask under a task).
@@ -28,9 +28,9 @@ Load `${plugin_root}/../references/jira-tooling.md` before choosing Jira tooling
 2. **Apply project-specific safeguards** from `jira-standard.md`:
 
    - **For project boards such as `TPM`, `AJD`, `GPT`, `HMB`, or infrastructure boards**: if the project supports Epics and Tasks, prioritize Epic / Task / Subtask creation. Before drafting a create payload, search/list relevant existing Epics in that project using the user's context. Show likely matching Epics and ask whether this work belongs under one of them. Prefer creating a Task under an existing Epic. Do not create a new Epic unless the user explicitly confirms there is no existing project/Epic and they are authorized to create a new project container. Do not use ASD-style AI issue/request types for these project boards unless the user explicitly says the target project is configured that way.
-   - **For `ASD`**: ask the ASD ticket-type question the first time a team member asks Workflow OS to create an ASD ticket in the current setup/context. Clarify whether the ticket should be an `AI Gen Issue` or an `AI Gen Request`. Use `AI Gen Issue` for problems/symptoms/incidents/investigation. Use `AI Gen Request` for planned work, setup, configuration, fulfillment, follow-up, or non-incident action. Ask when ambiguous. Resolve available issue/request types when tooling exposes them; if names differ, choose the matching AI-related type that contains `AI`. Before drafting the final payload, verify and show both the Jira issue type and the service/request type that the selected tool path will send. If the selected Rovo or `acli` create path cannot verify or set the required AI-related ASD issue/request type, stop before writing instead of creating the ticket with a guessed or wrong type.
+   - **For `ASD`**: finish the ordered preliminary questions in `jira-standard.md`, ending with "Is this a task, or is this an issue?" Resolve the exact work type, linked request type, required fields and available choices from live metadata when possible. Collect every required answer before formulating the ticket, reusing explicit answers already supplied. Never guess a category, urgency acknowledgement, reporter or required choice. If metadata or the creation path cannot verify and set the required request type and fields, explain the limitation and stop before writing.
 
-3. **Run the creation quality checklist** from `jira-standard.md`. If the project, issue type, title, objective, or acceptance/desired outcome is unclear, ask before drafting.
+3. **Complete intake before drafting.** Ask the preliminary questions in `jira-standard.md`, including the intended reporter and all required request-form fields. Use the user's existing explicit answers; ask only for missing or ambiguous information. Run the creation quality checklist. Do not formulate the ticket or request approval until intake is complete.
 
 4. **Draft the description** using the §2 skeleton from `emoji-format.md`. Show the user the draft.
 
@@ -39,7 +39,9 @@ Load `${plugin_root}/../references/jira-tooling.md` before choosing Jira tooling
    Type: <type>
    Project: <key>
    Jira issue type: <exact issue type to send>
-   Service/request type: <exact AI-related request type, or n/a>
+   Service/request type: <exact request type to send, or n/a for non-service work>
+   Reporter/requester: <resolved person when applicable>
+   Required request fields: <field names and exact selected values, when applicable>
    Parent: <key or none>
    Title: <title>
    Description:
@@ -60,5 +62,5 @@ Load `${plugin_root}/../references/jira-tooling.md` before choosing Jira tooling
 - **Authorization is per-action**: each create gets its own confirmation. Don't batch.
 - **If the project is wrong**, abort and ask. Don't guess.
 - **Project-board safeguard**: for project boards such as `TPM`, `AJD`, `GPT`, `HMB`, or infrastructure boards, do not create a new Epic/project container without first checking relevant existing Epics and getting explicit user confirmation. Prefer Epic / Task / Subtask shapes over ASD-style AI issue/request types.
-- **ASD safeguard**: do not create an ASD ticket until `AI Gen Issue` vs `AI Gen Request` is clarified and the actual AI-related issue type/request type payload is verified. If the tool cannot verify or set the correct ASD issue/request type, stop.
+- **ASD safeguard**: do not create until issue vs request/task is clarified, required intake is complete, and the actual work type, request type, reporter, and required field payload are verified. If the tool cannot verify or set them, stop.
 - **Standalone behavior**: this skill must work with only `wos-jira` installed. Do not require Memory Lite, project, or task plugins.

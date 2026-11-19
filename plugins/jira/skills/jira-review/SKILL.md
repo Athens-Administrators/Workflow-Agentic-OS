@@ -11,12 +11,11 @@ You are reviewing one existing Jira work item against the Workflow OS Jira team 
 
 Load these before reviewing:
 
-- `${plugin_root}/../references/setup-gate.md`
 - `${plugin_root}/../references/jira-standard.md`
 - `${plugin_root}/../references/emoji-format.md`
 - `${plugin_root}/../references/jira-tooling.md`
 
-Apply `setup-gate.md` before fetching or reviewing any Jira item. If Jira setup is not complete, stop and send the user to `$jira-setup`.
+Use known Jira tenant and project context, or resolve missing details through the connector and user. A setup completion marker is not required.
 
 ## Step 1 — Identify The Jira Item
 
