@@ -5,7 +5,7 @@ description: Configure standalone Workflow OS Jira defaults for a teammate. Use 
 
 # `$jira-setup` — Jira-First Setup
 
-You are configuring the user's standalone Workflow OS Jira profile. This setup is intentionally lightweight and does not require a WOS memory component, Project, Task, or Onboarding plugins. In a full Workflow OS install, this setup is mandatory before any other `wos-jira` skill may continue.
+You are configuring the user's standalone Workflow OS Jira profile. This setup is intentionally lightweight and does not require a WOS memory component, Project, Task, or Onboarding plugins. This is an optional preferences workflow; operational Jira skills never require its completion or a setup marker.
 
 ## Required References
 
@@ -101,7 +101,7 @@ FIN -> Finance systems support
 
 If the user names project-board keys such as `AJD`, `GPT`, `HMB`, an infrastructure board, or another board with Epics and Tasks, record them as project-tracking boards. Explain that Workflow OS will prioritize Epic / Task / Subtask shapes for those boards instead of ASD-style AI issue/request types.
 
-If the user names `ASD`, record it as the service-desk path. Explain that ASD creation will ask whether the ticket is an `AI Gen Issue` or an `AI Gen Request`, then verify the exact AI-related issue/request type before writing.
+If the user names `ASD`, record it as the service-desk path. Explain that ASD creation distinguishes an issue from a request/task, collects required request-form answers before drafting, and verifies the exact work type and customer request type before writing.
 
 ## Step 6 — Tooling Check
 
@@ -123,40 +123,11 @@ Do not handle or request tokens in chat.
 
 ## Step 7 — Output Profile
 
-Show the final profile in concise JSON-like form. Include a setup completion timestamp:
+Show the selected Jira tenant, project keys, default project by work type, and primary Jira usage. Do not create a setup-completion timestamp or `plugin_state.wos-jira` completion marker. Existing markers may remain for compatibility but must never gate Jira work.
 
-```json
-{
-  "jira_tenant": "https://athensadmin.atlassian.net",
-  "jira_projects": ["ASD", "TPM"],
-  "additional_jira_projects": [],
-  "default_project_by_work_type": {
-    "support": "ASD",
-    "project_tracking": "TPM"
-  },
-  "primary_jira_usage": ["helpdesk tickets", "project/task tracking"],
-  "setup_completed_at": "<ISO timestamp>"
-}
-```
+## Step 8 — Optional Preferences
 
-## Step 8 — Save Setup Marker
-
-If Workflow OS local state is available, save the profile fields into `<data_root>/.agent/local.json` and set:
-
-```json
-"plugin_state": {
-  "wos-jira": {
-    "mandatory": true,
-    "setup_completed_at": "<ISO timestamp>"
-  }
-}
-```
-
-Preserve existing `plugin_state` entries and existing user preferences. Do not remove optional plugin selections.
-
-If native Codex memory is available, the user may optionally save their own preference through the normal product flow. The local setup marker is sufficient for the setup gate; do not write a second memory store.
-
-If Workflow OS local state is unavailable, provide the profile for the user to keep and clearly state that setup is only complete for the current conversation; future Jira skills may ask for `$jira-setup` again until a persistent WOS profile exists.
+If the user wants to save these defaults and Workflow OS local state is available, preserve existing settings and save only the selected preference fields in `<data_root>/.agent/local.json`. If local state is unavailable, return the profile in chat. Neither situation blocks future Jira work. Do not write a second memory store.
 
 ## Step 9 — Finish
 

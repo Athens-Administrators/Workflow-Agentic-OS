@@ -9,7 +9,7 @@ You are posting a comment to a Jira work item on the user's explicit request.
 
 ## Required reference
 
-Load `${plugin_root}/../references/setup-gate.md` first. If Jira setup is not complete, stop and send the user to `$jira-setup` before doing anything else.
+Use known Jira tenant and project context, or resolve the missing details through the connector and user. Do not require a setup completion marker or `$jira-setup` before carrying out work.
 Load `${plugin_root}/../references/jira-standard.md` before drafting. Use it to choose the right update type and avoid vague comments.
 Load `${plugin_root}/../references/emoji-format.md` before drafting. The comment **must** follow §1 (Comment structure) including the status marker.
 Load `${plugin_root}/../references/jira-tooling.md` before choosing Jira tooling.

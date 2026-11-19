@@ -21,6 +21,12 @@ Do not depend on legacy `mcp__codex_apps__atlassian_rovo._...` tool paths. The c
 
 ## Example exact-key query
 
+### ASD reporter and customer request verification
+
+Resolve the intended requester to an exact Jira account ID. For self-submission use the authenticated Jira identity; for on-behalf submissions resolve the named customer and clarify ambiguous matches. Inspect the active tool contract before composing the payload. The current `createJiraIssue` wrapper accepts Jira system fields through `additional_fields`: send the reporter as `additional_fields.reporter = { "id": "<resolved account ID>" }` when that Jira field shape is supported by the live contract. If another supported service-desk request tool uses an on-behalf parameter, use that tool's documented parameter instead. Never pass the requester in `assignee`, substitute request participants for reporter, or rely on a name in the description.
+
+The creation payload must also set the matching customer request type and required Department Category and Acknowledgement of Urgency values using the live field contract. A correct reporter alone does not establish portal visibility or notifications. If the path cannot set these fields, stop before creating. After the approved create, read back the reporter account ID, request type, and required values and compare them to the preview. Report discrepancies; do not retry creation or silently repair through an additional write. Verify customer portal access and notification delivery separately before claiming either succeeded. Do not promise an email solely from a successful create or correct reporter.
+
 ```text
 Operation: searchJiraIssuesUsingJql
 Site: selected accessible Jira cloud resource
